@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MyShoppingApp</string>
+    <string name="search">Search</string>
+    <string name="quantity">Quantity :</string>
+    <string name="price">Price :</string>
+    <string name="name">Name :</string>
+    <string name="todo">TODO</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="not_registered">Not Registered?</string>
+    <string name="register">REGISTER</string>
+    <string name="make_order">Make Order</string>
+    <string name="view_total_price">View Total Price</string>
+    <string name="add_new_product">Add new Product</string>
+    <string name="egp">EGP</string>
+    <string name="add_to_cart">Add To Cart</string>
+    <string name="product_name">Product Name :</string>
+    <string name="quantity1">Quantity :</string>
+    <string name="price1">Price :</string>
+    <string name="name1">Name</string>
+    <string name="categorie_name">Categorie Name</string>
+</resources>
