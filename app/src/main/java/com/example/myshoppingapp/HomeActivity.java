@@ -46,11 +46,14 @@ public class HomeActivity extends AppCompatActivity {
             startActivity(i);
         });
         category.setOnClickListener(v -> {
+            arr.clear();
             Cursor cc = sdb.Select_Categories();
             while (!cc.isAfterLast()) {
                 arr.add(cc.getString(1));
                 cc.moveToNext();
             }
+            arr.notifyDataSetChanged();
+
         });
         cart.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, ShoppingCart.class);

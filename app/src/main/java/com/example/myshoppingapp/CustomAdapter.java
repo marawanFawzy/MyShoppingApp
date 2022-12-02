@@ -20,11 +20,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<String> quantity;
     ShoppingDatabase sdb;
     public int count = 0;
-    TextView prodQuantity;
-    TextView productName;
-    TextView productPrice;
-    Button plusBtn;
-    Button minusBtn;
+
 
     public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records) {
         super(context, resource, records);
@@ -38,7 +34,11 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         final ProductClass item = getItem(position);
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_custom_adapter, parent, false);
-
+        TextView prodQuantity;
+        TextView productName;
+        TextView productPrice;
+        Button plusBtn;
+        Button minusBtn;
         sdb = new ShoppingDatabase(getContext());
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
         productName = convertView.findViewById(R.id.nameeditText2);
