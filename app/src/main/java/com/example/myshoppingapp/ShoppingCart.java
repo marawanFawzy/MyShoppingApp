@@ -52,14 +52,6 @@ public class ShoppingCart extends AppCompatActivity
             Toast.makeText(this, "Shopping Cart is empty", Toast.LENGTH_SHORT).show();
         InsertIntoAdapter();
 
-       myList.setOnItemLongClickListener((parent, view, position, id) -> {
-           Integer idd = Integer.parseInt(iDArray.get(position));
-           sdb.deleteItem(idd);
-           iDArray.remove(position);
-           InsertIntoAdapter();
-           return true;
-       });
-
        addNewItem.setOnClickListener(v -> {
            Intent i = new Intent(ShoppingCart.this,HomeActivity.class);
            startActivity(i);

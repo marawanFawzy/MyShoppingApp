@@ -7,6 +7,17 @@
     android:background="#F55364"
     tools:context=".CustomAdapter">
 
+    <ImageButton
+        android:id="@+id/delete_button"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_baseline_delete_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp" />
+
     <TextView
         android:id="@+id/nameTextview"
         android:layout_width="96dp"

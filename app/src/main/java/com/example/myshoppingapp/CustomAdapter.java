@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,12 +40,14 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         TextView productPrice;
         Button plusBtn;
         Button minusBtn;
+        ImageButton deleteBtn;
         sdb = new ShoppingDatabase(getContext());
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
         productName = convertView.findViewById(R.id.nameeditText2);
         productPrice = convertView.findViewById(R.id.priceeditText3);
         plusBtn = convertView.findViewById(R.id.plusbutton);
         minusBtn = convertView.findViewById(R.id.Minusbutton3);
+        deleteBtn = convertView.findViewById(R.id.delete_button);
 
 
         productName.setText(item.name);
@@ -77,6 +80,13 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
             }
             Integer q = Integer.parseInt(prodQuantity.getText().toString());
             sdb.editQuantity(Integer.parseInt(item.id), q);
+        });
+
+        deleteBtn.setOnClickListener(v -> {
+            sdb.deleteItem(Integer.parseInt(item.id));
+            records.remove(position);
+            Toast.makeText(getContext(), "Item Deleted", Toast.LENGTH_SHORT).show();
+            notifyDataSetChanged();
         });
 
         return convertView;
