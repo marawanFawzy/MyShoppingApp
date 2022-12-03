@@ -99,33 +99,47 @@
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <RadioButton
-        android:id="@+id/female"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="Female"
-        android:buttonTint="@color/colorPrimary"
+    <RadioGroup
+        android:layout_width="202dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="150dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/btnsign"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.31"
-        app:layout_constraintStart_toEndOf="@+id/gendertxt"
-        app:layout_constraintTop_toBottomOf="@+id/jobeditText5"
-        app:layout_constraintVertical_bias="0.222" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/jobeditText5">
 
-    <RadioButton
-        android:id="@+id/male"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minHeight="48dp"
-        android:text="Male"
-        android:buttonTint="@color/colorPrimary"
-        app:layout_constraintBottom_toTopOf="@+id/btnsign"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.422"
-        app:layout_constraintStart_toEndOf="@+id/female"
-        app:layout_constraintTop_toBottomOf="@+id/jobeditText5"
-        app:layout_constraintVertical_bias="0.222" />
+        <RadioButton
+            android:id="@+id/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
+            android:minHeight="48dp"
+            android:text="Female"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnsign"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.31"
+            app:layout_constraintStart_toEndOf="@+id/gendertxt"
+            app:layout_constraintTop_toBottomOf="@+id/jobeditText5"
+            app:layout_constraintVertical_bias="0.222" />
+
+        <RadioButton
+            android:id="@+id/male"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginLeft="20dp"
+            android:buttonTint="@color/colorPrimary"
+            android:minHeight="48dp"
+            android:text="Male"
+            app:layout_constraintBottom_toTopOf="@+id/btnsign"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.422"
+            app:layout_constraintStart_toEndOf="@+id/female"
+            app:layout_constraintTop_toBottomOf="@+id/jobeditText5"
+            app:layout_constraintVertical_bias="0.222" />
+    </RadioGroup>
+
 
     <TextView
         android:id="@+id/nametxt"
