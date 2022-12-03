@@ -29,11 +29,12 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
                 " Cat_name text not null )");
 
         db.execSQL("Create Table Products " +
-                "(P_id Integer Primary Key AUTOINCREMENT," +
+                "(P_id Integer not null," +
                 " P_name text not null ," +
                 " Price Float not null ," +
                 " Quantity Integer not null," +
-                " Fk_Cat_id Integer ," +
+                " Fk_Cat_id Integer ,"+
+                " PRIMARY KEY (P_id,P_name),"+
                 " Foreign Key(Fk_Cat_id) References Categories(Cat_id))");
 
         db.execSQL("Create Table Orders " +
@@ -48,7 +49,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
                 "prod_ID integer not null," +
                 " quantity integer not null," +
                 " PRIMARY KEY (Ord_id,prod_ID)," +
-                "FOREIGN KEY(Ord_id) REFERENCES Orders(O_id)," +
+                " FOREIGN KEY(Ord_id) REFERENCES Orders(O_id)," +
                 " FOREIGN KEY(prod_ID) REFERENCES Products(P_id))");
 
         db.execSQL("create table Cart" +
@@ -62,6 +63,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         catrow.put("Cat_name", "Eye Makeup");
         db.insert("Categories", null, catrow);
         catrow = new ContentValues();
+        prodrow.put("P_id", "1");
         prodrow.put("P_name", "mascara loreal");
         prodrow.put("Price", "300");
         prodrow.put("Quantity", 5);
@@ -69,6 +71,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "2");
         prodrow.put("P_name", "mascra maybelline");
         prodrow.put("Price", "350");
         prodrow.put("Quantity", 4);
@@ -76,6 +79,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "3");
         prodrow.put("P_name", "Eyeliner paradise");
         prodrow.put("Price", "100");
         prodrow.put("Quantity", 3);
@@ -83,6 +87,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "4");
         prodrow.put("P_name", "Eyeliner Essence");
         prodrow.put("Price", "100");
         prodrow.put("Quantity", 5);
@@ -90,6 +95,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "5");
         prodrow.put("P_name", "Dipliner Amanda matt");
         prodrow.put("Price", "75");
         prodrow.put("Quantity", 10);
@@ -97,6 +103,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "6");
         prodrow.put("P_name", "Eyeliner Balm");
         prodrow.put("Price", "250");
         prodrow.put("Quantity", 3);
@@ -108,6 +115,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Categories", null, catrow);
         catrow = new ContentValues();
 
+        prodrow.put("P_id", "1");
         prodrow.put("P_name", "mac");
         prodrow.put("Price", "300");
         prodrow.put("Quantity", 2);
@@ -115,6 +123,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "2");
         prodrow.put("P_name", "Amanda");
         prodrow.put("Price", "50");
         prodrow.put("Quantity", 7);
@@ -122,6 +131,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "3");
         prodrow.put("P_name", "Essence");
         prodrow.put("Price", "60");
         prodrow.put("Quantity", 5);
@@ -133,6 +143,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Categories", null, catrow);
         catrow = new ContentValues();
 
+        prodrow.put("P_id", "1");
         prodrow.put("P_name", "Foundation makeupforever");
         prodrow.put("Price", "500");
         prodrow.put("Quantity", 6);
@@ -140,6 +151,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "2");
         prodrow.put("P_name", "Foundation Maybelline fit me");
         prodrow.put("Price", "185");
         prodrow.put("Quantity", 12);
@@ -147,6 +159,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "3");
         prodrow.put("P_name", "highlighter makeupforever");
         prodrow.put("Price", "350");
         prodrow.put("Quantity", 6);
@@ -154,6 +167,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "4");
         prodrow.put("P_name", "highlighter fentybeauty");
         prodrow.put("Price", "900");
         prodrow.put("Quantity", 3);
@@ -161,6 +175,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "4");
         prodrow.put("P_name", "Bronzer Kiko");
         prodrow.put("Price", "500");
         prodrow.put("Quantity", 6);
@@ -172,6 +187,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Categories", null, catrow);
         catrow = new ContentValues();
 
+        prodrow.put("P_id", "1");
         prodrow.put("P_name", "Off Shoulder Blouse");
         prodrow.put("Price", "300");
         prodrow.put("Quantity", 6);
@@ -179,6 +195,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "2");
         prodrow.put("P_name", "Formal Chemise");
         prodrow.put("Price", "350");
         prodrow.put("Quantity", 7);
@@ -186,6 +203,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "3");
         prodrow.put("P_name", "Pants");
         prodrow.put("Price", "270");
         prodrow.put("Quantity", 16);
@@ -193,6 +211,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "4");
         prodrow.put("P_name", "Skirts");
         prodrow.put("Price", "200");
         prodrow.put("Quantity", 9);
@@ -203,6 +222,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         catrow.put("Cat_name", "Swatches");
         db.insert("Categories", null, catrow);
 
+        prodrow.put("P_id", "1");
         prodrow.put("P_name", "Casio");
         prodrow.put("Price", "3000");
         prodrow.put("Quantity", 6);
@@ -210,6 +230,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "2");
         prodrow.put("P_name", "D&G");
         prodrow.put("Price", "2000");
         prodrow.put("Quantity", 5);
@@ -217,6 +238,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
+        prodrow.put("P_id", "3");
         prodrow.put("P_name", "Daniel Hicher");
         prodrow.put("Price", "3500");
         prodrow.put("Quantity", 4);
@@ -334,9 +356,11 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
 
 
     public Cursor getProductInfo(Integer productID , Integer cat_id) {
+        //productID = 3 ;
+        //cat_id = 5 ;
         CustomerRegesiter = getReadableDatabase();
         Cursor cursor = CustomerRegesiter.rawQuery("select * from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '"+cat_id +"' ", null);
-        if (cursor != null)
+        if (cursor.getCount() != 0)
             cursor.moveToFirst();
         CustomerRegesiter.close();
         return cursor;
