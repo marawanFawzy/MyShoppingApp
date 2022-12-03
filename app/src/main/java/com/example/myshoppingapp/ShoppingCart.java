@@ -1,13 +1,14 @@
 package com.example.myshoppingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.ArrayList;
 
 
@@ -32,12 +33,12 @@ public class ShoppingCart extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
 
-        addNewItem = (Button)findViewById(R.id.addnewbutton);
-        makeOrder = (Button)findViewById(R.id.Orderbutton2);
-        showPrice = (Button)findViewById(R.id.totalpricebutton3);
-        home = (Button)findViewById(R.id.homebutton);
+        addNewItem = findViewById(R.id.addnewbutton);
+        makeOrder = findViewById(R.id.Orderbutton2);
+        showPrice = findViewById(R.id.totalpricebutton3);
+        home = findViewById(R.id.homebutton);
 
-        myList = (ListView) findViewById(R.id.mylist);
+        myList = findViewById(R.id.mylist);
         iDArray = new ArrayList<>();
         catIdArray = new ArrayList<>();
         sdb = new ShoppingDatabase(this);

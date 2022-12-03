@@ -1,7 +1,5 @@
 package com.example.myshoppingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HomeActivity extends AppCompatActivity {
     ShoppingDatabase sdb = new ShoppingDatabase(this);
@@ -39,7 +39,7 @@ public class HomeActivity extends AppCompatActivity {
         });
         searchButton.setOnClickListener(v1 -> {
             String text = searchText.getText().toString();
-            Cursor cu = sdb.Search_By_Text(text);  //so2al el while loop!
+           // Cursor cu = sdb.Search_By_Text(text);  //so2al el while loop!
 
             Intent i = new Intent(HomeActivity.this, ProductsDetails.class);
             i.putExtra("Prod_name", text);

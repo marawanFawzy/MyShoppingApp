@@ -1,7 +1,5 @@
 package com.example.myshoppingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,6 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Products extends AppCompatActivity {
     ShoppingDatabase sdb = new ShoppingDatabase(this);
@@ -22,10 +22,10 @@ public class Products extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-        t = (TextView) findViewById(R.id.cat_n_Textview);
-        mylist = (ListView) findViewById(R.id.Products_list);
-        cart = (Button) findViewById(R.id.cartbutton);
-        home = (Button) findViewById(R.id.homebutton);
+        t = findViewById(R.id.cat_n_Textview);
+        mylist = findViewById(R.id.Products_list);
+        cart = findViewById(R.id.cartbutton);
+        home = findViewById(R.id.homebutton);
         final ArrayAdapter<String> arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         mylist.setAdapter(arr);
 

@@ -333,18 +333,6 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return c;
     }
 
-    public Cursor Search_By_Text(String name) {
-        CustomerRegesiter = getReadableDatabase();
-        Cursor c = CustomerRegesiter.rawQuery("Select * From Products where P_name Like '" + name + "' ", null);
-        if (c != null) {
-            c.moveToFirst();
-        }
-        CustomerRegesiter.close();
-        //c.close();
-        return c;
-    }
-
-
     public Cursor getProductInfo(Integer productID, Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
         Cursor cursor = CustomerRegesiter.rawQuery("select * from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '" + cat_id + "' ", null);
@@ -380,7 +368,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
 
     public Integer getQuantity(Integer id, Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cur = CustomerRegesiter.rawQuery("select qty from Cart where pro_ID like '" + id + "'AND cat_id like  '" + cat_id + "' ", null);
+        @SuppressLint("Recycle") Cursor cur = CustomerRegesiter.rawQuery("select qty from Cart where pro_ID like '" + id + "'AND cat_id like  '" + cat_id + "' ", null);
         Integer qnty = null;
         if (cur != null) {
             cur.moveToFirst();
@@ -440,6 +428,17 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         Integer countID = cursor.getCount();
         CustomerRegesiter.close();
         return countID;
+    }
+
+    public Cursor Search_By_Text(String name) {
+        CustomerRegesiter = getReadableDatabase();
+        Cursor c = CustomerRegesiter.rawQuery("Select * From Products where P_name Like '" + name + "' ", null);
+        if (c != null) {
+            c.moveToFirst();
+        }
+        CustomerRegesiter.close();
+        //c.close();
+        return c;
     }
 
 
