@@ -54,7 +54,7 @@ public class ProductsDetails extends AppCompatActivity {
             } else {
                 add.setOnClickListener(v -> {
                     add.setEnabled(true);
-                    sdb.addtoCart(x , cat_id, 1);
+                    sdb.addToCart(x , cat_id, 1);
                     Toast.makeText(this, "added to cart", Toast.LENGTH_SHORT).show();
                 });
             }

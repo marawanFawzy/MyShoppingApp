@@ -40,7 +40,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.execSQL("Create Table Orders " +
                 "(O_id Integer Primary Key AUTOINCREMENT ," +
                 " Order_date date ," +
-                "Address text ," +
+                " Address text ," +
                 " Cust_id integer ," +
                 "Foreign Key(Cust_id) References Customers(C_id) )");
 
@@ -390,9 +390,9 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         CustomerRegesiter.close();
     }
 
-    public Integer getQuantity(Integer id) {
+    public Integer getQuantity(Integer id , Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cur = CustomerRegesiter.rawQuery("select qty from Cart where pro_ID like '" + id + "' ", null);
+        Cursor cur = CustomerRegesiter.rawQuery("select qty from Cart where pro_ID like '" + id + "'AND cat_id like  '"+cat_id +"' ", null);
         Integer qnty = null;
         if (cur != null) {
             cur.moveToFirst();
@@ -402,9 +402,9 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return qnty;
     }
 
-    public String getProductPrice(Integer id) {
+    public String getProductPrice(Integer productID ,Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cursor = CustomerRegesiter.rawQuery("select Price from Products where P_id like '" + id + "' ", null);
+        Cursor cursor = CustomerRegesiter.rawQuery("select Price from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '"+cat_id +"' ", null);
         String price = null;
         if (cursor != null) {
             cursor.moveToFirst();
@@ -414,7 +414,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return price;
     }
 
-    public void addtoCart(Integer id, Integer cat_id, Integer q) {
+    public void addToCart(Integer id, Integer cat_id, Integer q) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("pro_ID", id);

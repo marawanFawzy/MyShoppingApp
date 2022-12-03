@@ -84,7 +84,8 @@ public class ShoppingCart extends AppCompatActivity
             {
                 Integer id = cursor1.getInt(0);
                 Integer q = cursor1.getInt(1);
-                String price = sdb.getProductPrice(id);
+                Integer cat_id = cursor1.getInt(2);
+                String price = sdb.getProductPrice(id , cat_id);
                 Double prodPrice = Double.parseDouble(price);
                 total += q*prodPrice;
                 cursor1.moveToNext();
@@ -111,7 +112,7 @@ public class ShoppingCart extends AppCompatActivity
             String id = cursor.getString(0);
             String name = cursor.getString(1);
             String price = cursor.getString(2);
-            String quantity  = String.valueOf(sdb.getQuantity(Integer.parseInt(iDArray.get(i))));
+            String quantity  = String.valueOf(sdb.getQuantity(Integer.parseInt(iDArray.get(i)) , Integer.parseInt(catIdArray.get(i))));
 
             product = new ProductClass(id,name, quantity, price , catIdArray.get(i));
             arrayOfProducts.add(product);

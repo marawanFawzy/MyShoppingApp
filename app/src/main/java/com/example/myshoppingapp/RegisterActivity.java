@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -13,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.lang.reflect.Method;
 import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -42,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         gfemale = (RadioButton) findViewById(R.id.female);
         gmale = (RadioButton) findViewById(R.id.male);
         signup = (Button) findViewById(R.id.btnsign);
-
+        disableSoftInputFromAppearing(cbirthdate);
         cbirthdate.setOnClickListener(view -> {
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
@@ -95,5 +98,18 @@ public class RegisterActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+    public static void disableSoftInputFromAppearing(EditText editText) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            editText.setShowSoftInputOnFocus(false);
+        } else {
+            try {
+                final Method method = EditText.class.getMethod("setShowSoftInputOnFocus", boolean.class);
+                method.setAccessible(true);
+                method.invoke(editText, false);
+            } catch (Exception e) {
+                // handle error
+            }
+        }
     }
 }

@@ -19,4 +19,6 @@
     <string name="price1">Price :</string>
     <string name="name1">Name</string>
     <string name="categorie_name">Categorie Name</string>
+    <string name="log_in">Log in</string>
+    <string name="todo1">TODO</string>
 </resources>
