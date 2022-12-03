@@ -68,7 +68,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
                 String newValue = String.valueOf(value + 1);
                 prodQuantity.setText(newValue);
             }
-            Integer q = Integer.parseInt(prodQuantity.getText().toString());
+            int q = Integer.parseInt(prodQuantity.getText().toString());
             sdb.editQuantity(Integer.parseInt(item.id), q);
         });
 

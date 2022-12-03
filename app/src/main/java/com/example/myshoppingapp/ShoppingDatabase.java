@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.Date;
+
 public class ShoppingDatabase extends SQLiteOpenHelper {
     public static final String databaseName = "CustomerRegesiter";
     SQLiteDatabase CustomerRegesiter;
@@ -39,18 +41,22 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
                 " Foreign Key(Fk_Cat_id) References Categories(Cat_id))");
 
         db.execSQL("Create Table Orders " +
-                "(O_id Integer Primary Key AUTOINCREMENT ," +
+                " (O_id Integer Primary Key AUTOINCREMENT ," +
                 " Order_date date ," +
-                " Address text ," +
+                " Latitude number ," +
+                " Longitude number ," +
+                " name text not null ," +
                 " Cust_id integer ," +
                 "Foreign Key(Cust_id) References Customers(C_id) )");
 
         db.execSQL("create table order_details " +
-                "(Ord_id integer not null," +
-                "prod_ID integer not null," +
+                " (Ord_id integer not null," +
+                " prod_ID integer not null," +
+                " cat_id integer not null," +
                 " quantity integer not null," +
                 " PRIMARY KEY (Ord_id,prod_ID)," +
                 " FOREIGN KEY(Ord_id) REFERENCES Orders(O_id)," +
+                " FOREIGN KEY(cat_id) REFERENCES Categories(Cat_id)," +
                 " FOREIGN KEY(prod_ID) REFERENCES Products(P_id))");
 
         db.execSQL("create table Cart" +
@@ -333,7 +339,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return c;
     }
 
-    public Cursor getProductInfo(Integer productID, Integer cat_id) {
+    public Cursor getProductInfo(int productID, int cat_id) {
         CustomerRegesiter = getReadableDatabase();
         Cursor cursor = CustomerRegesiter.rawQuery("select * from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '" + cat_id + "' ", null);
         if (cursor.getCount() != 0)
@@ -342,7 +348,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void editQuantity(Integer id, Integer newQuantity) {
+    public void editQuantity(int id, int newQuantity) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("qty", newQuantity);
@@ -360,13 +366,13 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return cur;
     }
 
-    public void deleteItem(Integer id) {
+    public void deleteItem(int id) {
         CustomerRegesiter = getWritableDatabase();
         CustomerRegesiter.delete("Cart", "pro_ID='" + id + "'", null);
         CustomerRegesiter.close();
     }
 
-    public Integer getQuantity(Integer id, Integer cat_id) {
+    public int getQuantity(int id, int cat_id) {
         CustomerRegesiter = getReadableDatabase();
         @SuppressLint("Recycle") Cursor cur = CustomerRegesiter.rawQuery("select qty from Cart where pro_ID like '" + id + "'AND cat_id like  '" + cat_id + "' ", null);
         Integer qnty = null;
@@ -378,7 +384,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return qnty;
     }
 
-    public String getProductPrice(Integer productID, Integer cat_id) {
+    public String getProductPrice(int productID, int cat_id) {
         CustomerRegesiter = getReadableDatabase();
         @SuppressLint("Recycle") Cursor cursor = CustomerRegesiter.rawQuery("select Price from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '" + cat_id + "' ", null);
         String price = null;
@@ -390,7 +396,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return price;
     }
 
-    public void addToCart(Integer id, Integer cat_id, Integer q) {
+    public void addToCart(int id, int cat_id, int q) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("pro_ID", id);
@@ -400,28 +406,38 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         CustomerRegesiter.close();
     }
 
-    public void OrderDetails(Integer ordID, Integer prodID, Integer qty) {
+    public void OrderDetails(int ordID, int prodID, int qty , int cat_id ) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("ord_ID", ordID);
         row.put("prod_ID", prodID);
         row.put("quantity", qty);
+        row.put("cat_id", cat_id);
 
         CustomerRegesiter.insert("order_details", null, row);
         CustomerRegesiter.close();
     }
 
-    public void CreateNewOrder(Integer custID, String date, String address) {
+    public void CreateNewOrder(Integer custID, Date date, String Latitude ,String Longitude , String name) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
-        row.put("Order_date", date);
+        row.put("Order_date", String.valueOf(date));
         row.put("Cust_id", custID);
-        row.put("Address", address);
+        row.put("Latitude", Latitude);
+        row.put("Longitude", Longitude);
+        row.put("name", name);
 
         CustomerRegesiter.insert("Orders", null, row);
         CustomerRegesiter.close();
     }
-
+    public Integer test()
+    {
+        CustomerRegesiter = getReadableDatabase();
+        @SuppressLint("Recycle") Cursor cursor = CustomerRegesiter.rawQuery("select * from order_details ", null);
+        Integer countID = cursor.getCount();
+        CustomerRegesiter.close();
+        return countID;
+    }
     public Integer getLastOrderID() {
         CustomerRegesiter = getReadableDatabase();
         @SuppressLint("Recycle") Cursor cursor = CustomerRegesiter.rawQuery("select * from Orders ", null);

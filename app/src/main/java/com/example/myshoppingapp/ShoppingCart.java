@@ -41,6 +41,7 @@ public class ShoppingCart extends AppCompatActivity
         myList = findViewById(R.id.mylist);
         iDArray = new ArrayList<>();
         catIdArray = new ArrayList<>();
+        quantityArray = new ArrayList<>();
         sdb = new ShoppingDatabase(this);
         Cursor cursor = sdb.fetchCart();
         if (!cursor.isAfterLast())
@@ -48,6 +49,7 @@ public class ShoppingCart extends AppCompatActivity
             while (!cursor.isAfterLast())
             {
                 iDArray.add(String.valueOf(cursor.getInt(0)));
+                quantityArray.add(String.valueOf(cursor.getInt(1)));
                 catIdArray.add(String.valueOf(cursor.getInt(2)));
                 cursor.moveToNext();
             }
@@ -64,12 +66,13 @@ public class ShoppingCart extends AppCompatActivity
        makeOrder.setOnClickListener(v -> {
            if (myList.getCount()>0)
            {
-               quantityArray = new ArrayList<>();
-               quantityArray = adapter.getQuantity();
+               //quantityArray = new ArrayList<>();
+               //quantityArray = adapter.getQuantity();
 
                Intent in = new Intent(ShoppingCart.this, MakeOrder.class);
                in.putExtra("productsID", iDArray);
                in.putExtra("productsQuantity", quantityArray);
+               in.putExtra("products_cat_ids", catIdArray);
                startActivity(in);
            }
            else
