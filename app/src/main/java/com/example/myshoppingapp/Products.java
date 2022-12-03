@@ -10,13 +10,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class Products extends AppCompatActivity {
     ShoppingDatabase sdb = new ShoppingDatabase(this);
     ListView mylist;
     TextView t;
     Button cart;
     Button home;
-
+    ArrayList<String> ids = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class Products extends AppCompatActivity {
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         final ArrayAdapter<String> arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+
         mylist.setAdapter(arr);
 
         int i;
@@ -38,6 +41,7 @@ public class Products extends AppCompatActivity {
 
         Cursor cc = sdb.Select_Products(i);
         while (!cc.isAfterLast()) {
+            ids.add(cc.getString(0));
             arr.add(cc.getString(1));
             cc.moveToNext();
         }
@@ -45,8 +49,8 @@ public class Products extends AppCompatActivity {
         mylist.setOnItemClickListener((parent, view, position, id) -> {
             String pname = ((TextView) view).getText().toString();
             Intent products_Det = new Intent(Products.this, ProductsDetails.class);
-            products_Det.putExtra("Prod_name", pname); //ana 3ayza name el product 3shan a select el data 3la asaso
-            products_Det.putExtra("Prod_id", position + 1);
+            products_Det.putExtra("Prod_name", pname);
+            products_Det.putExtra("Prod_id", Integer.parseInt(ids.get(position)));
             products_Det.putExtra("cat_id", i);
             startActivity(products_Det);
         });
