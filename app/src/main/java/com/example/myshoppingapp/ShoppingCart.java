@@ -18,6 +18,7 @@ public class ShoppingCart extends AppCompatActivity
     ArrayList<ProductClass> arrayOfProducts;
     CustomAdapter adapter;
     ArrayList<String> iDArray;
+    ArrayList<String> catIdArray;
     ArrayList<String> quantityArray;
     //String id;
     Button addNewItem;
@@ -38,6 +39,7 @@ public class ShoppingCart extends AppCompatActivity
 
         myList = (ListView) findViewById(R.id.mylist);
         iDArray = new ArrayList<>();
+        catIdArray = new ArrayList<>();
         sdb = new ShoppingDatabase(this);
         Cursor cursor = sdb.fetchCart();
         if (!cursor.isAfterLast())
@@ -45,6 +47,7 @@ public class ShoppingCart extends AppCompatActivity
             while (!cursor.isAfterLast())
             {
                 iDArray.add(String.valueOf(cursor.getInt(0)));
+                catIdArray.add(String.valueOf(cursor.getInt(2)));
                 cursor.moveToNext();
             }
         }
@@ -103,14 +106,14 @@ public class ShoppingCart extends AppCompatActivity
 
         sdb = new ShoppingDatabase(this);
         for (int i = 0; i < iDArray.size(); i++) {
-            Cursor cursor = sdb.getProductInfo(Integer.parseInt(iDArray.get(i)));
+            Cursor cursor = sdb.getProductInfo(Integer.parseInt(iDArray.get(i)) , Integer.parseInt(catIdArray.get(i)));
 
             String id = cursor.getString(0);
             String name = cursor.getString(1);
             String price = cursor.getString(2);
             String quantity  = String.valueOf(sdb.getQuantity(Integer.parseInt(iDArray.get(i))));
 
-            product = new ProductClass(id,name, quantity, price);
+            product = new ProductClass(id,name, quantity, price , catIdArray.get(i));
             arrayOfProducts.add(product);
         }
         adapter = new CustomAdapter(this, 0, arrayOfProducts);

@@ -33,8 +33,8 @@ public class HomeActivity extends AppCompatActivity {
             TextView e = (TextView) view;
             String y = e.getText().toString();
             Intent products = new Intent(HomeActivity.this, Products.class);
-            products.putExtra("Cat_id", position + 1);
-            products.putExtra("Cat_name", y);
+            products.putExtra("cat_id", position + 1);
+            products.putExtra("cat_name", y);
             startActivity(products);
         });
         searchButton.setOnClickListener(v1 -> {

@@ -18,6 +18,7 @@ public class ProductsDetails extends AppCompatActivity {
     Button home;
     ShoppingDatabase sdb = new ShoppingDatabase(this);
     int x;
+    int cat_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class ProductsDetails extends AppCompatActivity {
         Intent i = getIntent();
         String y = i.getStringExtra("Prod_name");
         x = i.getIntExtra("Prod_id", 0);
+        cat_id = i.getIntExtra("cat_id", 0);
         String z;
         String k;
 
@@ -52,7 +54,7 @@ public class ProductsDetails extends AppCompatActivity {
             } else {
                 add.setOnClickListener(v -> {
                     add.setEnabled(true);
-                    sdb.addtoCart(x, 1);
+                    sdb.addtoCart(x , cat_id, 1);
                 });
             }
         }

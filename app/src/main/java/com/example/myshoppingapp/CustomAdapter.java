@@ -57,7 +57,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
 
         plusBtn.setOnClickListener(v -> {
             int qty = 0;
-            Cursor c = sdb.getProductInfo(Integer.parseInt(item.id));
+            Cursor c = sdb.getProductInfo(Integer.parseInt(item.id) ,Integer.parseInt(item.cat_id));
             if (!c.isAfterLast()) {
                 qty = c.getInt(3);
             }

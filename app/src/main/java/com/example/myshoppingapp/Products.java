@@ -32,8 +32,8 @@ public class Products extends AppCompatActivity {
         int i;
         String x;
         Intent ii = getIntent();
-        i = ii.getIntExtra("Cat_id", 0);
-        x = ii.getStringExtra("Cat_name");
+        i = ii.getIntExtra("cat_id", 0);
+        x = ii.getStringExtra("cat_name");
         t.setText(x);
 
         Cursor cc = sdb.Select_Products(i);
@@ -47,6 +47,7 @@ public class Products extends AppCompatActivity {
             Intent products_Det = new Intent(Products.this, ProductsDetails.class);
             products_Det.putExtra("Prod_name", pname); //ana 3ayza name el product 3shan a select el data 3la asaso
             products_Det.putExtra("Prod_id", position + 1);
+            products_Det.putExtra("cat_id", i);
             startActivity(products_Det);
         });
 

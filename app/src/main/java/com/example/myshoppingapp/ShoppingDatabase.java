@@ -53,7 +53,8 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
 
         db.execSQL("create table Cart" +
                 "(pro_ID integer primary key ," +
-                "qty integer not null)");
+                "qty integer not null ," +
+                "cat_id integer not null)" );
 
         ContentValues catrow = new ContentValues();
         ContentValues prodrow = new ContentValues();
@@ -332,9 +333,9 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getProductInfo(Integer productID) {
+    public Cursor getProductInfo(Integer productID , Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cursor = CustomerRegesiter.rawQuery("select * from Products where P_id like '" + productID + "' ", null);
+        Cursor cursor = CustomerRegesiter.rawQuery("select * from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '"+cat_id +"' ", null);
         if (cursor != null)
             cursor.moveToFirst();
         CustomerRegesiter.close();
@@ -351,7 +352,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
 
     public Cursor fetchCart() {
         CustomerRegesiter = getReadableDatabase();
-        String[] rowDetails = {"pro_ID", "qty"};
+        String[] rowDetails = {"pro_ID", "qty" , "cat_id"};
         Cursor cur = CustomerRegesiter.query("Cart", rowDetails, null, null, null, null, null);
         if (cur != null)
             cur.moveToFirst();
@@ -389,11 +390,12 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return price;
     }
 
-    public void addtoCart(Integer id, Integer q) {
+    public void addtoCart(Integer id, Integer cat_id, Integer q) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("pro_ID", id);
         row.put("qty", q);
+        row.put("cat_id" , cat_id);
         CustomerRegesiter.insert("Cart", null, row);
         CustomerRegesiter.close();
     }
