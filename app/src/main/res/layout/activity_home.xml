@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_search"
         tools:ignore="ImageContrastCheck"
-        android:contentDescription="TODO" />
+        android:contentDescription="search icon" />
 
     <ListView
         android:id="@+id/cat_listview"

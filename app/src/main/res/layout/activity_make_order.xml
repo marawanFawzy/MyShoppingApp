@@ -18,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.143"
         app:srcCompat="@drawable/megav2"
-        android:contentDescription="TODO" />
+        android:contentDescription="mega store" />
 
     <TextView
         android:id="@+id/textView3"

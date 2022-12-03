@@ -120,7 +120,7 @@
         app:layout_constraintHorizontal_bias="0.793"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/home"
-        android:contentDescription="TODO" />
+        android:contentDescription="home icon" />
 
     <Button
         android:id="@+id/homebutton"
