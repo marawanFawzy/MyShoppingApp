@@ -4,11 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -99,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
             String uname = username.getText().toString();
             String c_upass;
-            Cursor cc = sdb.forgetpassword(uname);
+            Cursor cc = sdb.forgetPassword(uname);
             if (!cc.isAfterLast()) {
                 c_upass = cc.getString(1);
                 //password.setText(c_upass);

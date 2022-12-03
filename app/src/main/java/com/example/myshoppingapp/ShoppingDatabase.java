@@ -1,5 +1,6 @@
 package com.example.myshoppingapp;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -33,8 +34,8 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
                 " P_name text not null ," +
                 " Price Float not null ," +
                 " Quantity Integer not null," +
-                " Fk_Cat_id Integer ,"+
-                " PRIMARY KEY (P_id,P_name),"+
+                " Fk_Cat_id Integer ," +
+                " PRIMARY KEY (P_id,P_name)," +
                 " Foreign Key(Fk_Cat_id) References Categories(Cat_id))");
 
         db.execSQL("Create Table Orders " +
@@ -55,7 +56,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.execSQL("create table Cart" +
                 "(pro_ID integer primary key ," +
                 "qty integer not null ," +
-                "cat_id integer not null)" );
+                "cat_id integer not null)");
 
         ContentValues catrow = new ContentValues();
         ContentValues prodrow = new ContentValues();
@@ -175,7 +176,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         db.insert("Products", null, prodrow);
         prodrow = new ContentValues();
 
-        prodrow.put("P_id", "4");
+        prodrow.put("P_id", "5");
         prodrow.put("P_name", "Bronzer Kiko");
         prodrow.put("Price", "500");
         prodrow.put("Quantity", 6);
@@ -267,7 +268,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         row.put("job", job);
         row.put("gender", gender);
 
-        long ret = CustomerRegesiter.insert("Customers", null, row);
+        CustomerRegesiter.insert("Customers", null, row);
         CustomerRegesiter.close();
     }
 
@@ -300,7 +301,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return null;
     }
 
-    public Cursor forgetpassword(String c_uname) {
+    public Cursor forgetPassword(String c_uname) {
         CustomerRegesiter = getReadableDatabase();
         Cursor c = CustomerRegesiter.rawQuery("Select Username , Password from Customers where Username like '" + c_uname + "' ", null);
         if (c != null) {
@@ -332,17 +333,6 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return c;
     }
 
-    public Cursor Get_SelectedProduct_details(int id)   //assuming each product has only one name
-    {
-        CustomerRegesiter = getReadableDatabase();
-        Cursor c = CustomerRegesiter.rawQuery("Select * From Products where P_id Like '" + id + "' ", null);
-        if (c != null) {
-            c.moveToFirst();
-        }
-        CustomerRegesiter.close();
-        return c;
-    }
-
     public Cursor Search_By_Text(String name) {
         CustomerRegesiter = getReadableDatabase();
         Cursor c = CustomerRegesiter.rawQuery("Select * From Products where P_name Like '" + name + "' ", null);
@@ -355,11 +345,9 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
     }
 
 
-    public Cursor getProductInfo(Integer productID , Integer cat_id) {
-        //productID = 3 ;
-        //cat_id = 5 ;
+    public Cursor getProductInfo(Integer productID, Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cursor = CustomerRegesiter.rawQuery("select * from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '"+cat_id +"' ", null);
+        Cursor cursor = CustomerRegesiter.rawQuery("select * from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '" + cat_id + "' ", null);
         if (cursor.getCount() != 0)
             cursor.moveToFirst();
         CustomerRegesiter.close();
@@ -376,7 +364,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
 
     public Cursor fetchCart() {
         CustomerRegesiter = getReadableDatabase();
-        String[] rowDetails = {"pro_ID", "qty" , "cat_id"};
+        String[] rowDetails = {"pro_ID", "qty", "cat_id"};
         Cursor cur = CustomerRegesiter.query("Cart", rowDetails, null, null, null, null, null);
         if (cur != null)
             cur.moveToFirst();
@@ -390,9 +378,9 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         CustomerRegesiter.close();
     }
 
-    public Integer getQuantity(Integer id , Integer cat_id) {
+    public Integer getQuantity(Integer id, Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cur = CustomerRegesiter.rawQuery("select qty from Cart where pro_ID like '" + id + "'AND cat_id like  '"+cat_id +"' ", null);
+        Cursor cur = CustomerRegesiter.rawQuery("select qty from Cart where pro_ID like '" + id + "'AND cat_id like  '" + cat_id + "' ", null);
         Integer qnty = null;
         if (cur != null) {
             cur.moveToFirst();
@@ -402,9 +390,9 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         return qnty;
     }
 
-    public String getProductPrice(Integer productID ,Integer cat_id) {
+    public String getProductPrice(Integer productID, Integer cat_id) {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cursor = CustomerRegesiter.rawQuery("select Price from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '"+cat_id +"' ", null);
+        @SuppressLint("Recycle") Cursor cursor = CustomerRegesiter.rawQuery("select Price from Products where P_id like '" + productID + "' AND Fk_Cat_id like  '" + cat_id + "' ", null);
         String price = null;
         if (cursor != null) {
             cursor.moveToFirst();
@@ -419,7 +407,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         ContentValues row = new ContentValues();
         row.put("pro_ID", id);
         row.put("qty", q);
-        row.put("cat_id" , cat_id);
+        row.put("cat_id", cat_id);
         CustomerRegesiter.insert("Cart", null, row);
         CustomerRegesiter.close();
     }
@@ -448,7 +436,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
 
     public Integer getLastOrderID() {
         CustomerRegesiter = getReadableDatabase();
-        Cursor cursor = CustomerRegesiter.rawQuery("select * from Orders ", null);
+        @SuppressLint("Recycle") Cursor cursor = CustomerRegesiter.rawQuery("select * from Orders ", null);
         Integer countID = cursor.getCount();
         CustomerRegesiter.close();
         return countID;

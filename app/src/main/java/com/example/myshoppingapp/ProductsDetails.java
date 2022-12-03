@@ -25,12 +25,12 @@ public class ProductsDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_details);
 
-        e_name = (EditText) findViewById(R.id.editTextP_Name);
-        e_price = (EditText) findViewById(R.id.editTextPrice);
-        e_qty = (EditText) findViewById(R.id.quantityeditText);
-        add = (Button) findViewById(R.id.buttonAddtoCart);
-        cart = (Button) findViewById(R.id.cartbutton);
-        home = (Button) findViewById(R.id.homebutton);
+        e_name = findViewById(R.id.editTextP_Name);
+        e_price = findViewById(R.id.editTextPrice);
+        e_qty = findViewById(R.id.quantityeditText);
+        add = findViewById(R.id.buttonAddtoCart);
+        cart = findViewById(R.id.cartbutton);
+        home = findViewById(R.id.homebutton);
 
         Intent i = getIntent();
         String y = i.getStringExtra("Prod_name");
@@ -39,12 +39,12 @@ public class ProductsDetails extends AppCompatActivity {
         String z;
         String k;
 
-        Cursor cur = sdb.Get_SelectedProduct_details(x);
+        Cursor cur = sdb.getProductInfo(x , cat_id);
         if (cur != null) {
             z = cur.getString(cur.getColumnIndex("Price"));
             k = cur.getString(cur.getColumnIndex("Quantity"));
             e_name.setText(y);
-            e_price.setText(z + "EGP");
+            e_price.setText(String.format("%sEGP", z));
             e_qty.setText(k);
             //cur.moveToNext();
 

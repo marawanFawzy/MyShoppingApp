@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputType;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -35,17 +34,21 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
         sdb = new ShoppingDatabase(this);
-        cname = (EditText) findViewById(R.id.nameeditText);
-        cusername = (EditText) findViewById(R.id.usernameeditText2);
-        cpassword = (EditText) findViewById(R.id.passwordeditText3);
-        cbirthdate = (EditText) findViewById(R.id.birthddateeditText4);
-        cjob = (EditText) findViewById(R.id.jobeditText5);
-        gfemale = (RadioButton) findViewById(R.id.female);
-        gmale = (RadioButton) findViewById(R.id.male);
-        signup = (Button) findViewById(R.id.btnsign);
+        cname = findViewById(R.id.nameeditText);
+        cusername = findViewById(R.id.usernameeditText2);
+        cpassword = findViewById(R.id.passwordeditText3);
+        cbirthdate = findViewById(R.id.birthddateeditText4);
+        cjob = findViewById(R.id.jobeditText5);
+        gfemale = findViewById(R.id.female);
+        gmale = findViewById(R.id.male);
+        signup = findViewById(R.id.btnsign);
         disableSoftInputFromAppearing(cbirthdate);
+        cdate = (datePicker, year, month, day) -> {
+            month = month + 1;  //assuming month starts with zero
+            String date = month + "/" + day + "/" + year;
+            cbirthdate.setText(date);
+        };
         cbirthdate.setOnClickListener(view -> {
             Calendar cal = Calendar.getInstance();
             int year = cal.get(Calendar.YEAR);
@@ -56,13 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
             dialog.show();
 
         });
-        cdate = (datePicker, year, month, day) -> {
-            month = month + 1;  //assuming month starts with zero
-            String date = month + "/" + day + "/" + year;
-            cbirthdate.setText(date);
-        };
-
-
         signup.setOnClickListener(v -> {
             Cursor ss;
             String gender = "";
