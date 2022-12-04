@@ -1,16 +1,16 @@
 package com.example.myshoppingapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.CheckBox;
-import android.content.SharedPreferences;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     EditText username;
@@ -71,6 +71,13 @@ public class MainActivity extends AppCompatActivity {
                     editor.putBoolean("savelogin", false);
                 }
                 editor.commit();
+                if(c.getInt(c.getColumnIndex("flag")) == 1)
+                {
+                    Toast.makeText(MainActivity.this, "welcome admin", Toast.LENGTH_LONG).show();
+                    Intent adminIntent = new Intent(MainActivity.this, adminPage.class);
+                    startActivity(adminIntent);
+                    return;
+                }
                 Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_LONG).show();
                 Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(homeIntent);

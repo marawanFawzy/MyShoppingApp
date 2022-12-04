@@ -21,4 +21,5 @@
     <string name="categorie_name">Categorie Name</string>
     <string name="log_in">Log in</string>
     <string name="todo1">TODO</string>
+    <string name="bar_char">bar char</string>
 </resources>

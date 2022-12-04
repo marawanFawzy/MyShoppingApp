@@ -25,6 +25,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
                 " Username text not null ," +
                 " Password text not null ," +
                 " Birthdate text not null ," +
+                " flag INTEGER DEFAULT 0 ," +
                 " job text , gender text not null )");
 
         db.execSQL("Create Table Categories " +
@@ -60,12 +61,24 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
                 " FOREIGN KEY(prod_ID) REFERENCES Products(P_id))");
 
         db.execSQL("create table Cart" +
-                "(pro_ID integer primary key ," +
+                "(pro_ID integer not null ," +
                 "qty integer not null ," +
-                "cat_id integer not null)");
+                "cat_id integer not null," +
+                "PRIMARY KEY (pro_ID,cat_id))");
 
         ContentValues catrow = new ContentValues();
         ContentValues prodrow = new ContentValues();
+        ContentValues adminRow = new ContentValues();
+
+        adminRow.put("C_Name", "admin");
+        adminRow.put("Username", "admin");
+        adminRow.put("Password", "admin");
+        Date date = new Date();
+        adminRow.put("Birthdate", String.valueOf(date) );
+        adminRow.put("job", "admin");
+        adminRow.put("gender", "male");
+        adminRow.put("flag", 1);
+        db.insert("Customers", null, adminRow);
 
         catrow.put("Cat_name", "Eye Makeup");
         db.insert("Categories", null, catrow);
