@@ -2,7 +2,6 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,6 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myshoppingapp.firebase.Customers;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     EditText username;
@@ -54,66 +57,85 @@ public class MainActivity extends AppCompatActivity {
         });
 
         login.setOnClickListener(v -> {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
             String userName = username.getText().toString();
             String Password = password.getText().toString();
-
-            Cursor c = sdb.CheckUser(userName, Password);
-            if (c == null) {
-                Toast.makeText(MainActivity.this, "Login Error!", Toast.LENGTH_LONG).show();
-                username.setText("");
-                password.setText("");
-            } else {
-                if (remember.isChecked()) {
-                    editor.putBoolean("savelogin", true);
-                    editor.putString("username", userName);
-                    editor.putString("password", Password);
-                } else {
-                    editor.putBoolean("savelogin", false);
-                }
-                editor.commit();
-                if(c.getInt(c.getColumnIndex("flag")) == 1)
-                {
-                    Toast.makeText(MainActivity.this, "welcome admin", Toast.LENGTH_LONG).show();
-                    Intent adminIntent = new Intent(MainActivity.this, adminPage.class);
-                    startActivity(adminIntent);
-                    return;
-                }
-                Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_LONG).show();
-                Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(homeIntent);
-            }
+            db.collection("Customers")
+                    .whereEqualTo("username", userName)
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (queryDocumentSnapshots.size() == 0) {
+                            Toast.makeText(MainActivity.this, "please enter a valid username or password", Toast.LENGTH_SHORT).show();
+                            username.setText("");
+                            password.setText("");
+                            return;
+                        }
+                        DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
+                        if (d.exists()) {
+                            Customers temp = d.toObject(Customers.class);
+                            if (temp != null && !Password.equals(temp.getPassword())) {
+                                Toast.makeText(MainActivity.this, "please enter a valid username or password", Toast.LENGTH_SHORT).show();
+                                username.setText("");
+                                password.setText("");
+                                return;
+                            }
+                            if (remember.isChecked()) {
+                                editor.putBoolean("savelogin", true);
+                                editor.putString("username", userName);
+                                editor.putString("password", Password);
+                            } else {
+                                editor.putBoolean("savelogin", false);
+                            }
+                            editor.commit();
+                            if (temp.isFlag()) {
+                                Toast.makeText(MainActivity.this, "welcome admin", Toast.LENGTH_LONG).show();
+                                Intent adminIntent = new Intent(MainActivity.this, adminPage.class);
+                                startActivity(adminIntent);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_LONG).show();
+                                Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+                                startActivity(homeIntent);
+                            }
+                        }
+                    });
         });
 
-
-//        forgetPassword.setOnClickListener(v -> {
-//
-//            String uname = username.getText().toString();
-//            String c_upass;
-//            Cursor cc = sdb.forgetpassword(uname);
-//            if (!cc.isAfterLast()) {
-//                c_upass = cc.getString(1);
-//                //password.setText(c_upass);
-//                sendEmail();
-//            }
-//            cc.close();
-//
-//        });
         forgetPassword.setOnClickListener(v -> {
-
-            String uname = username.getText().toString();
-            String c_upass;
-            Cursor cc = sdb.forgetPassword(uname);
-            if (!cc.isAfterLast()) {
-                c_upass = cc.getString(1);
-                //password.setText(c_upass);
-                senEmail(c_upass);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            String userName = username.getText().toString();
+            if (userName.equals("")) {
+                Toast.makeText(this, "please type your username", Toast.LENGTH_SHORT).show();
+                return;
             }
-            cc.close();
+            db.collection("Customers")
+                    .whereEqualTo("username", userName)
+                    .limit(1)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        if (queryDocumentSnapshots.size() == 0) {
+                            Toast.makeText(MainActivity.this, "please enter a valid username", Toast.LENGTH_SHORT).show();
+                            username.setText("");
+                            return;
+                        }
+                        DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
+                        if (d.exists()) {
+                            Customers temp = d.toObject(Customers.class);
+                            if (temp == null) {
+                                Toast.makeText(MainActivity.this, "please enter a valid username", Toast.LENGTH_SHORT).show();
+                                username.setText("");
+                                return;
+                            }
+                            senEmail(temp.getPassword(), temp.getEmail());
+                            Toast.makeText(this, "email sent to you with password", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
         });
     }
-    private void senEmail(String msg) {
-        String mEmail = "marawanfawzy15@gmail.com";
+
+    private void senEmail(String msg, String email) {
+        String mEmail = email;
         String mSubject = "you forgot your password";
         String mMessage = "your password is " + msg;
 

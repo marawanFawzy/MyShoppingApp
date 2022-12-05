@@ -69,6 +69,7 @@ public class RegisterActivity extends AppCompatActivity {
             String p = cpassword.getText().toString();
             String b = cbirthdate.getText().toString();
             String j = cjob.getText().toString();
+            //TODO change hard coded email
             String Email = "marawanfawzy15@gmail.com";
             if (gfemale.isChecked()) {
                 gender = "Female";
