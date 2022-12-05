@@ -2,7 +2,6 @@ package com.example.myshoppingapp;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -14,8 +13,12 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myshoppingapp.firebase.Customers;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.lang.reflect.Method;
 import java.util.Calendar;
+import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener cdate;
@@ -60,19 +63,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         });
         signup.setOnClickListener(v -> {
-            Cursor ss;
             String gender = "";
             String n = cname.getText().toString();
             String un = cusername.getText().toString();
             String p = cpassword.getText().toString();
             String b = cbirthdate.getText().toString();
             String j = cjob.getText().toString();
+            String Email = "marawanfawzy15@gmail.com";
             if (gfemale.isChecked()) {
                 gender = "Female";
             } else if (gmale.isChecked()) {
                 gender = "Male";
             }
-            ss = sdb.CheckUser(un);
             if (cname.getText().toString().equals(""))
                 Toast.makeText(RegisterActivity.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
             else if (cusername.getText().toString().equals(""))
@@ -85,16 +87,31 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Please enter your Birth Date", Toast.LENGTH_SHORT).show();
             else if (cjob.getText().toString().equals(""))
                 Toast.makeText(getApplicationContext(), "Please enter your Job", Toast.LENGTH_SHORT).show();
-            else if (ss != null) {
-                Toast.makeText(getApplicationContext(), "enter a valid username , username used before ", Toast.LENGTH_LONG).show();
-                cusername.setText("");
-            } else {
-                sdb.addNewCustomer(n, un, p, gender, b, j);
-                Intent i = new Intent(RegisterActivity.this, MainActivity.class);
-                startActivity(i);
+            else {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                String finalGender = gender;
+                db.collection("Customers")
+                        .whereEqualTo("username", un)
+                        .limit(1)
+                        .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                            if (queryDocumentSnapshots.size() != 0) {
+                                Toast.makeText(RegisterActivity.this, "please enter a valid username ", Toast.LENGTH_SHORT).show();
+                                cusername.setText("");
+                            }
+                            else {
+                                String id = db.collection("Customers").document().getId().substring(0, 5);
+                                Date date = new Date(b);
+                                Customers newTemp = new Customers(id, n, un, p, date, j, Email , finalGender, false);
+                                db.collection("Customers").document(id).set(newTemp);
+                                Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+                                startActivity(i);
+                            }
+                        });
+
             }
         });
     }
+
     public static void disableSoftInputFromAppearing(EditText editText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.setShowSoftInputOnFocus(false);
