@@ -33,6 +33,6 @@ dependencies {
     implementation 'com.github.BirjuVachhani:locus-android:4.1.0'
     implementation 'pub.devrel:easypermissions:3.0.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+   
 
 }
