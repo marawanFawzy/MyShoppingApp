@@ -16,6 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".AddNewCategory"
+            android:exported="false" />
+        <activity
+            android:name=".AddNewProduct"
+            android:exported="false" />
+        <activity
             android:name=".adminPage"
             android:exported="false" />
         <activity

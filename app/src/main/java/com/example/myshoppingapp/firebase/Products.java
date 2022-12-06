@@ -1,12 +1,12 @@
 package com.example.myshoppingapp.firebase;
 
 public class Products {
-    private int id , Quantity , CatId;
+    private int Quantity ;
     private double Price;
-    private String name;
+    private String name , id , CatId;
     public Products(){}
 
-    public Products(int id, int quantity, int catId, double price, String name) {
+    public Products(String id, int quantity, String catId, double price, String name) {
         this.id = id;
         Quantity = quantity;
         CatId = catId;
@@ -14,11 +14,11 @@ public class Products {
         this.name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -30,11 +30,11 @@ public class Products {
         Quantity = quantity;
     }
 
-    public int getCatId() {
+    public String getCatId() {
         return CatId;
     }
 
-    public void setCatId(int catId) {
+    public void setCatId(String catId) {
         CatId = catId;
     }
 

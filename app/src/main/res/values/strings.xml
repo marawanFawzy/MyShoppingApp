@@ -22,4 +22,10 @@
     <string name="log_in">Log in</string>
     <string name="todo1">TODO</string>
     <string name="bar_char">bar char</string>
+    <string name="catName">Name</string>
+    <string name="category_name">Category name</string>
+    <string name="add_category">add category</string>
+    <string name="add_product">Add Product</string>
+    <string name="product_nameEditBOX">Product name</string>
+    <string name="categoryname">categoryName</string>
 </resources>

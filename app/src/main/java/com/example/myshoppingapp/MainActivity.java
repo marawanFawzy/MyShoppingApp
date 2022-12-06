@@ -89,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
                             }
                             editor.commit();
                             if (temp.isFlag()) {
-                                Toast.makeText(MainActivity.this, "welcome admin", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "welcome admin", Toast.LENGTH_SHORT).show();
                                 Intent adminIntent = new Intent(MainActivity.this, adminPage.class);
                                 startActivity(adminIntent);
                             } else {
-                                Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_SHORT).show();
                                 Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
                                 startActivity(homeIntent);
                             }
