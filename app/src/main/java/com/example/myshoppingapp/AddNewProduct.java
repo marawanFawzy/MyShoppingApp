@@ -22,7 +22,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
     private Spinner spinner;
     private ArrayList<String> paths = new ArrayList<>();
     EditText ProductName, ProductQuantity, price;
-    private String SelectedCategory;
+    private String SelectedCategory, SelectedCategoryId;
     Button buttonAddProduct;
 
     @Override
@@ -54,18 +54,30 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                 else if (price.getText().toString().equals(""))
                     Toast.makeText(this, "please choose a price first", Toast.LENGTH_SHORT).show();
                 else {
-                    db.collection("Categories").whereEqualTo("name", SelectedCategory).get().addOnSuccessListener(queryDocumentSnapshots -> {
-                        DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
+                    db.collection("Categories")
+                            .whereEqualTo("name", SelectedCategory)
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
+                                Categories temp = d.toObject(Categories.class);
+                                SelectedCategoryId = temp.getId();
+                                db.collection("Products")
+                                        .whereEqualTo("name", ProductName.getText().toString())
+                                        .whereEqualTo("catId", SelectedCategoryId)
+                                        .get()
+                                        .addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                            if (queryDocumentSnapshots1.getDocuments().size() != 0) {
+                                                Toast.makeText(AddNewProduct.this, "this Product is already added", Toast.LENGTH_SHORT).show();
+                                                return;
+                                            }
+                                            String id = db.collection("Products").document().getId().substring(0,5);
+                                            Products newtemp = new Products(id, Integer.parseInt(ProductQuantity.getText().toString()), SelectedCategoryId, Integer.parseInt(price.getText().toString()), ProductName.getText().toString());
 
-                        if (d.exists()) {
-                            Categories temp = d.toObject(Categories.class);
-                            if (temp != null)
-                                SelectedCategory = temp.getId();
-                        }
-                        String id = db.collection("Products").document().getId().substring(0, 5);
-                        Products temp = new Products(id, Integer.parseInt(ProductQuantity.getText().toString()), SelectedCategory, Integer.parseInt(price.getText().toString()), ProductName.getText().toString());
-                        db.collection("Products").document(id).set(temp).addOnSuccessListener(unused -> Toast.makeText(AddNewProduct.this, "added product", Toast.LENGTH_SHORT).show());
-                    });
+                                            db.collection("Products").document(id).set(newtemp).addOnSuccessListener(unused -> Toast.makeText(AddNewProduct.this, "added", Toast.LENGTH_SHORT).show());
+                                        });
+
+                            });
+
 
                 }
             }

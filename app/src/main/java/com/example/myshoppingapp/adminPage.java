@@ -23,12 +23,12 @@ public class adminPage extends AppCompatActivity {
             startActivity(chartIntent);
         });
         newProduct.setOnClickListener(v->{
-            Toast.makeText(adminPage.this, "new Product", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(adminPage.this, "new Product", Toast.LENGTH_SHORT).show();
             Intent chartIntent = new Intent(adminPage.this, AddNewProduct.class);
             startActivity(chartIntent);
         });
         newCategory.setOnClickListener(v->{
-            Toast.makeText(adminPage.this, "new category", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(adminPage.this, "new category", Toast.LENGTH_SHORT).show();
             Intent chartIntent = new Intent(adminPage.this, AddNewCategory.class);
             startActivity(chartIntent);
         });
