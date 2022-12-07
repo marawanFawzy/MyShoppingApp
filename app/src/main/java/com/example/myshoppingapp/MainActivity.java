@@ -95,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_SHORT).show();
                                 Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+                                homeIntent.putExtra("userId" ,temp.getId());
                                 startActivity(homeIntent);
                             }
                         }

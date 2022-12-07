@@ -41,6 +41,7 @@ public class ProductsActivity extends AppCompatActivity {
         Intent ii = getIntent();
         cat_id = ii.getStringExtra("cat_id");
         cat_name = ii.getStringExtra("cat_name");
+        String userId = ii.getStringExtra("userId");
         t.setText(cat_name);
         getAllProducts(cat_id);
         mylist.setOnItemClickListener((parent, view, position, id) -> {
@@ -49,17 +50,20 @@ public class ProductsActivity extends AppCompatActivity {
             products_Det.putExtra("Prod_name", pname);
             products_Det.putExtra("Prod_id", ids.get(position));
             products_Det.putExtra("cat_id", cat_id);
+            products_Det.putExtra("userId" ,userId);
             startActivity(products_Det);
         });
 
         cart.setOnClickListener(v -> {
-            Intent i1 = new Intent(ProductsActivity.this, ShoppingCart.class);
-            startActivity(i1);
+            Intent i = new Intent(ProductsActivity.this, ShoppingCart.class);
+            i.putExtra("userId" ,userId);
+            startActivity(i);
         });
 
         home.setOnClickListener(v -> {
-            Intent i12 = new Intent(ProductsActivity.this, HomeActivity.class);
-            startActivity(i12);
+            Intent i = new Intent(ProductsActivity.this, HomeActivity.class);
+            i.putExtra("userId" ,userId);
+            startActivity(i);
         });
     }
     void getAllProducts(String cat_id) {

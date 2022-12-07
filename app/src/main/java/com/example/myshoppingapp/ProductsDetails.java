@@ -28,10 +28,10 @@ public class ProductsDetails extends AppCompatActivity {
         add = findViewById(R.id.buttonAddtoCart);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
-        Intent i = getIntent();
-        Prod_id = i.getStringExtra("Prod_id");
-        cat_id = i.getStringExtra("cat_id");
-
+        Intent ii = getIntent();
+        Prod_id = ii.getStringExtra("Prod_id");
+        cat_id = ii.getStringExtra("cat_id");
+        String userId = ii.getStringExtra("userId");
         getProduct(Prod_id, cat_id);
 
         if (e_qty.getText().toString().equals("0")) {
@@ -47,13 +47,15 @@ public class ProductsDetails extends AppCompatActivity {
         }
 
         cart.setOnClickListener(v -> {
-            Intent i1 = new Intent(ProductsDetails.this, ShoppingCart.class);
-            startActivity(i1);
+            Intent i = new Intent(ProductsDetails.this, ShoppingCart.class);
+            i.putExtra("userId" ,userId);
+            startActivity(i);
         });
 
         home.setOnClickListener(v -> {
-            Intent i12 = new Intent(ProductsDetails.this, HomeActivity.class);
-            startActivity(i12);
+            Intent i = new Intent(ProductsDetails.this, HomeActivity.class);
+            i.putExtra("userId" ,userId);
+            startActivity(i);
         });
     }
 
@@ -74,5 +76,8 @@ public class ProductsDetails extends AppCompatActivity {
                         }
                     }
                 });
+    }
+    void AddCart(){
+        //TODO fill this function
     }
 }

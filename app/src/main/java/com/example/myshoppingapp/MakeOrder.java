@@ -27,6 +27,7 @@ public class MakeOrder extends AppCompatActivity {
     ArrayList<String> cat_ids;
     Button confirm, location, cart, home;
     EditText Longitude, Latitude, nameOfReceiver;
+    String userId;
     ShoppingDatabase sdb = new ShoppingDatabase(this);
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -48,6 +49,8 @@ public class MakeOrder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_make_order);
         getLocationPermissions();
+        Intent ii = getIntent();
+         userId = ii.getStringExtra("userId");
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         confirm = findViewById(R.id.confirm);
@@ -95,16 +98,21 @@ public class MakeOrder extends AppCompatActivity {
                 }
                 ret = sdb.test();
                 System.out.println();
+                Intent i = new Intent(MakeOrder.this, HomeActivity.class);
+                i.putExtra("userId" ,userId);
+                startActivity(i);
             }
         });
 
         cart.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, ShoppingCart.class);
+            i.putExtra("userId" ,userId);
             startActivity(i);
         });
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, HomeActivity.class);
+            i.putExtra("userId" ,userId);
             startActivity(i);
         });
 

@@ -37,13 +37,15 @@ public class HomeActivity extends AppCompatActivity {
         category = findViewById(R.id.show_cat);
         listView = findViewById(R.id.cat_listview);
         listView.setAdapter(arr);
-
+        Intent ii = getIntent();
+        String userId = ii.getStringExtra("userId");
         listView.setOnItemClickListener((parent, view, position, id) -> {
             TextView e = (TextView) view;
             String y = e.getText().toString();
             Intent products = new Intent(HomeActivity.this, ProductsActivity.class);
             products.putExtra("cat_id", catIds.get(position));
             products.putExtra("cat_name", y);
+            products.putExtra("userId" ,userId);
             startActivity(products);
         });
         searchButton.setOnClickListener(v1 -> {
@@ -52,11 +54,13 @@ public class HomeActivity extends AppCompatActivity {
 
             Intent i = new Intent(HomeActivity.this, ProductsDetails.class);
             i.putExtra("Prod_name", text);
+            i.putExtra("userId" ,userId);
             startActivity(i);
         });
         category.setOnClickListener(v -> getAllCategories());
         cart.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, ShoppingCart.class);
+            i.putExtra("userId" ,userId);
             startActivity(i);
         });
     }

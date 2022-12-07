@@ -20,7 +20,6 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<ProductClass> records;
     public ArrayList<String> quantity;
     ShoppingDatabase sdb;
-    //public int count = 0;
 
 
     public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records) {

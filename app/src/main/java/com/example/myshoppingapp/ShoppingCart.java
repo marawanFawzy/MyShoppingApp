@@ -18,14 +18,8 @@ public class ShoppingCart extends AppCompatActivity
     ListView myList;
     ArrayList<ProductClass> arrayOfProducts;
     CustomAdapter adapter;
-    ArrayList<String> iDArray;
-    ArrayList<String> catIdArray;
-    ArrayList<String> quantityArray;
-    //String id;
-    Button addNewItem;
-    Button makeOrder ;
-    Button showPrice ;
-    Button home ;
+    ArrayList<String> iDArray , catIdArray ,quantityArray;
+    Button addNewItem , makeOrder ,showPrice ,home ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,7 +31,8 @@ public class ShoppingCart extends AppCompatActivity
         makeOrder = findViewById(R.id.Orderbutton2);
         showPrice = findViewById(R.id.totalpricebutton3);
         home = findViewById(R.id.homebutton);
-
+        Intent ii = getIntent();
+        String userId = ii.getStringExtra("userId");
         myList = findViewById(R.id.mylist);
         iDArray = new ArrayList<>();
         catIdArray = new ArrayList<>();
@@ -60,20 +55,19 @@ public class ShoppingCart extends AppCompatActivity
 
        addNewItem.setOnClickListener(v -> {
            Intent i = new Intent(ShoppingCart.this,HomeActivity.class);
+           i.putExtra("userId" ,userId);
            startActivity(i);
        });
 
        makeOrder.setOnClickListener(v -> {
            if (myList.getCount()>0)
            {
-               //quantityArray = new ArrayList<>();
-               //quantityArray = adapter.getQuantity();
-
-               Intent in = new Intent(ShoppingCart.this, MakeOrder.class);
-               in.putExtra("productsID", iDArray);
-               in.putExtra("productsQuantity", quantityArray);
-               in.putExtra("products_cat_ids", catIdArray);
-               startActivity(in);
+               Intent i = new Intent(ShoppingCart.this, MakeOrder.class);
+               i.putExtra("productsID", iDArray);
+               i.putExtra("productsQuantity", quantityArray);
+               i.putExtra("products_cat_ids", catIdArray);
+               i.putExtra("userId" ,userId);
+               startActivity(i);
            }
            else
                Toast.makeText(getApplicationContext() , "Shopping Cart Is Empty",Toast.LENGTH_SHORT).show();
@@ -86,9 +80,9 @@ public class ShoppingCart extends AppCompatActivity
             Cursor cursor1 = sdb.fetchCart();
             while (!cursor1.isAfterLast())
             {
-                Integer id = cursor1.getInt(0);
+                int id = cursor1.getInt(0);
                 Integer q = cursor1.getInt(1);
-                Integer cat_id = cursor1.getInt(2);
+                int cat_id = cursor1.getInt(2);
                 String price = sdb.getProductPrice(id , cat_id);
                 Double prodPrice = Double.parseDouble(price);
                 total += q*prodPrice;
@@ -99,6 +93,7 @@ public class ShoppingCart extends AppCompatActivity
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(ShoppingCart.this, HomeActivity.class);
+            i.putExtra("userId" ,userId);
             startActivity(i);
         });
 
