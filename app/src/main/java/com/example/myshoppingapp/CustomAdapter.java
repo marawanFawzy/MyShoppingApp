@@ -65,6 +65,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
                     total += Double.parseDouble(productPrice.getText().toString());
                     String newValue = String.valueOf(value + 1);
                     prodQuantity.setText(newValue);
+                    records.get(position).quantity = newValue;
                     db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
                         Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
                         ArrayList<String> newQ = new ArrayList<>();
@@ -90,6 +91,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
                 total -= Double.parseDouble(productPrice.getText().toString());
                 String newValue = String.valueOf(value - 1);
                 prodQuantity.setText(newValue);
+                records.get(position).quantity = newValue;
                 db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
                     Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
                     ArrayList<String> newQ = new ArrayList<>();
@@ -108,18 +110,15 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
                 Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
-                for (int i = 0; i < newTemp.getProducts().size(); i++)
-                    if (newTemp.getProducts().get(i).equals(item.id))
-                    {
-                        newTemp.getProducts().remove(i);
-                        total -= Double.parseDouble(newTemp.getPrices().get(i))*Double.parseDouble(newTemp.getProductsQuantity().get(i));
-                        newTemp.getPrices().remove(i);
-                        newTemp.getProductsQuantity().remove(i);
-                        newTemp.getNames().remove(i);
-                        records.remove(i);
-                        notifyDataSetChanged();
-                        break;
-                    }
+                {
+                    newTemp.getProducts().remove(position);
+                    total -= Double.parseDouble(newTemp.getPrices().get(position)) * Double.parseDouble(newTemp.getProductsQuantity().get(position));
+                    newTemp.getPrices().remove(position);
+                    newTemp.getProductsQuantity().remove(position);
+                    newTemp.getNames().remove(position);
+                    records.remove(position);
+                    notifyDataSetChanged();
+                }
                 db.collection("Cart").document(newTemp.getId()).set(newTemp);
             });
         });
