@@ -26,7 +26,7 @@ public class ShoppingCart extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<String> ids, NamesArray, PricesArray, quantityArray;
+        ArrayList<String> ids, NamesArray, quantityArray , PricesArray;
         setContentView(R.layout.activity_shopping_cart);
         addNewItem = findViewById(R.id.addnewbutton);
         makeOrder = findViewById(R.id.Orderbutton2);
@@ -57,7 +57,7 @@ public class ShoppingCart extends AppCompatActivity {
         });
 
         showPrice.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(), "Total Price is " + total + "EGP", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Total Price is " + adapter.total + "EGP", Toast.LENGTH_LONG).show();
         });
 
         home.setOnClickListener(v -> {
@@ -81,11 +81,12 @@ public class ShoppingCart extends AppCompatActivity {
             String name = namesArray.get(i);
             String price = pricesArray.get(i);
             String quantity = quantityArray.get(i);
-            total += Double.parseDouble(price);
+            total += Double.parseDouble(price) * Double.parseDouble(quantity);
             product = new ProductClass(userId,id, name, price, quantity);
             arrayOfProducts.add(product);
         }
         adapter = new CustomAdapter(this, 0, arrayOfProducts);
+        adapter.total = total;
         myList.setAdapter(adapter);
     }
 

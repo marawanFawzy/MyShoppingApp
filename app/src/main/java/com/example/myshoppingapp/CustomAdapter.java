@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<ProductClass> records;
     public ArrayList<String> quantity;
-    ShoppingDatabase sdb;
+    public double total = 0 ;
 
 
     public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records) {
@@ -42,7 +42,6 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         TextView productPrice;
         Button plusBtn, minusBtn;
         ImageButton deleteBtn;
-        sdb = new ShoppingDatabase(getContext());
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
         productName = convertView.findViewById(R.id.nameeditText2);
         productPrice = convertView.findViewById(R.id.priceeditText3);
@@ -63,6 +62,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
                 if (MaxQuantity == value) {
                     Toast.makeText(getContext(), "this is max quantity", Toast.LENGTH_SHORT).show();
                 } else {
+                    total += Double.parseDouble(productPrice.getText().toString());
                     String newValue = String.valueOf(value + 1);
                     prodQuantity.setText(newValue);
                     db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -87,6 +87,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
                 Toast.makeText(getContext(), "this is min quantity", Toast.LENGTH_SHORT).show();
             }
             else {
+                total -= Double.parseDouble(productPrice.getText().toString());
                 String newValue = String.valueOf(value - 1);
                 prodQuantity.setText(newValue);
                 db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
@@ -111,6 +112,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
                     if (newTemp.getProducts().get(i).equals(item.id))
                     {
                         newTemp.getProducts().remove(i);
+                        total -= Double.parseDouble(newTemp.getPrices().get(i))*Double.parseDouble(newTemp.getProductsQuantity().get(i));
                         newTemp.getPrices().remove(i);
                         newTemp.getProductsQuantity().remove(i);
                         newTemp.getNames().remove(i);
