@@ -98,9 +98,9 @@ public class MakeOrder extends AppCompatActivity {
                 }
                 ret = sdb.test();
                 System.out.println();
-                Intent i = new Intent(MakeOrder.this, HomeActivity.class);
-                i.putExtra("userId" ,userId);
-                startActivity(i);
+                //Intent i = new Intent(MakeOrder.this, getLocation.class);
+                //i.putExtra("userId" ,userId);
+                //startActivity(i);
             }
         });
 

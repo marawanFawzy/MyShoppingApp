@@ -8,8 +8,7 @@ public class Customers {
     private Date Birthdate;
     private boolean flag;
 
-    public Customers() {
-    }
+    public Customers() {}
 
     public Customers(String id, String name, String username, String password, Date birthdate, String job, String email , String gender, boolean flag) {
         this.id = id;

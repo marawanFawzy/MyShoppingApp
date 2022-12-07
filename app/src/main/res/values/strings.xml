@@ -28,4 +28,5 @@
     <string name="add_product">Add Product</string>
     <string name="product_nameEditBOX">Product name</string>
     <string name="categoryname">categoryName</string>
+    <string name="title_activity_get_location">getLocation</string>
 </resources>

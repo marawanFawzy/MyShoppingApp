@@ -49,7 +49,7 @@ public class ProductsActivity extends AppCompatActivity {
             Intent products_Det = new Intent(ProductsActivity.this, ProductsDetails.class);
             products_Det.putExtra("Prod_name", pname);
             products_Det.putExtra("Prod_id", ids.get(position));
-            products_Det.putExtra("cat_id", cat_id);
+            //products_Det.putExtra("cat_id", cat_id);
             products_Det.putExtra("userId" ,userId);
             startActivity(products_Det);
         });
