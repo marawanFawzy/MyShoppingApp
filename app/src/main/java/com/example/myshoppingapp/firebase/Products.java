@@ -3,13 +3,13 @@ package com.example.myshoppingapp.firebase;
 public class Products {
     private int Quantity ;
     private double Price;
-    private String name , id , CatId;
+    private String name , id , catId;
     public Products(){}
 
     public Products(String id, int quantity, String catId, double price, String name) {
         this.id = id;
         Quantity = quantity;
-        CatId = catId;
+        this.catId = catId;
         Price = price;
         this.name = name;
     }
@@ -31,11 +31,11 @@ public class Products {
     }
 
     public String getCatId() {
-        return CatId;
+        return catId;
     }
 
     public void setCatId(String catId) {
-        CatId = catId;
+        this.catId = catId;
     }
 
     public double getPrice() {

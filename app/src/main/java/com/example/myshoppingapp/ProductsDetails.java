@@ -1,7 +1,6 @@
 package com.example.myshoppingapp;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,16 +8,14 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myshoppingapp.firebase.Products;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 public class ProductsDetails extends AppCompatActivity {
-    EditText e_name;
-    EditText e_price;
-    EditText e_qty;
-    Button add;
-    Button cart;
-    Button home;
-    ShoppingDatabase sdb = new ShoppingDatabase(this);
-    int x;
-    int cat_id;
+    EditText e_name, e_price, e_qty;
+    Button add, cart, home;
+    String Prod_id, cat_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,37 +24,26 @@ public class ProductsDetails extends AppCompatActivity {
 
         e_name = findViewById(R.id.editTextP_Name);
         e_price = findViewById(R.id.editTextPrice);
-        e_qty = findViewById(R.id.quantityeditText);
+        e_qty = findViewById(R.id.quantityEditText);
         add = findViewById(R.id.buttonAddtoCart);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
-
         Intent i = getIntent();
-        String y = i.getStringExtra("Prod_name");
-        x = i.getIntExtra("Prod_id", 0);
-        cat_id = i.getIntExtra("cat_id", 0);
-        String z;
-        String k;
+        Prod_id = i.getStringExtra("Prod_id");
+        cat_id = i.getStringExtra("cat_id");
 
-        Cursor cur = sdb.getProductInfo(x , cat_id);
-        if (cur != null) {
-            z = cur.getString(cur.getColumnIndex("Price"));
-            k = cur.getString(cur.getColumnIndex("Quantity"));
-            e_name.setText(y);
-            e_price.setText(String.format("%sEGP", z));
-            e_qty.setText(k);
-            //cur.moveToNext();
+        getProduct(Prod_id, cat_id);
 
-            if (e_qty.getText().toString().equals("0")) {
-                add.setEnabled(false);
-                Toast.makeText(getApplicationContext(), "Sorry, The quantity carried out", Toast.LENGTH_SHORT).show();
-            } else {
-                add.setOnClickListener(v -> {
-                    add.setEnabled(true);
-                    sdb.addToCart(x , cat_id, 1);
-                    Toast.makeText(this, "added to cart", Toast.LENGTH_SHORT).show();
-                });
-            }
+        if (e_qty.getText().toString().equals("0")) {
+            add.setEnabled(false);
+            Toast.makeText(getApplicationContext(), "Sorry, The quantity carried out", Toast.LENGTH_SHORT).show();
+        } else {
+            add.setOnClickListener(v -> {
+                add.setEnabled(true);
+                //TODO ADD TO CART
+                //sdb.addToCart(Prod_id, cat_id, 1);
+                Toast.makeText(this, "added to cart", Toast.LENGTH_SHORT).show();
+            });
         }
 
         cart.setOnClickListener(v -> {
@@ -69,5 +55,24 @@ public class ProductsDetails extends AppCompatActivity {
             Intent i12 = new Intent(ProductsDetails.this, HomeActivity.class);
             startActivity(i12);
         });
+    }
+
+    void getProduct(String Prod_id, String cat_id) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Products").whereEqualTo("id", Prod_id).whereEqualTo("catId", cat_id).get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (queryDocumentSnapshots.size() == 0) {
+                        Toast.makeText(ProductsDetails.this, "not found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        for (DocumentSnapshot d : queryDocumentSnapshots) {
+                            Products temp = d.toObject(Products.class);
+                            if (temp != null) {
+                                e_name.setText(temp.getName());
+                                e_price.setText(String.format("%sEGP", temp.getPrice()));
+                                e_qty.setText(String.valueOf(temp.getQuantity()));
+                            }
+                        }
+                    }
+                });
     }
 }

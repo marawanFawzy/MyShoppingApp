@@ -30,7 +30,10 @@ public class AddNewCategory extends AppCompatActivity {
                 if (queryDocumentSnapshots.getDocuments().size() == 0) {
                     String id = db.collection("Categories").document().getId().substring(0, 5);
                     Categories newTemp = new Categories(id, catName.getText().toString());
-                    db.collection("Categories").document(id).set(newTemp).addOnSuccessListener(unused -> Toast.makeText(AddNewCategory.this, "category " + catName.getText().toString() + " is added", Toast.LENGTH_SHORT).show());
+                    db.collection("Categories").document(id).set(newTemp).addOnSuccessListener(unused -> {
+                        Toast.makeText(AddNewCategory.this, "category " + catName.getText().toString() + " is added", Toast.LENGTH_SHORT).show();
+                        catName.setText("");
+                    });
 
                 }
                 else Toast.makeText(this, "this category is already added", Toast.LENGTH_LONG).show();

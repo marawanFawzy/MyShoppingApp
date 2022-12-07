@@ -19,8 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class AddNewProduct extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private Spinner spinner;
-    private ArrayList<String> paths = new ArrayList<>();
+    private final ArrayList<String> paths = new ArrayList<>();
     EditText ProductName, ProductQuantity, price;
     private String SelectedCategory, SelectedCategoryId;
     Button buttonAddProduct;
@@ -35,7 +34,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
         price = findViewById(R.id.price);
         getAllCategories();
         paths.add("");
-        spinner = findViewById(R.id.spinner);
+        Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(AddNewProduct.this,
                 android.R.layout.simple_spinner_item, paths);
 
@@ -68,12 +67,18 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                                         .addOnSuccessListener(queryDocumentSnapshots1 -> {
                                             if (queryDocumentSnapshots1.getDocuments().size() != 0) {
                                                 Toast.makeText(AddNewProduct.this, "this Product is already added", Toast.LENGTH_SHORT).show();
+                                                ProductName.setText("");
                                                 return;
                                             }
-                                            String id = db.collection("Products").document().getId().substring(0,5);
+                                            String id = db.collection("Products").document().getId().substring(0, 5);
                                             Products newtemp = new Products(id, Integer.parseInt(ProductQuantity.getText().toString()), SelectedCategoryId, Integer.parseInt(price.getText().toString()), ProductName.getText().toString());
 
-                                            db.collection("Products").document(id).set(newtemp).addOnSuccessListener(unused -> Toast.makeText(AddNewProduct.this, "added", Toast.LENGTH_SHORT).show());
+                                            db.collection("Products").document(id).set(newtemp).addOnSuccessListener(unused -> {
+                                                Toast.makeText(AddNewProduct.this, "added", Toast.LENGTH_SHORT).show();
+                                                ProductQuantity.setText("");
+                                                price.setText("");
+                                                ProductName.setText("");
+                                            });
                                         });
 
                             });
