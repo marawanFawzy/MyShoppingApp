@@ -64,21 +64,33 @@
 
     <EditText
         android:id="@+id/editTextPrice"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="134dp"
+        android:layout_height="48dp"
         android:layout_marginBottom="24dp"
         android:ems="10"
         android:enabled="false"
         android:hint="@string/egp"
+        android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toTopOf="@+id/quantityEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintHorizontal_bias="0.736"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/EGP"
+        android:layout_width="59dp"
+        android:layout_height="35dp"
+        android:text="EGP"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/quantityEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.071"
+        app:layout_constraintStart_toEndOf="@+id/editTextPrice"
+        app:layout_constraintTop_toBottomOf="@+id/editTextP_Name" />
 
     <TextView
         android:id="@+id/quantitytextView3"

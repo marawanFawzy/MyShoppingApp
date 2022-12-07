@@ -1,7 +1,6 @@
 package com.example.myshoppingapp;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.example.myshoppingapp.firebase.Cart;
+import com.example.myshoppingapp.firebase.Products;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -37,8 +40,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         TextView prodQuantity;
         TextView productName;
         TextView productPrice;
-        Button plusBtn;
-        Button minusBtn;
+        Button plusBtn, minusBtn;
         ImageButton deleteBtn;
         sdb = new ShoppingDatabase(getContext());
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
@@ -47,51 +49,78 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         plusBtn = convertView.findViewById(R.id.plusbutton);
         minusBtn = convertView.findViewById(R.id.Minusbutton3);
         deleteBtn = convertView.findViewById(R.id.delete_button);
-
-
         productName.setText(item.name);
         prodQuantity.setText(item.quantity);
         productPrice.setText(item.price);
 
 
         plusBtn.setOnClickListener(v -> {
-            int qty = 0;
-            Cursor c = sdb.getProductInfo(Integer.parseInt(item.id) ,Integer.parseInt(item.cat_id));
-            if (!c.isAfterLast()) {
-                qty = c.getInt(3);
-            }
-            int value = Integer.parseInt(prodQuantity.getText().toString());
-            if (qty == value) {
-                Toast.makeText(getContext(), "this is max quantity", Toast.LENGTH_SHORT).show();
-            } else {
-                String newValue = String.valueOf(value + 1);
-                prodQuantity.setText(newValue);
-            }
-            int q = Integer.parseInt(prodQuantity.getText().toString());
-            sdb.editQuantity(Integer.parseInt(item.id), q);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Products").document(item.id).get().addOnSuccessListener(documentSnapshot -> {
+                Products temp = documentSnapshot.toObject(Products.class);
+                int MaxQuantity = temp.getQuantity();
+                int value = Integer.parseInt(prodQuantity.getText().toString());
+                if (MaxQuantity == value) {
+                    Toast.makeText(getContext(), "this is max quantity", Toast.LENGTH_SHORT).show();
+                } else {
+                    String newValue = String.valueOf(value + 1);
+                    prodQuantity.setText(newValue);
+                    db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                        Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                        ArrayList<String> newQ = new ArrayList<>();
+                        for (int i = 0; i < newTemp.getProducts().size(); i++)
+                            if (newTemp.getProducts().get(i).equals(item.id))
+                                newQ.add(newValue);
+                            else
+                                newQ.add(newTemp.getProductsQuantity().get(i));
+                        newTemp.setProductsQuantity(newQ);
+                        db.collection("Cart").document(newTemp.getId()).set(newTemp);
+                    });
+                }
+            });
         });
 
         minusBtn.setOnClickListener(v -> {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
             int value = Integer.parseInt(prodQuantity.getText().toString());
-            if (value != 1) {
+            if (1 == value) {
+                Toast.makeText(getContext(), "this is min quantity", Toast.LENGTH_SHORT).show();
+            }
+            else {
                 String newValue = String.valueOf(value - 1);
                 prodQuantity.setText(newValue);
+                db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                    ArrayList<String> newQ = new ArrayList<>();
+                    for (int i = 0; i < newTemp.getProducts().size(); i++)
+                        if (newTemp.getProducts().get(i).equals(item.id))
+                            newQ.add(newValue);
+                        else
+                            newQ.add(newTemp.getProductsQuantity().get(i));
+                    newTemp.setProductsQuantity(newQ);
+                    db.collection("Cart").document(newTemp.getId()).set(newTemp);
+                });
             }
-            Integer q = Integer.parseInt(prodQuantity.getText().toString());
-            sdb.editQuantity(Integer.parseInt(item.id), q);
         });
 
         deleteBtn.setOnClickListener(v -> {
-            sdb.deleteItem(Integer.parseInt(item.id));
-            records.remove(position);
-            Toast.makeText(getContext(), "Item Deleted", Toast.LENGTH_SHORT).show();
-            notifyDataSetChanged();
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                for (int i = 0; i < newTemp.getProducts().size(); i++)
+                    if (newTemp.getProducts().get(i).equals(item.id))
+                    {
+                        newTemp.getProducts().remove(i);
+                        newTemp.getPrices().remove(i);
+                        newTemp.getProductsQuantity().remove(i);
+                        newTemp.getNames().remove(i);
+                        records.remove(i);
+                        notifyDataSetChanged();
+                        break;
+                    }
+                db.collection("Cart").document(newTemp.getId()).set(newTemp);
+            });
         });
-
         return convertView;
-    }
-
-    public ArrayList<String> getQuantity() {
-        return quantity;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.myshoppingapp;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
@@ -9,24 +8,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myshoppingapp.firebase.Cart;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 
-public class ShoppingCart extends AppCompatActivity
-{
+public class ShoppingCart extends AppCompatActivity {
     ShoppingDatabase sdb;
     ListView myList;
     ArrayList<ProductClass> arrayOfProducts;
     CustomAdapter adapter;
-    ArrayList<String> iDArray , catIdArray ,quantityArray;
-    Button addNewItem , makeOrder ,showPrice ,home ;
+    double total = 0.0;
+    Button addNewItem, makeOrder, showPrice, home;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ArrayList<String> ids, NamesArray, PricesArray, quantityArray;
         setContentView(R.layout.activity_shopping_cart);
-
         addNewItem = findViewById(R.id.addnewbutton);
         makeOrder = findViewById(R.id.Orderbutton2);
         showPrice = findViewById(R.id.totalpricebutton3);
@@ -34,90 +35,78 @@ public class ShoppingCart extends AppCompatActivity
         Intent ii = getIntent();
         String userId = ii.getStringExtra("userId");
         myList = findViewById(R.id.mylist);
-        iDArray = new ArrayList<>();
-        catIdArray = new ArrayList<>();
+        ids = new ArrayList<>();
+        NamesArray = new ArrayList<>();
+        PricesArray = new ArrayList<>();
         quantityArray = new ArrayList<>();
         sdb = new ShoppingDatabase(this);
-        Cursor cursor = sdb.fetchCart();
-        if (!cursor.isAfterLast())
-        {
-            while (!cursor.isAfterLast())
-            {
-                iDArray.add(String.valueOf(cursor.getInt(0)));
-                quantityArray.add(String.valueOf(cursor.getInt(1)));
-                catIdArray.add(String.valueOf(cursor.getInt(2)));
-                cursor.moveToNext();
-            }
-        }
-        else
-            Toast.makeText(this, "Shopping Cart is empty", Toast.LENGTH_SHORT).show();
-        InsertIntoAdapter();
+        getCart(userId, NamesArray, PricesArray, quantityArray, ids);
 
-       addNewItem.setOnClickListener(v -> {
-           Intent i = new Intent(ShoppingCart.this,HomeActivity.class);
-           i.putExtra("userId" ,userId);
-           startActivity(i);
-       });
 
-       makeOrder.setOnClickListener(v -> {
-           if (myList.getCount()>0)
-           {
-               Intent i = new Intent(ShoppingCart.this, MakeOrder.class);
-               i.putExtra("productsID", iDArray);
-               i.putExtra("productsQuantity", quantityArray);
-               i.putExtra("products_cat_ids", catIdArray);
-               i.putExtra("userId" ,userId);
-               startActivity(i);
-           }
-           else
-               Toast.makeText(getApplicationContext() , "Shopping Cart Is Empty",Toast.LENGTH_SHORT).show();
+        makeOrder.setOnClickListener(v -> {
+            if (myList.getCount() > 0) {
+                Intent i = new Intent(ShoppingCart.this, MakeOrder.class);
+                i.putExtra("productsID", NamesArray);
+                i.putExtra("productsQuantity", quantityArray);
+                i.putExtra("products_cat_ids", PricesArray);
+                i.putExtra("userId", userId);
+                startActivity(i);
+            } else
+                Toast.makeText(getApplicationContext(), "Shopping Cart Is Empty", Toast.LENGTH_SHORT).show();
 
-       });
-
+        });
 
         showPrice.setOnClickListener(v -> {
-            double total = 0.0;
-            Cursor cursor1 = sdb.fetchCart();
-            while (!cursor1.isAfterLast())
-            {
-                int id = cursor1.getInt(0);
-                Integer q = cursor1.getInt(1);
-                int cat_id = cursor1.getInt(2);
-                String price = sdb.getProductPrice(id , cat_id);
-                Double prodPrice = Double.parseDouble(price);
-                total += q*prodPrice;
-                cursor1.moveToNext();
-            }
-            Toast.makeText(getApplicationContext(), "Total Price is " + total + "EGP" , Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Total Price is " + total + "EGP", Toast.LENGTH_LONG).show();
         });
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(ShoppingCart.this, HomeActivity.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        addNewItem.setOnClickListener(v -> {
+            Intent i = new Intent(ShoppingCart.this, HomeActivity.class);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
 
     }
 
-    public void InsertIntoAdapter()
-    {
+    public void InsertIntoAdapter(String userId,ArrayList<String> ids, ArrayList<String> namesArray, ArrayList<String> pricesArray, ArrayList<String> quantityArray) {
         ProductClass product;
         arrayOfProducts = new ArrayList<>();
-
-        sdb = new ShoppingDatabase(this);
-        for (int i = 0; i < iDArray.size(); i++) {
-            Cursor cursor = sdb.getProductInfo(Integer.parseInt(iDArray.get(i)) , Integer.parseInt(catIdArray.get(i)));
-
-            String id = cursor.getString(0);
-            String name = cursor.getString(1);
-            String price = cursor.getString(2);
-            String quantity  = String.valueOf(sdb.getQuantity(Integer.parseInt(iDArray.get(i)) , Integer.parseInt(catIdArray.get(i))));
-
-            product = new ProductClass(id,name, quantity, price , catIdArray.get(i));
+        for (int i = 0; i < namesArray.size(); i++) {
+            String id = ids.get(i);
+            String name = namesArray.get(i);
+            String price = pricesArray.get(i);
+            String quantity = quantityArray.get(i);
+            total += Double.parseDouble(price);
+            product = new ProductClass(userId,id, name, price, quantity);
             arrayOfProducts.add(product);
         }
         adapter = new CustomAdapter(this, 0, arrayOfProducts);
         myList.setAdapter(adapter);
+    }
+
+    void getCart(String userId, ArrayList<String> NamesArray, ArrayList<String> PricesArray, ArrayList<String> quantityArray, ArrayList<String> ids) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("Cart")
+                .whereEqualTo("customerId", userId)
+                .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (queryDocumentSnapshots.getDocuments().size() == 0) {
+                        Toast.makeText(this, "add any product to your cart first", Toast.LENGTH_SHORT).show();
+                        return;
+                    } else {
+                        DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
+                        Cart temp = d.toObject(Cart.class);
+                        NamesArray.addAll(temp.getNames());
+                        PricesArray.addAll(temp.getPrices());
+                        quantityArray.addAll(temp.getProductsQuantity());
+                        ids.addAll(temp.getProducts());
+                    }
+                    InsertIntoAdapter(userId, ids, NamesArray, PricesArray, quantityArray);
+                });
     }
 
 }

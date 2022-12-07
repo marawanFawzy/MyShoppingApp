@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Products;
-import com.example.myshoppingapp.firebase.order_details;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -33,9 +32,8 @@ public class ProductsDetails extends AppCompatActivity {
         home = findViewById(R.id.homebutton);
         Intent ii = getIntent();
         Prod_id = ii.getStringExtra("Prod_id");
-        //cat_id = ii.getStringExtra("cat_id");
         userId = ii.getStringExtra("userId");
-        getProduct(Prod_id, cat_id);
+        getProduct(Prod_id);
 
         if (e_qty.getText().toString().equals("0")) {
             add.setEnabled(false);
@@ -61,7 +59,7 @@ public class ProductsDetails extends AppCompatActivity {
         });
     }
 
-    void getProduct(String Prod_id, String cat_id) {
+    void getProduct(String Prod_id) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Products")
                 .whereEqualTo("id", Prod_id)
@@ -73,7 +71,7 @@ public class ProductsDetails extends AppCompatActivity {
                             Products temp = d.toObject(Products.class);
                             if (temp != null) {
                                 e_name.setText(temp.getName());
-                                e_price.setText(String.format("%sEGP", temp.getPrice()));
+                                e_price.setText(String.valueOf(temp.getPrice()));
                                 e_qty.setText(String.valueOf(temp.getQuantity()));
                             }
                         }
@@ -85,18 +83,18 @@ public class ProductsDetails extends AppCompatActivity {
         db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
             if(queryDocumentSnapshots.getDocuments().size() ==0)
             {
-                String orderId = db.collection("order_details").document().getId().substring(0,5);
                 String id = db.collection("Cart").document().getId().substring(0,5);
-                ArrayList<String> ids = new ArrayList<>();
-                ArrayList<String> prodids = new ArrayList<>();
-                ids.add(orderId);
-                prodids.add(Prod_id);
-                Cart newTemp = new Cart(id, userId  , ids , prodids);
+                ArrayList<String> productsQuantity = new ArrayList<>();
+                ArrayList<String> prodIds = new ArrayList<>();
+                ArrayList<String> prodNames = new ArrayList<>();
+                ArrayList<String> prices = new ArrayList<>();
+                productsQuantity.add("1");
+                prodIds.add(Prod_id);
+                prodNames.add(e_name.getText().toString());
+                prices.add(e_price.getText().toString());
+                Cart newTemp = new Cart(id, userId  , productsQuantity , prodIds , prodNames, prices);
                 db.collection("Cart").document(id).set(newTemp).addOnSuccessListener(unused -> {
-                    order_details newOrder = new order_details(orderId,id ,Prod_id , "1");
-                    db.collection("order_details").document(orderId).set(newOrder).addOnSuccessListener(unused1 -> {
-                        Toast.makeText(this, "added product to new cart", Toast.LENGTH_SHORT).show();
-                    });
+                    Toast.makeText(this, "added product to new cart", Toast.LENGTH_SHORT).show();
                 });
             }
             else
@@ -111,14 +109,12 @@ public class ProductsDetails extends AppCompatActivity {
                         return;
                     }
                 }
-                String orderId = db.collection("order_details").document().getId().substring(0,5);
-                temp.getOrdDetId().add(orderId);
+                temp.getProductsQuantity().add("1");
                 temp.getProducts().add(Prod_id);
-                order_details newOrder = new order_details(orderId,temp.getId() ,Prod_id , "1");
-                db.collection("order_details").document(orderId).set(newOrder).addOnSuccessListener(unused -> {
-                    db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
-                        Toast.makeText(this, "added this product to existing cart", Toast.LENGTH_SHORT).show();
-                    });
+                temp.getNames().add(e_name.getText().toString());
+                temp.getPrices().add(e_price.getText().toString());
+                db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
+                    Toast.makeText(this, "added this product to existing cart", Toast.LENGTH_SHORT).show();
                 });
 
             }
