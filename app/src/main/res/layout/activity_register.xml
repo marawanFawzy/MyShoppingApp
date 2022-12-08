@@ -7,33 +7,35 @@
     android:background="@color/colorAccent"
     tools:context=".RegisterActivity">
 
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="222dp"
         android:layout_height="250dp"
+        android:contentDescription="mega store"
         app:layout_constraintBottom_toTopOf="@+id/nameeditText"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/megav2"
-        android:contentDescription="mega store" />
-
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/megav2" />
 
     <EditText
         android:id="@+id/nameeditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="your name "
+        android:hint="enter your name here "
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/usernameeditText2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintVertical_bias="0.923"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
@@ -48,10 +50,10 @@
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/birthddateeditText4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.86"
+        app:layout_constraintHorizontal_bias="0.855"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.131"
+        app:layout_constraintVertical_bias="0.0"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
@@ -87,12 +89,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/jobeditText5"
+        android:id="@+id/MailEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="job"
+        android:hint="Mail"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -110,7 +112,7 @@
         app:layout_constraintBottom_toTopOf="@+id/btnsign"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/jobeditText5">
+        app:layout_constraintTop_toBottomOf="@+id/MailEditText">
 
         <RadioButton
             android:id="@+id/female"
@@ -124,7 +126,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.31"
             app:layout_constraintStart_toEndOf="@+id/gendertxt"
-            app:layout_constraintTop_toBottomOf="@+id/jobeditText5"
+            app:layout_constraintTop_toBottomOf="@+id/MailEditText"
             app:layout_constraintVertical_bias="0.222" />
 
         <RadioButton
@@ -139,7 +141,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.422"
             app:layout_constraintStart_toEndOf="@+id/female"
-            app:layout_constraintTop_toBottomOf="@+id/jobeditText5"
+            app:layout_constraintTop_toBottomOf="@+id/MailEditText"
             app:layout_constraintVertical_bias="0.222" />
     </RadioGroup>
 
@@ -150,13 +152,13 @@
         android:layout_height="wrap_content"
         android:text="Name :"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
+        android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/usernametxt"
         app:layout_constraintEnd_toStartOf="@+id/nameeditText"
-        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintHorizontal_bias="0.459"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.789" />
+        app:layout_constraintVertical_bias="0.535" />
 
     <TextView
         android:id="@+id/usernametxt"
@@ -164,13 +166,13 @@
         android:layout_height="wrap_content"
         android:text="Username :"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
+        android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/textView8"
         app:layout_constraintEnd_toStartOf="@+id/usernameeditText2"
-        app:layout_constraintHorizontal_bias="0.148"
+        app:layout_constraintHorizontal_bias="0.584"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nameeditText"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintVertical_bias="0.561" />
 
     <TextView
         android:id="@+id/birthdatetxt"
@@ -178,27 +180,26 @@
         android:layout_height="wrap_content"
         android:text="BirthDate :"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/birthddateeditText4"
-        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.738" />
+        app:layout_constraintVertical_bias="0.728" />
 
     <TextView
-        android:id="@+id/jobtxt"
+        android:id="@+id/MailText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Job :"
+        android:text="Mail :"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
+        android:textSize="24dp"
         app:layout_constraintBottom_toTopOf="@+id/gendertxt"
-        app:layout_constraintEnd_toStartOf="@+id/jobeditText5"
-        app:layout_constraintHorizontal_bias="0.066"
+        app:layout_constraintEnd_toStartOf="@+id/MailEditText"
+        app:layout_constraintHorizontal_bias="0.387"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/birthdatetxt"
-        app:layout_constraintVertical_bias="0.421" />
+        app:layout_constraintVertical_bias="0.437" />
 
     <TextView
         android:id="@+id/gendertxt"
@@ -206,7 +207,7 @@
         android:layout_height="wrap_content"
         android:text="Gender :"
         android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
+        android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.024"
@@ -223,10 +224,9 @@
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/passwordeditText3"
-        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.652" />
+        app:layout_constraintVertical_bias="0.642" />
 
     <Button
         android:id="@+id/btnsign"
@@ -237,7 +237,7 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.401"
         app:layout_constraintStart_toStartOf="parent" />
 
 

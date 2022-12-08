@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText cusername;
     EditText cpassword;
     EditText cbirthdate;
-    EditText cjob;
+    EditText cMail;
     RadioButton gfemale;
     RadioButton gmale;
     Button signup;
@@ -42,7 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         cusername = findViewById(R.id.usernameeditText2);
         cpassword = findViewById(R.id.passwordeditText3);
         cbirthdate = findViewById(R.id.birthddateeditText4);
-        cjob = findViewById(R.id.jobeditText5);
+        cMail = findViewById(R.id.MailEditText);
         gfemale = findViewById(R.id.female);
         gmale = findViewById(R.id.male);
         signup = findViewById(R.id.btnsign);
@@ -68,9 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
             String un = cusername.getText().toString();
             String p = cpassword.getText().toString();
             String b = cbirthdate.getText().toString();
-            String j = cjob.getText().toString();
-            //TODO change hard coded email
-            String Email = "marawanfawzy15@gmail.com";
+            String Mail = cMail.getText().toString();
             if (gfemale.isChecked()) {
                 gender = "Female";
             } else if (gmale.isChecked()) {
@@ -86,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Please enter your Gender", Toast.LENGTH_SHORT).show();
             else if (cbirthdate.getText().toString().equals("Select your Birthdate"))
                 Toast.makeText(getApplicationContext(), "Please enter your Birth Date", Toast.LENGTH_SHORT).show();
-            else if (cjob.getText().toString().equals(""))
+            else if (cMail.getText().toString().equals(""))
                 Toast.makeText(getApplicationContext(), "Please enter your Job", Toast.LENGTH_SHORT).show();
             else {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -102,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
                             else {
                                 String id = db.collection("Customers").document().getId().substring(0, 5);
                                 Date date = new Date(b);
-                                Customers newTemp = new Customers(id, n, un, p, date, j, Email , finalGender, false);
+                                Customers newTemp = new Customers(id, n, un, p, date, Mail , finalGender, false);
                                 db.collection("Customers").document(id).set(newTemp);
                                 Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                                 startActivity(i);

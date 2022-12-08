@@ -29,7 +29,7 @@ public class deleteCat extends AppCompatActivity implements AdapterView.OnItemSe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_cat);
         Spinner spinner = findViewById(R.id.spinner);
-        delete = findViewById(R.id.delete);
+        delete = findViewById(R.id.editProduct);
         getAllCategories();
         paths.add("");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(deleteCat.this,

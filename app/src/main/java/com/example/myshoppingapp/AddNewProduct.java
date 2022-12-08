@@ -29,9 +29,9 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_product);
         buttonAddProduct = findViewById(R.id.buttonAddProduct);
-        ProductName = findViewById(R.id.ProductName);
-        ProductQuantity = findViewById(R.id.ProductQuantity);
-        price = findViewById(R.id.price);
+        ProductName = findViewById(R.id.ProductNameEdit);
+        ProductQuantity = findViewById(R.id.ProductQuantityEdit);
+        price = findViewById(R.id.priceAdd);
         getAllCategories();
         paths.add("");
         Spinner spinner = findViewById(R.id.spinner);
@@ -78,6 +78,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                                                 ProductQuantity.setText("");
                                                 price.setText("");
                                                 ProductName.setText("");
+                                                spinner.setSelection(0);
                                             });
                                         });
 

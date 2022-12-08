@@ -5,11 +5,13 @@
       <map>
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_add_new_category.xml" value="0.264" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_add_new_product.xml" value="0.22857142857142856" />
-        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_admin_page.xml" value="0.536" />
+        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_admin_page.xml" value="0.1" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_chart.xml" value="0.1" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_custom_adapter.xml" value="0.4" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_delete_cat.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_delete_product.xml" value="0.2" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_edit_cat.xml" value="0.24010416666666667" />
+        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_edit_product.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_get_location.xml" value="0.24010416666666667" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_home.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_main.xml" value="0.32" />
@@ -17,7 +19,7 @@
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_map.xml" value="0.2" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_products.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_products_details.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_register.xml" value="0.536" />
+        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_shopping_cart.xml" value="0.264" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/fragment_map.xml" value="0.1" />
       </map>

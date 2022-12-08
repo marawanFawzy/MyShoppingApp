@@ -4,19 +4,18 @@ import java.util.Date;
 
 public class Customers {
     private String  id;
-    private String name, Username, Password, job, Email , gender;
+    private String name, Username, Password, Email , gender;
     private Date Birthdate;
     private boolean flag;
 
     public Customers() {}
 
-    public Customers(String id, String name, String username, String password, Date birthdate, String job, String email , String gender, boolean flag) {
+    public Customers(String id, String name, String username, String password, Date birthdate, String email , String gender, boolean flag) {
         this.id = id;
         this.name = name;
         Username = username;
         Password = password;
         Birthdate = birthdate;
-        this.job = job;
         Email = email;
         this.gender = gender;
         this.flag = flag;
@@ -62,13 +61,6 @@ public class Customers {
         Birthdate = birthdate;
     }
 
-    public String getJob() {
-        return job;
-    }
-
-    public void setJob(String job) {
-        this.job = job;
-    }
 
     public String getEmail() {
         return Email;

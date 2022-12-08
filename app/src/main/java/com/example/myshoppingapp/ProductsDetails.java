@@ -41,7 +41,6 @@ public class ProductsDetails extends AppCompatActivity {
         } else {
             add.setOnClickListener(v -> {
                 add.setEnabled(true);
-                //TODO ADD TO CART
                 AddCart(Prod_id);
             });
         }

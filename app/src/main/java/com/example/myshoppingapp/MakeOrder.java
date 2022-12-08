@@ -97,7 +97,13 @@ public class MakeOrder extends AppCompatActivity {
                         db.collection("Orders").document(id).set(newTemp).addOnSuccessListener(unused -> {
                             Toast.makeText(MakeOrder.this, "your order is created successfully", Toast.LENGTH_SHORT).show();
                             temp.setCustomerId("finished Order");
-                            db.collection("Cart").document(temp.getId()).set(temp);
+                            db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
+                                Latitude.setText("");
+                                Longitude.setText("");
+                                nameOfReceiver.setText("");
+                                feedback.setText("");
+                                simpleRatingBar.setRating(0);
+                            });
                         });
                     }
                     else Toast.makeText(MakeOrder.this, "please fill your cart first", Toast.LENGTH_SHORT).show();
