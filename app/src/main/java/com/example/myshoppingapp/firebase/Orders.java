@@ -8,7 +8,8 @@ public class Orders {
     private double Latitude;
     private double Longitude;
     private double total ;
-    private String name , feedback = "" ,rating = "";
+    private String name , feedback;
+    private float rating;
     private Cart cart;
 
     public Orders() {}
@@ -96,11 +97,11 @@ public class Orders {
         this.feedback = feedback;
     }
 
-    public String getRating() {
+    public float getRating() {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(float rating) {
         this.rating = rating;
     }
 }

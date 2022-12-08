@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,7 +26,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class MakeOrder extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 155;
     Button confirm, location, cart, home;
-    EditText Longitude, Latitude, nameOfReceiver;
+    EditText Longitude, Latitude, nameOfReceiver , feedback;
     String userId;
     double total;
     ShoppingDatabase sdb = new ShoppingDatabase(this);
@@ -59,8 +60,9 @@ public class MakeOrder extends AppCompatActivity {
         Longitude = findViewById(R.id.editTextLongitude);
         Latitude = findViewById(R.id.editTextTextLatitude);
         nameOfReceiver = findViewById(R.id.editTextnameOfReceiver);
+        feedback = findViewById(R.id.FeedbackEditText);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
+        RatingBar simpleRatingBar = findViewById(R.id.simpleRatingBar);
         location.setOnClickListener(v -> {
             if (ActivityCompat.checkSelfPermission(MakeOrder.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MakeOrder.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MakeOrder.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
@@ -90,6 +92,8 @@ public class MakeOrder extends AppCompatActivity {
                         id = db.collection("Orders").document().getId().substring(0, 5);
                         Cart temp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
                         Orders newTemp = new Orders(id, userId, date, Double.parseDouble(Latitude.getText().toString()), Double.parseDouble(Longitude.getText().toString()), nameOfReceiver.getText().toString(), temp , total);
+                        newTemp.setRating(simpleRatingBar.getRating());
+                        newTemp.setFeedback(feedback.getText().toString());
                         db.collection("Orders").document(id).set(newTemp).addOnSuccessListener(unused -> {
                             Toast.makeText(MakeOrder.this, "your order is created successfully", Toast.LENGTH_SHORT).show();
                             temp.setCustomerId("finished Order");

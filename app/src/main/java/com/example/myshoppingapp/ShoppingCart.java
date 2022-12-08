@@ -52,7 +52,13 @@ public class ShoppingCart extends AppCompatActivity {
         });
 
         showPrice.setOnClickListener(v -> {
-            Toast.makeText(getApplicationContext(), "Total Price is " + adapter.total + "EGP", Toast.LENGTH_LONG).show();
+            try {
+                Toast.makeText(getApplicationContext(), "Total Price is " + adapter.total + "EGP", Toast.LENGTH_LONG).show();
+            }
+            catch (Exception e )
+            {
+                Toast.makeText(this, "no products yet", Toast.LENGTH_SHORT).show();
+            }
         });
 
         home.setOnClickListener(v -> {
