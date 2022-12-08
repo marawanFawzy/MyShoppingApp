@@ -2,9 +2,9 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +20,7 @@ import java.util.ArrayList;
 public class HomeActivity extends AppCompatActivity {
     ShoppingDatabase sdb = new ShoppingDatabase(this);
     ListView listView;
-    Button category, searchButton, cart, home;
-    EditText searchText;
+    Button category, cart, home , search;
     ArrayAdapter<String> arr;
     ArrayList<String> catIds = new ArrayList<>();
 
@@ -32,8 +31,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
-        searchText = findViewById(R.id.search);
-        searchButton = findViewById(R.id.searchbtn);
+        search = findViewById(R.id.searchbtn);
         category = findViewById(R.id.show_cat);
         listView = findViewById(R.id.cat_listview);
         listView.setAdapter(arr);
@@ -48,20 +46,19 @@ public class HomeActivity extends AppCompatActivity {
             products.putExtra("userId" ,userId);
             startActivity(products);
         });
-        searchButton.setOnClickListener(v1 -> {
-            String text = searchText.getText().toString();
-            // Cursor cu = sdb.Search_By_Text(text);  //so2al el while loop!
-
-            Intent i = new Intent(HomeActivity.this, ProductsDetails.class);
-            i.putExtra("Prod_name", text);
-            i.putExtra("userId" ,userId);
-            startActivity(i);
-        });
         category.setOnClickListener(v -> getAllCategories());
         cart.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, ShoppingCart.class);
             i.putExtra("userId" ,userId);
             startActivity(i);
+        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, ProductsSearch.class);
+                i.putExtra("userId" ,userId);
+                startActivity(i);
+            }
         });
     }
     void getAllCategories() {

@@ -30,7 +30,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_add_new_product);
         buttonAddProduct = findViewById(R.id.buttonAddProduct);
         ProductName = findViewById(R.id.ProductNameEdit);
-        ProductQuantity = findViewById(R.id.ProductQuantityEdit);
+        ProductQuantity = findViewById(R.id.ProductQuantityAdd);
         price = findViewById(R.id.priceAdd);
         getAllCategories();
         paths.add("");
