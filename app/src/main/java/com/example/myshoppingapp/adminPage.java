@@ -22,7 +22,6 @@ public class adminPage extends AppCompatActivity {
         deleteProd = findViewById(R.id.DeleteProduct);
         editProd = findViewById(R.id.EditProduct);
         btnChart.setOnClickListener(v -> {
-            //TODO add extras or create them in chart page directly
             Toast.makeText(adminPage.this, "starting the chart", Toast.LENGTH_SHORT).show();
             Intent chartIntent = new Intent(adminPage.this, chart.class);
             startActivity(chartIntent);
