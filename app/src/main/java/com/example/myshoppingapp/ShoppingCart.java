@@ -16,9 +16,10 @@ import java.util.ArrayList;
 
 
 public class ShoppingCart extends AppCompatActivity {
-    ShoppingDatabase sdb;
     ListView myList;
     ArrayList<ProductClass> arrayOfProducts;
+    ArrayList<String> ids, NamesArray, quantityArray , PricesArray;
+    String userId;
     CustomAdapter adapter;
     double total = 0.0;
     Button addNewItem, makeOrder, showPrice, home;
@@ -26,29 +27,23 @@ public class ShoppingCart extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ArrayList<String> ids, NamesArray, quantityArray , PricesArray;
         setContentView(R.layout.activity_shopping_cart);
         addNewItem = findViewById(R.id.addnewbutton);
         makeOrder = findViewById(R.id.Orderbutton2);
         showPrice = findViewById(R.id.totalpricebutton3);
         home = findViewById(R.id.homebutton);
         Intent ii = getIntent();
-        String userId = ii.getStringExtra("userId");
+        userId = ii.getStringExtra("userId");
         myList = findViewById(R.id.mylist);
         ids = new ArrayList<>();
         NamesArray = new ArrayList<>();
         PricesArray = new ArrayList<>();
         quantityArray = new ArrayList<>();
-        sdb = new ShoppingDatabase(this);
         getCart(userId, NamesArray, PricesArray, quantityArray, ids);
-
-
         makeOrder.setOnClickListener(v -> {
             if (myList.getCount() > 0) {
                 Intent i = new Intent(ShoppingCart.this, MakeOrder.class);
-                i.putExtra("productsID", NamesArray);
-                i.putExtra("productsQuantity", quantityArray);
-                i.putExtra("products_cat_ids", PricesArray);
+                i.putExtra("total", adapter.total);
                 i.putExtra("userId", userId);
                 startActivity(i);
             } else
@@ -72,8 +67,14 @@ public class ShoppingCart extends AppCompatActivity {
         });
 
     }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        adapter.clear();
+        getCart(userId, NamesArray, PricesArray, quantityArray, ids);
+    }
 
-    public void InsertIntoAdapter(String userId,ArrayList<String> ids, ArrayList<String> namesArray, ArrayList<String> pricesArray, ArrayList<String> quantityArray) {
+    public void InsertIntoAdapter(String userId, ArrayList<String> ids, ArrayList<String> namesArray, ArrayList<String> pricesArray, ArrayList<String> quantityArray) {
         ProductClass product;
         arrayOfProducts = new ArrayList<>();
         for (int i = 0; i < namesArray.size(); i++) {

@@ -11,10 +11,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.myshoppingapp.firebase.Cart;
+import com.example.myshoppingapp.firebase.Orders;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
@@ -22,12 +24,10 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MakeOrder extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 155;
-    ArrayList<String> iDArray;
-    ArrayList<String> quantityArray;
-    ArrayList<String> cat_ids;
     Button confirm, location, cart, home;
     EditText Longitude, Latitude, nameOfReceiver;
     String userId;
+    double total;
     ShoppingDatabase sdb = new ShoppingDatabase(this);
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -50,7 +50,8 @@ public class MakeOrder extends AppCompatActivity {
         setContentView(R.layout.activity_make_order);
         getLocationPermissions();
         Intent ii = getIntent();
-         userId = ii.getStringExtra("userId");
+        userId = ii.getStringExtra("userId");
+        total = ii.getDoubleExtra("total", 0);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         confirm = findViewById(R.id.confirm);
@@ -59,13 +60,6 @@ public class MakeOrder extends AppCompatActivity {
         Latitude = findViewById(R.id.editTextTextLatitude);
         nameOfReceiver = findViewById(R.id.editTextnameOfReceiver);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-
-        iDArray = new ArrayList<>();
-        iDArray = getIntent().getStringArrayListExtra("productsID");
-        quantityArray = new ArrayList<>();
-        quantityArray = getIntent().getStringArrayListExtra("productsQuantity");
-        cat_ids = new ArrayList<>();
-        cat_ids = getIntent().getStringArrayListExtra("products_cat_ids");
 
         location.setOnClickListener(v -> {
             if (ActivityCompat.checkSelfPermission(MakeOrder.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MakeOrder.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -89,30 +83,38 @@ public class MakeOrder extends AppCompatActivity {
                 Toast.makeText(this, "please type the name of the Receiver", Toast.LENGTH_SHORT).show();
             else {
                 Date date = new Date();
-                Toast.makeText(this, "your order is created successfully", Toast.LENGTH_SHORT).show();
-                //TODO remove hard coded custID
-                sdb.CreateNewOrder(1, date, Latitude.getText().toString(), Longitude.getText().toString(), nameOfReceiver.getText().toString());
-                int ret = sdb.getLastOrderID();
-                for (int i = 0; i < iDArray.size(); i++) {
-                    sdb.OrderDetails(ret, Integer.parseInt(iDArray.get(i)), Integer.parseInt(quantityArray.get(i)), Integer.parseInt(cat_ids.get(i)));
-                }
-                ret = sdb.test();
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    String id;
+                    if (queryDocumentSnapshots.getDocuments().size() != 0) {
+                        id = db.collection("Orders").document().getId().substring(0, 5);
+                        Cart temp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                        Orders newTemp = new Orders(id, userId, date, Double.parseDouble(Latitude.getText().toString()), Double.parseDouble(Longitude.getText().toString()), nameOfReceiver.getText().toString(), temp , total);
+                        db.collection("Orders").document(id).set(newTemp).addOnSuccessListener(unused -> {
+                            Toast.makeText(MakeOrder.this, "your order is created successfully", Toast.LENGTH_SHORT).show();
+                            temp.setCustomerId("finished Order");
+                            db.collection("Cart").document(temp.getId()).set(temp);
+                        });
+                    }
+                    else Toast.makeText(MakeOrder.this, "please fill your cart first", Toast.LENGTH_SHORT).show();
+                });
                 System.out.println();
-                //Intent i = new Intent(MakeOrder.this, getLocation.class);
-                //i.putExtra("userId" ,userId);
-                //startActivity(i);
+                //TODO TO BE CONSIDERED WHEN DR ANSWERS
+//                Intent i = new Intent(MakeOrder.this, map.class);
+//                i.putExtra("userId" ,userId);
+//                startActivity(i);
             }
         });
 
         cart.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, ShoppingCart.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, HomeActivity.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
 

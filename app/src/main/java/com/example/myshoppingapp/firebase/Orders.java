@@ -3,35 +3,40 @@ package com.example.myshoppingapp.firebase;
 import java.util.Date;
 
 public class Orders {
-    private int id , Customer_id;
+    private String id , Customer_id;
     private Date Order_date;
-    private double Latitude , Longitude;
-    private String name;
+    private double Latitude;
+    private double Longitude;
+    private double total ;
+    private String name , feedback = "" ,rating = "";
+    private Cart cart;
 
     public Orders() {}
 
-    public Orders(int id, int customer_id, Date order_date, double latitude, double longitude, String name) {
+    public Orders(String id, String customer_id, Date order_date, double latitude, double longitude, String name , Cart cart , double total) {
         this.id = id;
         Customer_id = customer_id;
         Order_date = order_date;
         Latitude = latitude;
         Longitude = longitude;
         this.name = name;
+        this.cart = cart;
+        this.total = total;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getCustomer_id() {
+    public String getCustomer_id() {
         return Customer_id;
     }
 
-    public void setCustomer_id(int customer_id) {
+    public void setCustomer_id(String customer_id) {
         Customer_id = customer_id;
     }
 
@@ -65,5 +70,37 @@ public class Orders {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public String getFeedback() {
+        return feedback;
+    }
+
+    public void setFeedback(String feedback) {
+        this.feedback = feedback;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 }
