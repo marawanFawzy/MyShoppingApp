@@ -31,14 +31,38 @@
         app:layout_constraintVertical_bias="0.262" />
 
     <Button
+        android:id="@+id/DeleteCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.348" />
+
+    <Button
+        android:id="@+id/EditCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit Category"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.437" />
+
+    <Button
         android:id="@+id/addNewProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="add New Product"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.401" />
+        app:layout_constraintVertical_bias="0.612" />
 </androidx.constraintlayout.widget.ConstraintLayout>

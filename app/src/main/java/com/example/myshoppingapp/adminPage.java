@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class adminPage extends AppCompatActivity {
-    Button btnChart , newProduct , newCategory;
+    Button btnChart , newProduct , newCategory , buttonDeleteCat , EditCat;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,6 +16,8 @@ public class adminPage extends AppCompatActivity {
         btnChart = findViewById(R.id.buttonChart);
         newProduct = findViewById(R.id.addNewProduct);
         newCategory = findViewById(R.id.addNewCategory);
+        buttonDeleteCat = findViewById(R.id.DeleteCategory);
+        EditCat = findViewById(R.id.EditCategory);
         btnChart.setOnClickListener(v -> {
             //TODO add extras or create them in chart page directly
             Toast.makeText(adminPage.this, "starting the chart", Toast.LENGTH_SHORT).show();
@@ -23,13 +25,19 @@ public class adminPage extends AppCompatActivity {
             startActivity(chartIntent);
         });
         newProduct.setOnClickListener(v->{
-            //Toast.makeText(adminPage.this, "new Product", Toast.LENGTH_SHORT).show();
             Intent chartIntent = new Intent(adminPage.this, AddNewProduct.class);
             startActivity(chartIntent);
         });
         newCategory.setOnClickListener(v->{
-            //Toast.makeText(adminPage.this, "new category", Toast.LENGTH_SHORT).show();
             Intent chartIntent = new Intent(adminPage.this, AddNewCategory.class);
+            startActivity(chartIntent);
+        });
+        buttonDeleteCat.setOnClickListener(v -> {
+            Intent chartIntent = new Intent(adminPage.this, deleteCat.class);
+            startActivity(chartIntent);
+        });
+        EditCat.setOnClickListener(v->{
+            Intent chartIntent = new Intent(adminPage.this, EditCat.class);
             startActivity(chartIntent);
         });
     }

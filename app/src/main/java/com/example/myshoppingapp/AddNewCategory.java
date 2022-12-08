@@ -26,7 +26,9 @@ public class AddNewCategory extends AppCompatActivity {
                 return;
             }
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Categories").whereEqualTo("name", catName.getText().toString()).get().addOnSuccessListener(queryDocumentSnapshots -> {
+            db.collection("Categories")
+                    .whereEqualTo("name", catName.getText().toString())
+                    .get().addOnSuccessListener(queryDocumentSnapshots -> {
                 if (queryDocumentSnapshots.getDocuments().size() == 0) {
                     String id = db.collection("Categories").document().getId().substring(0, 5);
                     Categories newTemp = new Categories(id, catName.getText().toString());

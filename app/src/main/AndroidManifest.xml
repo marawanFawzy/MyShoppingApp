@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myshoppingapp">
 
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -15,16 +15,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity
+            android:name=".EditCat"
+            android:exported="false" />
+        <activity
+            android:name=".deleteCat"
+            android:exported="false" />
+
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC55eHM8q7gB1ZggiRYXcwCz4RJCdBejvg"/>
+            android:value="AIzaSyC55eHM8q7gB1ZggiRYXcwCz4RJCdBejvg" />
+
         <activity
             android:name=".map"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".AddNewCategory"
             android:exported="false" />
