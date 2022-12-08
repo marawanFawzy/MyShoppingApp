@@ -2,7 +2,6 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -52,13 +51,10 @@ public class HomeActivity extends AppCompatActivity {
             i.putExtra("userId" ,userId);
             startActivity(i);
         });
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, ProductsSearch.class);
-                i.putExtra("userId" ,userId);
-                startActivity(i);
-            }
+        search.setOnClickListener(v -> {
+            Intent i = new Intent(HomeActivity.this, ProductsSearch.class);
+            i.putExtra("userId" ,userId);
+            startActivity(i);
         });
     }
     void getAllCategories() {

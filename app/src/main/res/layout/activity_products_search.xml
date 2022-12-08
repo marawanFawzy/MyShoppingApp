@@ -28,22 +28,21 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="74dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
         android:layout_marginBottom="222dp"
+        android:contentDescription="search icon"
         app:layout_constraintBottom_toTopOf="@+id/_dynamic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/search"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@android:drawable/ic_menu_search"
-        tools:ignore="ImageContrastCheck"
-        android:contentDescription="search icon" />
+        tools:ignore="ImageContrastCheck" />
 
     <ListView
-        android:id="@+id/cat_listview"
+        android:id="@+id/Products_listview"
         android:layout_width="408dp"
-        android:layout_height="439dp"
+        android:layout_height="520dp"
         android:layout_marginStart="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginEnd="1dp"
