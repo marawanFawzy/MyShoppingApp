@@ -55,23 +55,24 @@
     <EditText
         android:id="@+id/dateForOrders"
         android:layout_width="205dp"
-        android:layout_height="47dp"
+        android:layout_height="48dp"
         android:ems="10"
-        android:inputType="date"
         android:hint="@string/date"
+        android:importantForAutofill="no"
+        android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/Orders_listview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinnerUsers"
-        app:layout_constraintVertical_bias="0.242"
-        android:importantForAutofill="no" />
+        app:layout_constraintVertical_bias="0.242" />
 
     <CheckBox
         android:id="@+id/allTimeCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/all_time"
         android:buttonTint="@color/colorPrimary"
+        android:minHeight="48dp"
+        android:text="@string/all_time"
         app:layout_constraintBottom_toTopOf="@+id/Orders_listview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.358"
@@ -83,7 +84,7 @@
         android:id="@+id/ButtonFindOrders"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="get Orders"
+        android:text="@string/get_orders"
         app:layout_constraintBottom_toTopOf="@+id/Orders_listview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

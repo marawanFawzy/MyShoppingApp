@@ -17,10 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".reportsActivity"
+            android:name=".reportDetails"
             android:exported="false" />
         <activity
-            android:name=".OrderAdapter"
+            android:name=".reportsActivity"
             android:exported="false" />
         <activity
             android:name=".deleteProduct"
@@ -83,13 +83,14 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".CaptureAct"
-            android:screenOrientation="portrait"
+            android:screenOrientation="fullSensor"
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme" />
         <activity
             android:name=".RegisterActivity"
             android:windowSoftInputMode="stateAlwaysHidden|adjustNothing" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
