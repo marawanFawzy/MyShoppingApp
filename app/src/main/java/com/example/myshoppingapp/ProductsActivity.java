@@ -49,26 +49,27 @@ public class ProductsActivity extends AppCompatActivity {
             Intent products_Det = new Intent(ProductsActivity.this, ProductsDetails.class);
             products_Det.putExtra("Prod_name", pname);
             products_Det.putExtra("Prod_id", ids.get(position));
-            products_Det.putExtra("userId" ,userId);
+            products_Det.putExtra("userId", userId);
             startActivity(products_Det);
         });
 
         cart.setOnClickListener(v -> {
             Intent i = new Intent(ProductsActivity.this, ShoppingCart.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(ProductsActivity.this, HomeActivity.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
     }
+
     void getAllProducts(String cat_id) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Products")
-                .whereEqualTo("catId" , cat_id)
+                .whereEqualTo("catId", cat_id)
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.size() == 0) {
                         Toast.makeText(ProductsActivity.this, "add a Product First ", Toast.LENGTH_SHORT).show();

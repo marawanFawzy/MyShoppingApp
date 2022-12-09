@@ -111,5 +111,6 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
         SelectedCategory = parent.getItemAtPosition(position).toString();
     }
 
-    public void onNothingSelected(AdapterView<?> arg0) {}
+    public void onNothingSelected(AdapterView<?> arg0) {
+    }
 }

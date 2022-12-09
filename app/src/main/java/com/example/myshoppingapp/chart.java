@@ -18,9 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class chart extends AppCompatActivity {
-    BarChart barChart ;
+    BarChart barChart;
     List<String> xAxisValues;
-    ArrayList<BarEntry> v ;
+    ArrayList<BarEntry> v;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,32 +31,26 @@ public class chart extends AppCompatActivity {
         v = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Cart")
-                .whereEqualTo("customerId" , "finished Order")
+                .whereEqualTo("customerId", "finished Order")
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
-                    if(queryDocumentSnapshots.getDocuments().size() == 0)
+                    if (queryDocumentSnapshots.getDocuments().size() == 0)
                         Toast.makeText(chart.this, "no orders", Toast.LENGTH_SHORT).show();
-                    else
-                    {
-                        for(int i = 0 ; i < queryDocumentSnapshots.size() ; i++)
-                        {
+                    else {
+                        for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                             Cart temp = queryDocumentSnapshots.getDocuments().get(i).toObject(Cart.class);
-                            for (int j = 0 ; j < temp.getNames().size();j++)
-                            {
+                            for (int j = 0; j < temp.getNames().size(); j++) {
                                 int ret = xAxisValues.indexOf(temp.getNames().get(j));
-                                if(ret == -1)
-                                {
+                                if (ret == -1) {
                                     xAxisValues.add(temp.getNames().get(j));
-                                    v.add(new BarEntry(xAxisValues.size()-1, Float.parseFloat(temp.getProductsQuantity().get(j))));
-                                }
-                                else
-                                {
-                                    v.get(ret).setY(v.get(ret).getY()+Float.parseFloat(temp.getProductsQuantity().get(j)));
+                                    v.add(new BarEntry(xAxisValues.size() - 1, Float.parseFloat(temp.getProductsQuantity().get(j))));
+                                } else {
+                                    v.get(ret).setY(v.get(ret).getY() + Float.parseFloat(temp.getProductsQuantity().get(j)));
                                 }
                             }
 
                         }
                     }
-                    BarDataSet barDataSet = new BarDataSet(v,"test ");
+                    BarDataSet barDataSet = new BarDataSet(v, "test ");
                     barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
                     barDataSet.setValueTextColor(Color.BLACK);
                     barDataSet.setValueTextSize(16f);

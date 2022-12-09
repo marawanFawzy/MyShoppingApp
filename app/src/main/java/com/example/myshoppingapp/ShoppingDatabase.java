@@ -220,7 +220,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         CustomerRegesiter.close();
     }
 
-    public void OrderDetails(int ordID, int prodID, int qty , int cat_id ) {
+    public void OrderDetails(int ordID, int prodID, int qty, int cat_id) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("ord_ID", ordID);
@@ -232,7 +232,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         CustomerRegesiter.close();
     }
 
-    public void CreateNewOrder(Integer custID, Date date, String Latitude ,String Longitude , String name) {
+    public void CreateNewOrder(Integer custID, Date date, String Latitude, String Longitude, String name) {
         CustomerRegesiter = getWritableDatabase();
         ContentValues row = new ContentValues();
         row.put("Order_date", String.valueOf(date));
@@ -244,14 +244,15 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         CustomerRegesiter.insert("Orders", null, row);
         CustomerRegesiter.close();
     }
-    public Integer test()
-    {
+
+    public Integer test() {
         CustomerRegesiter = getReadableDatabase();
         @SuppressLint("Recycle") Cursor cursor = CustomerRegesiter.rawQuery("select * from order_details ", null);
         Integer countID = cursor.getCount();
         CustomerRegesiter.close();
         return countID;
     }
+
     public Integer getLastOrderID() {
         CustomerRegesiter = getReadableDatabase();
         @SuppressLint("Recycle") Cursor cursor = CustomerRegesiter.rawQuery("select * from Orders ", null);

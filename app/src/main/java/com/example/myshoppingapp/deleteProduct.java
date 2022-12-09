@@ -24,7 +24,7 @@ public class deleteProduct extends AppCompatActivity {
     private final ArrayList<String> pathsProducts = new ArrayList<>();
     private String SelectedCategory, SelectedProduct, SelectedCategoryId;
     Button delete;
-    Spinner spinner , spinnerProducts;
+    Spinner spinner, spinnerProducts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +52,12 @@ public class deleteProduct extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedCategory = parent.getItemAtPosition(position).toString();
-                if(!SelectedCategory.equals("")) {
+                if (!SelectedCategory.equals("")) {
                     pathsProducts.clear();
                     pathsProducts.add("");
                     getAllProducts();
                     spinnerProducts.setEnabled(true);
-                }
-                else
-                {
+                } else {
                     pathsProducts.clear();
                     pathsProducts.add("");
                     spinnerProducts.setEnabled(false);
@@ -120,14 +118,14 @@ public class deleteProduct extends AppCompatActivity {
 
     void getAllProducts() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Categories").whereEqualTo("name" , SelectedCategory).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("Categories").whereEqualTo("name", SelectedCategory).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
                 Categories temp = d.toObject(Categories.class);
                 SelectedCategoryId = temp.getId();
                 db.collection("Products")
-                        .whereEqualTo("catId" , SelectedCategoryId).get()
+                        .whereEqualTo("catId", SelectedCategoryId).get()
                         .addOnSuccessListener(queryDocumentSnapshots1 -> {
                             if (queryDocumentSnapshots1.size() == 0) {
                                 Toast.makeText(deleteProduct.this, "add a product First ", Toast.LENGTH_SHORT).show();

@@ -88,5 +88,6 @@ public class deleteCat extends AppCompatActivity implements AdapterView.OnItemSe
         SelectedCategory = parent.getItemAtPosition(position).toString();
     }
 
-    public void onNothingSelected(AdapterView<?> arg0) {}
+    public void onNothingSelected(AdapterView<?> arg0) {
+    }
 }

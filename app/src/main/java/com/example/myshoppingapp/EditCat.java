@@ -94,5 +94,6 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
         SelectedCategory = parent.getItemAtPosition(position).toString();
     }
 
-    public void onNothingSelected(AdapterView<?> arg0) {}
+    public void onNothingSelected(AdapterView<?> arg0) {
+    }
 }

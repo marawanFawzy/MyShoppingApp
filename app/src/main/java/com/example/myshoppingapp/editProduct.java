@@ -25,8 +25,9 @@ public class editProduct extends AppCompatActivity {
     private final ArrayList<String> pathsProducts = new ArrayList<>();
     private String SelectedCategory, SelectedProduct, SelectedCategoryId;
     Button edit;
-    Spinner spinner , spinnerProducts;
-    EditText name , quantity , price;
+    Spinner spinner, spinnerProducts;
+    EditText name, quantity, price;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,15 +57,13 @@ public class editProduct extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedCategory = parent.getItemAtPosition(position).toString();
-                if(!SelectedCategory.equals("")) {
+                if (!SelectedCategory.equals("")) {
                     pathsProducts.clear();
                     pathsProducts.add("");
                     spinnerProducts.setSelection(0);
                     getAllProducts();
                     spinnerProducts.setEnabled(true);
-                }
-                else
-                {
+                } else {
                     pathsProducts.clear();
                     pathsProducts.add("");
                     spinnerProducts.setEnabled(false);
@@ -82,8 +81,7 @@ public class editProduct extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedProduct = parent.getItemAtPosition(position).toString();
                 edit.setEnabled(!SelectedProduct.equals(""));
-                if(!SelectedProduct.equals(""))
-                {
+                if (!SelectedProduct.equals("")) {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection("Products")
                             .whereEqualTo("name", SelectedProduct)
@@ -94,9 +92,7 @@ public class editProduct extends AppCompatActivity {
                                 quantity.setText(String.valueOf(EditTemp.getQuantity()));
                                 price.setText(String.valueOf(EditTemp.getPrice()));
                             });
-                }
-                else
-                {
+                } else {
                     name.setText("");
                     quantity.setText("");
                     price.setText("");
@@ -148,14 +144,14 @@ public class editProduct extends AppCompatActivity {
 
     void getAllProducts() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Categories").whereEqualTo("name" , SelectedCategory).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("Categories").whereEqualTo("name", SelectedCategory).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
                 Categories temp = d.toObject(Categories.class);
                 SelectedCategoryId = temp.getId();
                 db.collection("Products")
-                        .whereEqualTo("catId" , SelectedCategoryId).get()
+                        .whereEqualTo("catId", SelectedCategoryId).get()
                         .addOnSuccessListener(queryDocumentSnapshots1 -> {
                             if (queryDocumentSnapshots1.size() == 0) {
                                 Toast.makeText(editProduct.this, "add a product First ", Toast.LENGTH_SHORT).show();

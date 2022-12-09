@@ -3,14 +3,15 @@ package com.example.myshoppingapp.firebase;
 import java.util.Date;
 
 public class Customers {
-    private String  id;
-    private String name, Username, Password, Email , gender;
+    private String id;
+    private String name, Username, Password, Email, gender;
     private Date Birthdate;
     private boolean flag;
 
-    public Customers() {}
+    public Customers() {
+    }
 
-    public Customers(String id, String name, String username, String password, Date birthdate, String email , String gender, boolean flag) {
+    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender, boolean flag) {
         this.id = id;
         this.name = name;
         Username = username;

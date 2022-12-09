@@ -2,8 +2,11 @@ package com.example.myshoppingapp.firebase;
 
 public class Categories {
     private String id;
-    private String name ;
-    public Categories(){}
+    private String name;
+
+    public Categories() {
+    }
+
     public Categories(String id, String name) {
         this.id = id;
         this.name = name;

@@ -29,7 +29,6 @@ public class MakeOrder extends AppCompatActivity {
     EditText Longitude, Latitude, nameOfReceiver , feedback;
     String userId;
     double total;
-    ShoppingDatabase sdb = new ShoppingDatabase(this);
     private FusedLocationProviderClient fusedLocationClient;
 
     @AfterPermissionGranted(LOCATION_REQUEST_CODE)
@@ -110,9 +109,9 @@ public class MakeOrder extends AppCompatActivity {
                 });
                 System.out.println();
                 //TODO TO BE CONSIDERED WHEN DR ANSWERS
-//                Intent i = new Intent(MakeOrder.this, map.class);
-//                i.putExtra("userId" ,userId);
-//                startActivity(i);
+                //Intent i = new Intent(MakeOrder.this, map.class);
+                //i.putExtra("userId" ,userId);
+                //startActivity(i);
             }
         });
 

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<ProductClass> records;
     public ArrayList<String> quantity;
-    public double total = 0 ;
+    public double total = 0;
 
 
     public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records) {
@@ -86,8 +86,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
             int value = Integer.parseInt(prodQuantity.getText().toString());
             if (1 == value) {
                 Toast.makeText(getContext(), "this is min quantity", Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 total -= Double.parseDouble(productPrice.getText().toString());
                 String newValue = String.valueOf(value - 1);
                 prodQuantity.setText(newValue);

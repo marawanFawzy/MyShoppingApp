@@ -17,9 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity {
-    ShoppingDatabase sdb = new ShoppingDatabase(this);
     ListView listView;
-    Button category, cart, home , search;
+    Button category, cart, home, search;
     ArrayAdapter<String> arr;
     ArrayList<String> catIds = new ArrayList<>();
 
@@ -42,21 +41,22 @@ public class HomeActivity extends AppCompatActivity {
             Intent products = new Intent(HomeActivity.this, ProductsActivity.class);
             products.putExtra("cat_id", catIds.get(position));
             products.putExtra("cat_name", y);
-            products.putExtra("userId" ,userId);
+            products.putExtra("userId", userId);
             startActivity(products);
         });
         category.setOnClickListener(v -> getAllCategories());
         cart.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, ShoppingCart.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
         search.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, ProductsSearch.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
     }
+
     void getAllCategories() {
         arr.clear();
         FirebaseFirestore db = FirebaseFirestore.getInstance();

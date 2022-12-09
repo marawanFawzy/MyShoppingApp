@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity {
     Button login;
     TextView register;
     TextView forgetPassword;
-    ShoppingDatabase sdb;
     boolean saveCurrentLogin;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
@@ -31,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        sdb = new ShoppingDatabase(this);
         username = findViewById(R.id.username);
         password = findViewById(R.id.Password);
         login = findViewById(R.id.Loginbtn);

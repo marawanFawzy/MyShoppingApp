@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ShoppingCart extends AppCompatActivity {
     ListView myList;
     ArrayList<ProductClass> arrayOfProducts;
-    ArrayList<String> ids, NamesArray, quantityArray , PricesArray;
+    ArrayList<String> ids, NamesArray, quantityArray, PricesArray;
     String userId;
     CustomAdapter adapter;
     double total = 0.0;
@@ -54,9 +54,7 @@ public class ShoppingCart extends AppCompatActivity {
         showPrice.setOnClickListener(v -> {
             try {
                 Toast.makeText(getApplicationContext(), "Total Price is " + adapter.total + "EGP", Toast.LENGTH_LONG).show();
-            }
-            catch (Exception e )
-            {
+            } catch (Exception e) {
                 Toast.makeText(this, "no products yet", Toast.LENGTH_SHORT).show();
             }
         });
@@ -73,6 +71,7 @@ public class ShoppingCart extends AppCompatActivity {
         });
 
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -89,7 +88,7 @@ public class ShoppingCart extends AppCompatActivity {
             String price = pricesArray.get(i);
             String quantity = quantityArray.get(i);
             total += Double.parseDouble(price) * Double.parseDouble(quantity);
-            product = new ProductClass(userId,id, name, price, quantity);
+            product = new ProductClass(userId, id, name, price, quantity);
             arrayOfProducts.add(product);
         }
         adapter = new CustomAdapter(this, 0, arrayOfProducts);

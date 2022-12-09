@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class ProductsDetails extends AppCompatActivity {
     EditText e_name, e_price, e_qty;
     Button add, cart, home;
-    String Prod_id, cat_id ,userId;
+    String Prod_id, cat_id, userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +47,13 @@ public class ProductsDetails extends AppCompatActivity {
 
         cart.setOnClickListener(v -> {
             Intent i = new Intent(ProductsDetails.this, ShoppingCart.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(ProductsDetails.this, HomeActivity.class);
-            i.putExtra("userId" ,userId);
+            i.putExtra("userId", userId);
             startActivity(i);
         });
     }
@@ -77,12 +77,12 @@ public class ProductsDetails extends AppCompatActivity {
                     }
                 });
     }
-    void AddCart(String Prod_id){
+
+    void AddCart(String Prod_id) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
-            if(queryDocumentSnapshots.getDocuments().size() ==0)
-            {
-                String id = db.collection("Cart").document().getId().substring(0,5);
+            if (queryDocumentSnapshots.getDocuments().size() == 0) {
+                String id = db.collection("Cart").document().getId().substring(0, 5);
                 ArrayList<String> productsQuantity = new ArrayList<>();
                 ArrayList<String> prodIds = new ArrayList<>();
                 ArrayList<String> prodNames = new ArrayList<>();
@@ -91,19 +91,15 @@ public class ProductsDetails extends AppCompatActivity {
                 prodIds.add(Prod_id);
                 prodNames.add(e_name.getText().toString());
                 prices.add(e_price.getText().toString());
-                Cart newTemp = new Cart(id, userId  , productsQuantity , prodIds , prodNames, prices);
+                Cart newTemp = new Cart(id, userId, productsQuantity, prodIds, prodNames, prices);
                 db.collection("Cart").document(id).set(newTemp).addOnSuccessListener(unused -> {
                     Toast.makeText(this, "added product to new cart", Toast.LENGTH_SHORT).show();
                 });
-            }
-            else
-            {
+            } else {
                 DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
                 Cart temp = d.toObject(Cart.class);
-                for(String s: temp.getProducts())
-                {
-                    if (s.equals(Prod_id))
-                    {
+                for (String s : temp.getProducts()) {
+                    if (s.equals(Prod_id)) {
                         Toast.makeText(this, "this product is already added", Toast.LENGTH_SHORT).show();
                         return;
                     }

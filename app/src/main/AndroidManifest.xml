@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".reportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".OrderAdapter"
+            android:exported="false" />
+        <activity
             android:name=".deleteProduct"
             android:exported="false" />
         <activity
@@ -55,11 +61,11 @@
         <activity
             android:name=".ProductsSearch"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_categories">
-        <meta-data
-            android:name="android.app.lib_name"
-            android:value="" />
+            android:label="@string/title_activity_categories"
+            android:windowSoftInputMode="adjustPan">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
         </activity>
         <activity android:name=".MakeOrder" />
         <activity

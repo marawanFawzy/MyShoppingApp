@@ -26,7 +26,7 @@ import java.util.Objects;
 
 public class ProductsSearch extends AppCompatActivity {
 
-    public String res = "" , id , userId;
+    public String res = "", id, userId;
     ArrayList<String> ids = new ArrayList<>();
     ImageView btn_scan;
     String bar = "";
@@ -36,6 +36,7 @@ public class ProductsSearch extends AppCompatActivity {
     EditText search;
     ImageView searchButton;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +67,7 @@ public class ProductsSearch extends AppCompatActivity {
             Intent products_Det = new Intent(ProductsSearch.this, ProductsDetails.class);
             products_Det.putExtra("Prod_name", arr.getItem(position));
             products_Det.putExtra("Prod_id", ids.get(position));
-            products_Det.putExtra("userId" ,userId);
+            products_Det.putExtra("userId", userId);
             startActivity(products_Det);
         });
     }
@@ -97,7 +98,7 @@ public class ProductsSearch extends AppCompatActivity {
             bar = result.getContents();
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Products")
-                    .whereEqualTo("id" , bar)
+                    .whereEqualTo("id", bar)
                     .get().addOnSuccessListener(queryDocumentSnapshots -> {
                         if (queryDocumentSnapshots.size() == 0) {
                             Toast.makeText(ProductsSearch.this, "add a Product First ", Toast.LENGTH_SHORT).show();
@@ -108,7 +109,7 @@ public class ProductsSearch extends AppCompatActivity {
                                 Intent products_Det = new Intent(ProductsSearch.this, ProductsDetails.class);
                                 products_Det.putExtra("Prod_name", temp.getName());
                                 products_Det.putExtra("Prod_id", temp.getId());
-                                products_Det.putExtra("userId" ,userId);
+                                products_Det.putExtra("userId", userId);
                                 startActivity(products_Det);
                             }
                         }
@@ -118,8 +119,7 @@ public class ProductsSearch extends AppCompatActivity {
 
     void getAllProducts() {
         arr.clear();
-        if(search.getText().toString().equals(""))
-        {
+        if (search.getText().toString().equals("")) {
             Toast.makeText(this, "please type any search text first", Toast.LENGTH_SHORT).show();
             return;
         }

@@ -22,22 +22,15 @@ import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener cdate;
-    EditText cname;
-    EditText cusername;
-    EditText cpassword;
-    EditText cbirthdate;
-    EditText cMail;
-    RadioButton gfemale;
-    RadioButton gmale;
+    EditText cname, cusername , cpassword , cbirthdate , cMail;
+    RadioButton gfemale , gmale;
     Button signup;
-    ShoppingDatabase sdb;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        sdb = new ShoppingDatabase(this);
         cname = findViewById(R.id.nameeditText);
         cusername = findViewById(R.id.usernameeditText2);
         cpassword = findViewById(R.id.passwordeditText3);

@@ -8,7 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class adminPage extends AppCompatActivity {
-    Button btnChart, newProduct, newCategory, buttonDeleteCat, EditCat, deleteProd, editProd;
+    Button btnChart, newProduct, newCategory, buttonDeleteCat, EditCat, deleteProd, editProd, report;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +21,7 @@ public class adminPage extends AppCompatActivity {
         EditCat = findViewById(R.id.EditCategory);
         deleteProd = findViewById(R.id.DeleteProduct);
         editProd = findViewById(R.id.EditProduct);
+        report = findViewById(R.id.reports);
         btnChart.setOnClickListener(v -> {
             Toast.makeText(adminPage.this, "starting the chart", Toast.LENGTH_SHORT).show();
             Intent chartIntent = new Intent(adminPage.this, chart.class);
@@ -50,5 +51,10 @@ public class adminPage extends AppCompatActivity {
             Intent chartIntent = new Intent(adminPage.this, editProduct.class);
             startActivity(chartIntent);
         });
+        report.setOnClickListener(v -> {
+            Intent chartIntent = new Intent(adminPage.this, reportsActivity.class);
+            startActivity(chartIntent);
+        });
+
     }
 }

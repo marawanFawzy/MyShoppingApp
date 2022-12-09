@@ -1,10 +1,12 @@
 package com.example.myshoppingapp.firebase;
 
 public class Products {
-    private int Quantity ;
+    private int Quantity;
     private double Price;
-    private String name , id , catId;
-    public Products(){}
+    private String name, id, catId;
+
+    public Products() {
+    }
 
     public Products(String id, int quantity, String catId, double price, String name) {
         this.id = id;

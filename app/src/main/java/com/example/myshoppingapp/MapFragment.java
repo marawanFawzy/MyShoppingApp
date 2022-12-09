@@ -16,14 +16,14 @@ public class MapFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_map , container , false);
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.Map);
         supportMapFragment.getMapAsync(googleMap -> googleMap.setOnMapClickListener(latLng -> {
             MarkerOptions markerOptions = new MarkerOptions();
             markerOptions.position(latLng);
-            markerOptions.title(latLng.latitude +" " + latLng.longitude);
+            markerOptions.title(latLng.latitude + " " + latLng.longitude);
             googleMap.clear();
-            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng , 20));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 20));
             googleMap.addMarker(markerOptions);
         }));
         return view;

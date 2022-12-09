@@ -3,18 +3,17 @@ package com.example.myshoppingapp.firebase;
 import java.util.Date;
 
 public class Orders {
-    private String id , Customer_id;
+    private String id, Customer_id;
     private Date Order_date;
-    private double Latitude;
-    private double Longitude;
-    private double total ;
-    private String name , feedback;
+    private double Latitude, Longitude, total;
+    private String name, feedback;
     private float rating;
     private Cart cart;
 
-    public Orders() {}
+    public Orders() {
+    }
 
-    public Orders(String id, String customer_id, Date order_date, double latitude, double longitude, String name , Cart cart , double total) {
+    public Orders(String id, String customer_id, Date order_date, double latitude, double longitude, String name, Cart cart, double total) {
         this.id = id;
         Customer_id = customer_id;
         Order_date = order_date;

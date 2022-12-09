@@ -3,14 +3,16 @@ package com.example.myshoppingapp.firebase;
 import java.util.ArrayList;
 
 public class Cart {
-    private String id  , customerId;
+    private String id, customerId;
     private ArrayList<String> productsQuantity;
-    private ArrayList<String>products;
-    private ArrayList<String>names;
-    private ArrayList<String>prices;
-    public Cart(){}
-    public Cart(String id ,String customerId , ArrayList<String> productsQuantity , ArrayList<String> products, ArrayList<String> names, ArrayList<String>prices)
-    {
+    private ArrayList<String> products;
+    private ArrayList<String> names;
+    private ArrayList<String> prices;
+
+    public Cart() {
+    }
+
+    public Cart(String id, String customerId, ArrayList<String> productsQuantity, ArrayList<String> products, ArrayList<String> names, ArrayList<String> prices) {
         this.id = id;
         this.customerId = customerId;
         this.productsQuantity = productsQuantity;
