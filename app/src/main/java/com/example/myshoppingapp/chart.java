@@ -11,7 +11,6 @@ import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -26,6 +25,12 @@ public class chart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
+        final int[] Colors = {
+                Color.rgb(192, 255, 140), Color.rgb(255, 247, 140),  Color.rgb(255, 208, 140),
+                Color.rgb(140, 234, 255), Color.rgb(255, 140, 157) , Color.rgb(193, 37, 82),
+                Color.rgb(255, 102, 0),   Color.rgb(245, 199, 0),    Color.rgb(106, 150, 31),
+                Color.rgb(179, 100, 53),  Color.rgb(64, 89, 128),    Color.rgb(149, 165, 124)
+        };
         barChart = findViewById(R.id.barChart);
         xAxisValues = new ArrayList<>();
         v = new ArrayList<>();
@@ -50,14 +55,14 @@ public class chart extends AppCompatActivity {
 
                         }
                     }
-                    BarDataSet barDataSet = new BarDataSet(v, "test ");
-                    barDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                    BarDataSet barDataSet = new BarDataSet(v, "products sold ");
+                    barDataSet.setColors(Colors);
                     barDataSet.setValueTextColor(Color.BLACK);
                     barDataSet.setValueTextSize(16f);
                     BarData barData = new BarData(barDataSet);
                     barChart.setFitBars(true);
                     barChart.setData(barData);
-                    barChart.getDescription().setText("test bar");
+                    barChart.getDescription().setText("products");
                     barChart.animateY(2000);
                     barChart.getXAxis().setValueFormatter(new com.github.mikephil.charting.formatter.IndexAxisValueFormatter(xAxisValues));
                 });

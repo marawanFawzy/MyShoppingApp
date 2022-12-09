@@ -35,4 +35,5 @@
     <string name="date">date</string>
     <string name="all_time">all time</string>
     <string name="get_orders">get Orders</string>
+    <string name="feedback">Feedback</string>
 </resources>
