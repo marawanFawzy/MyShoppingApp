@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +24,21 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<ProductClass> records;
     public ArrayList<String> quantity;
     public double total = 0;
+    boolean report;
+    ImageView plus, minus ;
 
 
     public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records) {
         super(context, resource, records);
         this.records = records;
         quantity = new ArrayList<>();
+        report = false;
+    }
+    public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records , boolean report) {
+        super(context, resource, records);
+        this.records = records;
+        quantity = new ArrayList<>();
+        this.report = report;
     }
 
     @NonNull
@@ -37,21 +47,28 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         final ProductClass item = getItem(position);
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_custom_adapter, parent, false);
-        TextView prodQuantity;
-        TextView productName;
-        TextView productPrice;
+        TextView prodQuantity , productName , productPrice;
         Button plusBtn, minusBtn;
         ImageButton deleteBtn;
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
         productName = convertView.findViewById(R.id.nameeditText2);
         productPrice = convertView.findViewById(R.id.priceeditText3);
+        plus = convertView.findViewById(R.id.imageViewPlus);
+        minus = convertView.findViewById(R.id.imageViewMinus);
         plusBtn = convertView.findViewById(R.id.plusbutton);
         minusBtn = convertView.findViewById(R.id.Minusbutton3);
         deleteBtn = convertView.findViewById(R.id.delete_button);
         productName.setText(item.name);
         prodQuantity.setText(item.quantity);
         productPrice.setText(item.price);
-
+        if(report)
+        {
+            plusBtn.setVisibility(View.GONE);
+            minusBtn.setVisibility(View.GONE);
+            deleteBtn.setVisibility(View.GONE);
+            plus.setVisibility(View.GONE);
+            minus.setVisibility(View.GONE);
+        }
 
         plusBtn.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();

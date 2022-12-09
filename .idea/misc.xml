@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/drawable/ic_barcode.xml" value="0.124" />
+        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout-v21/activity_reports.xml" value="0.11197916666666667" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_add_new_category.xml" value="0.264" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_add_new_product.xml" value="0.22857142857142856" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_admin_page.xml" value="0.6" />
@@ -25,7 +26,8 @@
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_products_search.xml" value="0.264" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_report_adapter.xml" value="0.4" />
-        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_reports.xml" value="0.1" />
+        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_report_details.xml" value="0.72" />
+        <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_reports.xml" value="0.32653061224489793" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/activity_shopping_cart.xml" value="0.264" />
         <entry key="..\:/Users/maraw/Desktop/MyShoppingApp/app/src/main/res/layout/fragment_map.xml" value="0.1" />
       </map>

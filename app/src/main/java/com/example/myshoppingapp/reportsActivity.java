@@ -29,7 +29,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class reportsActivity extends AppCompatActivity {
-    private final ArrayList<String> users = new ArrayList<>(), usersIds = new ArrayList<>();
+    private final ArrayList<String> users = new ArrayList<>(), usersIds = new ArrayList<>(), ordersId = new ArrayList<>();
     ArrayAdapter<String> OrderArrayAdapter;
     ListView myList;
     int SelectedPosition = 0;
@@ -50,6 +50,7 @@ public class reportsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(reportsActivity.this, reportDetails.class);
+                i.putExtra("orderId", ordersId.get(position));
                 startActivity(i);
             }
         });
@@ -98,6 +99,7 @@ public class reportsActivity extends AppCompatActivity {
         getOrders = findViewById(R.id.ButtonFindOrders);
         getOrders.setOnClickListener(v -> {
             OrderArrayAdapter.clear();
+            ordersId.clear();
             if (date.getText().toString().equals("") && !allTime.isChecked()) {
                 Toast.makeText(reportsActivity.this, "please choose date first", Toast.LENGTH_SHORT).show();
                 return;
@@ -114,19 +116,22 @@ public class reportsActivity extends AppCompatActivity {
                                     String entry = users.get(usersIds.indexOf(temp.getCustomer_id())) + " | " +
                                             temp.getCart().getProducts().size() + " Product(s) " + " | " +
                                             temp.getTotal() + " EGP " + "| " +
-                                            temp.getRating() + " Stars " +"| "+
+                                            temp.getRating() + " Stars " + "| " +
                                             temp.getOrder_date().getDate() + "/" +
                                             temp.getOrder_date().getMonth() + "/" +
-                                            (temp.getOrder_date().getYear()+1900);
+                                            (temp.getOrder_date().getYear() + 1900);
                                     if (allTime.isChecked()) {
                                         OrderArrayAdapter.add(entry);
+                                        ordersId.add(temp.getId());
                                     } else {
                                         Date d = new Date(date.getText().toString());
-                                        if (d.getDate() == temp.getOrder_date().getDate() && d.getMonth() == temp.getOrder_date().getMonth() && d.getYear() == temp.getOrder_date().getYear())
+                                        if (d.getDate() == temp.getOrder_date().getDate() && d.getMonth() == temp.getOrder_date().getMonth() && d.getYear() == temp.getOrder_date().getYear()) {
                                             OrderArrayAdapter.add(entry);
+                                            ordersId.add(temp.getId());
+                                        }
                                     }
                                 }
-                                if(OrderArrayAdapter.getCount() == 0)
+                                if (OrderArrayAdapter.getCount() == 0)
                                     Toast.makeText(reportsActivity.this, "no Orders in this date for this customer", Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -140,19 +145,22 @@ public class reportsActivity extends AppCompatActivity {
                                     Orders temp = queryDocumentSnapshots.getDocuments().get(i).toObject(Orders.class);
                                     String entry = temp.getCart().getProducts().size() + " Product(s) " + " | " +
                                             temp.getTotal() + " EGP " + "| " +
-                                            temp.getRating() + " Stars " +"| "+
+                                            temp.getRating() + " Stars " + "| " +
                                             temp.getOrder_date().getDate() + "/" +
                                             temp.getOrder_date().getMonth() + "/" +
-                                            (temp.getOrder_date().getYear()+1900);
+                                            (temp.getOrder_date().getYear() + 1900);
                                     if (allTime.isChecked()) {
                                         OrderArrayAdapter.add(entry);
+                                        ordersId.add(temp.getId());
                                     } else {
                                         Date d = new Date(date.getText().toString());
-                                        if (d.getDate() == temp.getOrder_date().getDate() && d.getMonth() == temp.getOrder_date().getMonth() && d.getYear() == temp.getOrder_date().getYear())
+                                        if (d.getDate() == temp.getOrder_date().getDate() && d.getMonth() == temp.getOrder_date().getMonth() && d.getYear() == temp.getOrder_date().getYear()) {
                                             OrderArrayAdapter.add(entry);
+                                            ordersId.add(temp.getId());
+                                        }
                                     }
                                 }
-                                if(OrderArrayAdapter.getCount() == 0)
+                                if (OrderArrayAdapter.getCount() == 0)
                                     Toast.makeText(reportsActivity.this, "no Orders in this date for this customer", Toast.LENGTH_SHORT).show();
                             }
                         });
