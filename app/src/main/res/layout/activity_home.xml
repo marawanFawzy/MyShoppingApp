@@ -20,7 +20,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
         app:layout_constraintVertical_bias="1.0" />
 
 
@@ -74,7 +73,7 @@
         android:contentDescription="@string/app_name"
         app:layout_constraintBottom_toBottomOf="@+id/cat_listview"
         app:layout_constraintEnd_toEndOf="@+id/cartbutton"
-        app:layout_constraintHorizontal_bias="0.815"
+        app:layout_constraintHorizontal_bias="0.796"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.013" />
@@ -82,13 +81,13 @@
     <ImageView
         android:id="@+id/imageView10"
         android:layout_width="62dp"
-        android:layout_height="62dp"
+        android:layout_height="51dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cartbutton"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.008"
         app:srcCompat="@drawable/shoppingcartlogoicon70706" />
 
     <Button
@@ -102,6 +101,19 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.004" />
+
+    <ImageButton
+        android:id="@+id/Payment"
+        android:layout_width="41dp"
+        android:layout_height="47dp"
+        android:background="@color/zxing_transparent"
+        app:layout_constraintBottom_toTopOf="@+id/show_cat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.613"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.166"
+        app:srcCompat="@drawable/ic_action_payment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

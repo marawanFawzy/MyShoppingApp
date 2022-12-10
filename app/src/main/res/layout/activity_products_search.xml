@@ -32,7 +32,6 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="222dp"
         android:contentDescription="search icon"
-        app:layout_constraintBottom_toTopOf="@+id/_dynamic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/search"
         app:layout_constraintTop_toTopOf="parent"
@@ -141,5 +140,19 @@
         app:layout_constraintTop_toBottomOf="@+id/cartbutton"
         app:layout_constraintVertical_bias="0.033"
         app:srcCompat="@drawable/ic_mic" />
+
+    <ImageButton
+        android:id="@+id/Payment"
+        android:layout_width="41dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/zxing_transparent"
+        app:layout_constraintBottom_toTopOf="@+id/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.613"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.166"
+        app:srcCompat="@drawable/ic_action_payment" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
