@@ -1,6 +1,9 @@
 package com.example.myshoppingapp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,12 +23,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<ProductClass> records;
     public ArrayList<String> quantity;
     public double total = 0;
     boolean report;
     ImageView plus, minus ;
+    CircleImageView ProductImage;
+    String photo;
 
 
     public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records) {
@@ -50,6 +57,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         TextView prodQuantity , productName , productPrice;
         Button plusBtn, minusBtn;
         ImageButton deleteBtn;
+        ProductImage = convertView.findViewById(R.id.ProductImageAdapter);
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
         productName = convertView.findViewById(R.id.nameeditText2);
         productPrice = convertView.findViewById(R.id.priceeditText3);
@@ -61,6 +69,8 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         productName.setText(item.name);
         prodQuantity.setText(item.quantity);
         productPrice.setText(item.price);
+        photo = item.image;
+        ProductImage.setImageBitmap(StringToBitMap(photo));
         if(report)
         {
             plusBtn.setVisibility(View.GONE);
@@ -140,4 +150,15 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         });
         return convertView;
     }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
+    }
 }
+

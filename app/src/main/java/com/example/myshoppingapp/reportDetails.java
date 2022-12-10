@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Orders;
+import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -47,18 +48,28 @@ public class reportDetails extends AppCompatActivity {
     }
 
     public void InsertIntoAdapter(String userId, ArrayList<String> ids, ArrayList<String> namesArray, ArrayList<String> pricesArray, ArrayList<String> quantityArray) {
-        ProductClass product;
         arrayOfProducts = new ArrayList<>();
         for (int i = 0; i < namesArray.size(); i++) {
-            String id = ids.get(i);
-            String name = namesArray.get(i);
-            String price = pricesArray.get(i);
-            String quantity = quantityArray.get(i);
-            product = new ProductClass(userId, id, name, price, quantity);
-            arrayOfProducts.add(product);
+            String id, name ,  price, quantity;
+            id = ids.get(i);
+            name = namesArray.get(i);
+            price = pricesArray.get(i);
+            quantity = quantityArray.get(i);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            int finalI = i;
+            db.collection("Products").document(ids.get(i)).get().addOnSuccessListener(documentSnapshot -> {
+                ProductClass product;
+                String image;
+                Products temp = documentSnapshot.toObject(Products.class);
+                image = temp.getPhoto();
+                product = new ProductClass(userId, id, name, price, quantity, image);
+                arrayOfProducts.add(product);
+                if (finalI == namesArray.size()-1) {
+                    adapter = new CustomAdapter(this, 0, arrayOfProducts , true);
+                    myList.setAdapter(adapter);
+                }
+            });
         }
-        adapter = new CustomAdapter(this, 0, arrayOfProducts , true);
-        myList.setAdapter(adapter);
     }
 
     void getOrder(String orderId, ArrayList<String> NamesArray, ArrayList<String> PricesArray, ArrayList<String> quantityArray, ArrayList<String> ids) {

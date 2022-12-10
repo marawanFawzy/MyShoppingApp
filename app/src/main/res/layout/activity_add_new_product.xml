@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616" />
+        app:layout_constraintVertical_bias="0.926" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -122,6 +122,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.471" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ProductImage"
+        android:layout_width="178dp"
+        android:layout_height="161dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_baseline_image_200"
+        app:civ_border_color="@color/colorPrimary"
+        app:civ_border_width="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/ButtonUpload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.931" />
+
+    <Button
+        android:id="@+id/ButtonUpload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UploadImage"
+        app:layout_constraintBottom_toTopOf="@+id/buttonAddProduct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

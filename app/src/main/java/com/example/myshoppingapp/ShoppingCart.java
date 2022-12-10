@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Cart;
+import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,6 +29,7 @@ public class ShoppingCart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
+        Toast.makeText(this, "Start", Toast.LENGTH_SHORT).show();
         addNewItem = findViewById(R.id.addnewbutton);
         makeOrder = findViewById(R.id.Orderbutton2);
         showPrice = findViewById(R.id.totalpricebutton3);
@@ -75,25 +77,39 @@ public class ShoppingCart extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
-        adapter.clear();
+        arrayOfProducts.clear();
+        NamesArray.clear();
+        PricesArray.clear();
+        quantityArray.clear();
+        ids.clear();
         getCart(userId, NamesArray, PricesArray, quantityArray, ids);
     }
 
     public void InsertIntoAdapter(String userId, ArrayList<String> ids, ArrayList<String> namesArray, ArrayList<String> pricesArray, ArrayList<String> quantityArray) {
-        ProductClass product;
         arrayOfProducts = new ArrayList<>();
         for (int i = 0; i < namesArray.size(); i++) {
             String id = ids.get(i);
             String name = namesArray.get(i);
             String price = pricesArray.get(i);
             String quantity = quantityArray.get(i);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
             total += Double.parseDouble(price) * Double.parseDouble(quantity);
-            product = new ProductClass(userId, id, name, price, quantity);
-            arrayOfProducts.add(product);
+            int finalI = i;
+            db.collection("Products").document(ids.get(i)).get().addOnSuccessListener(documentSnapshot -> {
+                ProductClass product;
+                String image;
+                Products temp = documentSnapshot.toObject(Products.class);
+                image = temp.getPhoto();
+                product = new ProductClass(userId, id, name, price, quantity, image);
+                arrayOfProducts.add(product);
+                if (finalI == namesArray.size()-1) {
+                    adapter = new CustomAdapter(this, 0, arrayOfProducts , true);
+                    adapter.total = total;
+                    myList.setAdapter(adapter);
+                }
+            });
+
         }
-        adapter = new CustomAdapter(this, 0, arrayOfProducts);
-        adapter.total = total;
-        myList.setAdapter(adapter);
     }
 
     void getCart(String userId, ArrayList<String> NamesArray, ArrayList<String> PricesArray, ArrayList<String> quantityArray, ArrayList<String> ids) {

@@ -1,6 +1,9 @@
 package com.example.myshoppingapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,17 +22,21 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class deleteProduct extends AppCompatActivity {
     private final ArrayList<String> paths = new ArrayList<>();
     private final ArrayList<String> pathsProducts = new ArrayList<>();
     private String SelectedCategory, SelectedProduct, SelectedCategoryId;
     Button delete;
     Spinner spinner, spinnerProducts;
+    CircleImageView ProductImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delete_product);
+        ProductImage = findViewById(R.id.ProductImageDelete);
         spinner = findViewById(R.id.spinner);
         paths.add("");
         pathsProducts.add("");
@@ -75,6 +82,17 @@ public class deleteProduct extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedProduct = parent.getItemAtPosition(position).toString();
                 delete.setEnabled(!SelectedCategory.equals(""));
+                if(!SelectedCategory.equals(""))
+                {
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("Products")
+                            .whereEqualTo("name", SelectedProduct)
+                            .whereEqualTo("catId", SelectedCategoryId)
+                            .get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                Products Temp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
+                                ProductImage.setImageBitmap(StringToBitMap(Temp.getPhoto()));
+                            });
+                }
 
             }
 
@@ -91,6 +109,7 @@ public class deleteProduct extends AppCompatActivity {
                     .get().addOnSuccessListener(queryDocumentSnapshots1 -> {
                         Products deleteTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
                         db.collection("Products").document(deleteTemp.getId()).delete().addOnSuccessListener(unused -> {
+                            pathsProducts.remove(SelectedProduct);
                             spinnerProducts.setSelection(0);
                             Toast.makeText(this, "deleted " + SelectedProduct, Toast.LENGTH_SHORT).show();
                         });
@@ -140,5 +159,15 @@ public class deleteProduct extends AppCompatActivity {
             }
         });
 
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

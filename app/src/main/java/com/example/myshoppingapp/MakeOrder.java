@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Orders;
+import com.example.myshoppingapp.firebase.Products;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -90,6 +91,14 @@ public class MakeOrder extends AppCompatActivity {
                     if (queryDocumentSnapshots.getDocuments().size() != 0) {
                         id = db.collection("Orders").document().getId().substring(0, 5);
                         Cart temp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                        for (int i = 0 ; i < temp.getProducts().size(); i++) {
+                            int finalI = i;
+                            db.collection("Products").whereEqualTo("id" , temp.getProducts().get(i)).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                Products ProductTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
+                                db.collection("Products").document(temp.getProducts().get(finalI)).update("quantity" , ProductTemp.getQuantity()-Integer.parseInt(temp.getProductsQuantity().get(finalI)));
+                            });
+
+                        }
                         Orders newTemp = new Orders(id, userId, date, Double.parseDouble(Latitude.getText().toString()), Double.parseDouble(Longitude.getText().toString()), nameOfReceiver.getText().toString(), temp , total);
                         newTemp.setRating(simpleRatingBar.getRating());
                         newTemp.setFeedback(feedback.getText().toString());
@@ -104,6 +113,7 @@ public class MakeOrder extends AppCompatActivity {
                                 simpleRatingBar.setRating(0);
                             });
                         });
+
                     }
                     else Toast.makeText(MakeOrder.this, "please fill your cart first", Toast.LENGTH_SHORT).show();
                 });

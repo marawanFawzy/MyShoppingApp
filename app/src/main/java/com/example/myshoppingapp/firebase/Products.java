@@ -4,16 +4,18 @@ public class Products {
     private int Quantity;
     private double Price;
     private String name, id, catId;
+    private String photo;
 
     public Products() {
     }
 
-    public Products(String id, int quantity, String catId, double price, String name) {
+    public Products(String id, int quantity, String catId, double price, String name ,String photo) {
         this.id = id;
         Quantity = quantity;
         this.catId = catId;
         Price = price;
         this.name = name;
+        this.photo = photo;
     }
 
     public String getId() {
@@ -54,5 +56,13 @@ public class Products {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

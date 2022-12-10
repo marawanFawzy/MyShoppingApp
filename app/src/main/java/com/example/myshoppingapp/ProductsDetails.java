@@ -1,7 +1,10 @@
 package com.example.myshoppingapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,15 +18,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ProductsDetails extends AppCompatActivity {
     EditText e_name, e_price, e_qty;
     Button add, cart, home;
-    String Prod_id, cat_id, userId;
+    String Prod_id, userId;
+    CircleImageView ProductImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_details);
+        ProductImage = findViewById(R.id.ProductImageDetails);
         e_name = findViewById(R.id.editTextP_Name);
         e_price = findViewById(R.id.editTextPrice);
         e_qty = findViewById(R.id.quantityEditText);
@@ -34,16 +41,6 @@ public class ProductsDetails extends AppCompatActivity {
         Prod_id = ii.getStringExtra("Prod_id");
         userId = ii.getStringExtra("userId");
         getProduct(Prod_id);
-
-        if (e_qty.getText().toString().equals("0")) {
-            add.setEnabled(false);
-            Toast.makeText(getApplicationContext(), "Sorry, The quantity carried out", Toast.LENGTH_SHORT).show();
-        } else {
-            add.setOnClickListener(v -> {
-                add.setEnabled(true);
-                AddCart(Prod_id);
-            });
-        }
 
         cart.setOnClickListener(v -> {
             Intent i = new Intent(ProductsDetails.this, ShoppingCart.class);
@@ -65,6 +62,7 @@ public class ProductsDetails extends AppCompatActivity {
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.size() == 0) {
                         Toast.makeText(ProductsDetails.this, "not found", Toast.LENGTH_SHORT).show();
+                        return;
                     } else {
                         for (DocumentSnapshot d : queryDocumentSnapshots) {
                             Products temp = d.toObject(Products.class);
@@ -72,8 +70,18 @@ public class ProductsDetails extends AppCompatActivity {
                                 e_name.setText(temp.getName());
                                 e_price.setText(String.valueOf(temp.getPrice()));
                                 e_qty.setText(String.valueOf(temp.getQuantity()));
+                                ProductImage.setImageBitmap(StringToBitMap(temp.getPhoto()));
                             }
                         }
+                    }
+                    if (e_qty.getText().toString().equals("0")) {
+                        add.setEnabled(false);
+                        Toast.makeText(getApplicationContext(), "Sorry, The quantity carried out", Toast.LENGTH_SHORT).show();
+                    } else {
+                        add.setOnClickListener(v -> {
+                            add.setEnabled(true);
+                            AddCart(Prod_id);
+                        });
                     }
                 });
     }
@@ -115,5 +123,14 @@ public class ProductsDetails extends AppCompatActivity {
             }
         });
 
+    }
+    public Bitmap StringToBitMap(String encodedString){
+        try {
+            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+        } catch(Exception e) {
+            e.getMessage();
+            return null;
+        }
     }
 }

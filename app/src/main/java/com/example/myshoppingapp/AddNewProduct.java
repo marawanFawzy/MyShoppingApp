@@ -1,6 +1,11 @@
 package com.example.myshoppingapp;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,29 +20,43 @@ import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddNewProduct extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private final ArrayList<String> paths = new ArrayList<>();
     EditText ProductName, ProductQuantity, price;
     private String SelectedCategory, SelectedCategoryId;
-    Button buttonAddProduct;
+    Button buttonAddProduct, ButtonUpload;
+    Uri filePath;
+    FirebaseStorage storage;
+    StorageReference storageReference;
+    CircleImageView ProductImage;
+    String photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_product);
+        ProductImage = findViewById(R.id.ProductImage);
         buttonAddProduct = findViewById(R.id.buttonAddProduct);
+        ButtonUpload = findViewById(R.id.ButtonUpload);
+        ButtonUpload.setOnClickListener(v -> SelectImage());
+        storage = FirebaseStorage.getInstance();
+        storageReference = storage.getReference();
         ProductName = findViewById(R.id.ProductNameEdit);
         ProductQuantity = findViewById(R.id.ProductQuantityAdd);
         price = findViewById(R.id.priceAdd);
         getAllCategories();
         paths.add("");
         Spinner spinner = findViewById(R.id.spinner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(AddNewProduct.this,
-                android.R.layout.simple_spinner_item, paths);
-
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(AddNewProduct.this, android.R.layout.simple_spinner_item, paths);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
@@ -71,7 +90,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                                                 return;
                                             }
                                             String id = db.collection("Products").document().getId().substring(0, 5);
-                                            Products newtemp = new Products(id, Integer.parseInt(ProductQuantity.getText().toString()), SelectedCategoryId, Integer.parseInt(price.getText().toString()), ProductName.getText().toString());
+                                            Products newtemp = new Products(id, Integer.parseInt(ProductQuantity.getText().toString()), SelectedCategoryId, Integer.parseInt(price.getText().toString()), ProductName.getText().toString(), photo);
 
                                             db.collection("Products").document(id).set(newtemp).addOnSuccessListener(unused -> {
                                                 Toast.makeText(AddNewProduct.this, "added", Toast.LENGTH_SHORT).show();
@@ -81,10 +100,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                                                 spinner.setSelection(0);
                                             });
                                         });
-
                             });
-
-
                 }
             }
         });
@@ -112,5 +128,33 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {
+    }
+
+    private void SelectImage() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Image from here..."), 22);
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 22 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                ProductImage.setImageBitmap(bitmap);
+                photo = BitMapToString(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 5, baos);
+        byte[] b = baos.toByteArray();
+        return Base64.encodeToString(b, Base64.DEFAULT);
     }
 }
