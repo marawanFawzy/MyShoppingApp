@@ -2,6 +2,7 @@ package com.example.myshoppingapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -111,6 +112,8 @@ public class deleteProduct extends AppCompatActivity {
                         db.collection("Products").document(deleteTemp.getId()).delete().addOnSuccessListener(unused -> {
                             pathsProducts.remove(SelectedProduct);
                             spinnerProducts.setSelection(0);
+                            Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
+                            ProductImage.setImageDrawable(myDrawable);
                             Toast.makeText(this, "deleted " + SelectedProduct, Toast.LENGTH_SHORT).show();
                         });
                     });

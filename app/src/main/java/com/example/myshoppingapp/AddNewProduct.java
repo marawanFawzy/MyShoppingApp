@@ -2,6 +2,7 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -98,6 +99,8 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                                                 price.setText("");
                                                 ProductName.setText("");
                                                 spinner.setSelection(0);
+                                                Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
+                                                ProductImage.setImageDrawable(myDrawable);
                                             });
                                         });
                             });

@@ -3,6 +3,7 @@ package com.example.myshoppingapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -23,8 +24,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,8 +39,6 @@ public class editProduct extends AppCompatActivity {
     Spinner spinner, spinnerProducts;
     EditText name, quantity, price;
     Uri filePath;
-    FirebaseStorage storage;
-    StorageReference storageReference;
     CircleImageView ProductImage;
     String newPhoto = "";
 
@@ -144,6 +141,9 @@ public class editProduct extends AppCompatActivity {
                         }
                         db.collection("Products").document(EditTemp.getId()).set(EditTemp).addOnSuccessListener(unused -> {
                             spinnerProducts.setSelection(0);
+                            newPhoto = "";
+                            Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
+                            ProductImage.setImageDrawable(myDrawable);
                             Toast.makeText(this, "updated " + SelectedProduct, Toast.LENGTH_SHORT).show();
                         });
                     });
@@ -225,7 +225,7 @@ public class editProduct extends AppCompatActivity {
     }
     public String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 5, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 10, baos);
         byte[] b = baos.toByteArray();
         return Base64.encodeToString(b, Base64.DEFAULT);
     }
