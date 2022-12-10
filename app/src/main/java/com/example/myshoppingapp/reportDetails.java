@@ -1,5 +1,6 @@
 package com.example.myshoppingapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -72,6 +73,7 @@ public class reportDetails extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     void getOrder(String orderId, ArrayList<String> NamesArray, ArrayList<String> PricesArray, ArrayList<String> quantityArray, ArrayList<String> ids) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Orders")
@@ -85,7 +87,7 @@ public class reportDetails extends AppCompatActivity {
                         DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
                         Orders order = d.toObject(Orders.class);
                         rate.setRating(order.getRating());
-                        totalText.setText(String.valueOf(order.getTotal()) + " EGP");
+                        totalText.setText(order.getTotal() + " EGP");
                         name.setText(order.getName());
                         date.setText(String.valueOf(order.getOrder_date()));
                         FeedbackView.setText(order.getFeedback());

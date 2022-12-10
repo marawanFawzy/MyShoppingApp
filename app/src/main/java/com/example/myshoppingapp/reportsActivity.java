@@ -46,13 +46,10 @@ public class reportsActivity extends AppCompatActivity {
         myList = findViewById(R.id.Orders_listview);
         OrderArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         myList.setAdapter(OrderArrayAdapter);
-        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(reportsActivity.this, reportDetails.class);
-                i.putExtra("orderId", ordersId.get(position));
-                startActivity(i);
-            }
+        myList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent i = new Intent(reportsActivity.this, reportDetails.class);
+            i.putExtra("orderId", ordersId.get(position));
+            startActivity(i);
         });
         allTime = findViewById(R.id.allTimeCheckBox);
         allTime.setOnCheckedChangeListener((buttonView, isChecked) -> {
