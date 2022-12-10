@@ -191,6 +191,7 @@
         android:id="@+id/Payment"
         android:layout_width="41dp"
         android:layout_height="47dp"
+
         android:background="@color/zxing_transparent"
         app:layout_constraintBottom_toTopOf="@+id/ProductImageDetails"
         app:layout_constraintEnd_toEndOf="parent"

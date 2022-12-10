@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -35,12 +37,17 @@ public class ProductsSearch extends AppCompatActivity {
     ArrayAdapter<String> arr;
     EditText search;
     ImageView searchButton;
+    Button cart, home;
+    ImageButton payment;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_search);
+        payment = findViewById(R.id.Payment);
+        cart = findViewById(R.id.cartbutton);
+        home = findViewById(R.id.homebutton);
         mylist = findViewById(R.id.Products_listview);
         arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         mylist.setAdapter(arr);
@@ -69,6 +76,22 @@ public class ProductsSearch extends AppCompatActivity {
             products_Det.putExtra("Prod_id", ids.get(position));
             products_Det.putExtra("userId", userId);
             startActivity(products_Det);
+        });
+        cart.setOnClickListener(v -> {
+            Intent i = new Intent(ProductsSearch.this, ShoppingCart.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+
+        home.setOnClickListener(v -> {
+            Intent i = new Intent(ProductsSearch.this, HomeActivity.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        payment.setOnClickListener(v->{
+            Intent i = new Intent(ProductsSearch.this, AddPayment.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
         });
     }
 

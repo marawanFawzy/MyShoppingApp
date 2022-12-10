@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/Card_Number"
-        android:inputType="textPersonName"
+        android:inputType="number"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,26 +40,42 @@
         android:textSize="22sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintHorizontal_bias="0.137"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.373" />
+        app:layout_constraintVertical_bias="0.359" />
 
     <EditText
-        android:id="@+id/ExpireDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/ExpireDateMonth"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
         android:ems="10"
-        android:hint="@string/ExpireDate"
+        android:hint="@string/month"
         android:importantForAutofill="no"
         android:inputType="date"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintHorizontal_bias="0.554"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.368" />
+        app:layout_constraintVertical_bias="0.357" />
+
+    <EditText
+        android:id="@+id/ExpireDateYear"
+        android:layout_width="50dp"
+        android:layout_height="48dp"
+        android:ems="10"
+        android:hint="@string/ExpireDateYear"
+        android:importantForAutofill="no"
+        android:inputType="date"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.77"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.357" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -101,5 +117,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.699" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="/"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/CVV"
+        app:layout_constraintEnd_toStartOf="@+id/ExpireDateYear"
+        app:layout_constraintStart_toEndOf="@+id/ExpireDateMonth"
+        app:layout_constraintTop_toBottomOf="@+id/CardNumber" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

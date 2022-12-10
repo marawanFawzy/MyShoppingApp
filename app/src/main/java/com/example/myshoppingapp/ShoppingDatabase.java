@@ -92,6 +92,7 @@ public class ShoppingDatabase extends SQLiteOpenHelper {
         CustomerRegesiter.close();
     }
 
+    @SuppressLint("Range")
     public Cursor CheckUser(String username, String pass) {
         CustomerRegesiter = this.getReadableDatabase();
         Cursor desireUser = CustomerRegesiter.rawQuery("select * from Customers where Username like '" + username + "' ", null);

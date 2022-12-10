@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +26,14 @@ public class ProductsDetails extends AppCompatActivity {
     Button add, cart, home;
     String Prod_id, userId;
     CircleImageView ProductImage;
+    ImageButton Payment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products_details);
         ProductImage = findViewById(R.id.ProductImageDetails);
+        Payment = findViewById(R.id.Payment);
         e_name = findViewById(R.id.editTextP_Name);
         e_price = findViewById(R.id.editTextPrice);
         e_qty = findViewById(R.id.quantityEditText);
@@ -50,6 +53,11 @@ public class ProductsDetails extends AppCompatActivity {
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(ProductsDetails.this, HomeActivity.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        Payment.setOnClickListener(v->{
+            Intent i = new Intent(ProductsDetails.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });

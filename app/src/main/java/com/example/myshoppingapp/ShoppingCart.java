@@ -3,6 +3,7 @@ package com.example.myshoppingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,12 +25,12 @@ public class ShoppingCart extends AppCompatActivity {
     CustomAdapter adapter;
     double total = 0.0;
     Button addNewItem, makeOrder, showPrice, home;
-
+    ImageButton payment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_shopping_cart);
-        Toast.makeText(this, "Start", Toast.LENGTH_SHORT).show();
+        payment = findViewById(R.id.Payment);
         addNewItem = findViewById(R.id.addnewbutton);
         makeOrder = findViewById(R.id.Orderbutton2);
         showPrice = findViewById(R.id.totalpricebutton3);
@@ -68,6 +69,11 @@ public class ShoppingCart extends AppCompatActivity {
         });
         addNewItem.setOnClickListener(v -> {
             Intent i = new Intent(ShoppingCart.this, HomeActivity.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        payment.setOnClickListener(v->{
+            Intent i = new Intent(ShoppingCart.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });

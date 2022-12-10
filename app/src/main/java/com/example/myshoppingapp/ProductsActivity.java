@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,12 +24,13 @@ public class ProductsActivity extends AppCompatActivity {
     Button home;
     ArrayList<String> ids = new ArrayList<>();
     ArrayAdapter<String> arr;
+    ImageButton payment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
-
+        payment = findViewById(R.id.Payment);
         t = findViewById(R.id.cat_n_Textview);
         mylist = findViewById(R.id.Products_list);
         cart = findViewById(R.id.cartbutton);
@@ -61,6 +63,11 @@ public class ProductsActivity extends AppCompatActivity {
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(ProductsActivity.this, HomeActivity.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        payment.setOnClickListener(v->{
+            Intent i = new Intent(ProductsActivity.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });

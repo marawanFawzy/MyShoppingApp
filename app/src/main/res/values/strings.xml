@@ -44,4 +44,6 @@
     <string name="Card_Number">Card Number</string>
     <string name="ExpireDate">Expire Date</string>
     <string name="CVV">CVV</string>
+    <string name="month">M</string>
+    <string name="ExpireDateYear">Y</string>
 </resources>

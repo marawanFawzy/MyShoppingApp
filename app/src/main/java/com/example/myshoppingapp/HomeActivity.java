@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,12 +22,14 @@ public class HomeActivity extends AppCompatActivity {
     Button category, cart, home, search;
     ArrayAdapter<String> arr;
     ArrayList<String> catIds = new ArrayList<>();
+    ImageButton payment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         setContentView(R.layout.activity_home);
+        payment = findViewById(R.id.Payment);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         search = findViewById(R.id.searchbtn);
@@ -52,6 +55,11 @@ public class HomeActivity extends AppCompatActivity {
         });
         search.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, ProductsSearch.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        payment.setOnClickListener(v->{
+            Intent i = new Intent(HomeActivity.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });

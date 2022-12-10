@@ -86,7 +86,6 @@
         android:layout_height="51dp"
         android:background="@android:color/transparent"
         android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toBottomOf="@+id/cat_listview"
         app:layout_constraintEnd_toEndOf="@+id/cartbutton"
         app:layout_constraintHorizontal_bias="0.815"
         app:layout_constraintStart_toStartOf="parent"
