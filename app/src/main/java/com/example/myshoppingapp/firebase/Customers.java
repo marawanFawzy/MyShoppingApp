@@ -3,10 +3,10 @@ package com.example.myshoppingapp.firebase;
 import java.util.Date;
 
 public class Customers {
-    private String id;
-    private String name, Username, Password, Email, gender;
+    private String id , name, Username, Password, Email, gender;
     private Date Birthdate;
     private boolean flag;
+    private CreditCard creditCard;
 
     public Customers() {
     }
@@ -85,5 +85,13 @@ public class Customers {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+
+    public CreditCard getCreditCard() {
+        return creditCard;
+    }
+
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 }

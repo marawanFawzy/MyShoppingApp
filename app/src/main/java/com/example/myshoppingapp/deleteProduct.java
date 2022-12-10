@@ -83,7 +83,7 @@ public class deleteProduct extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedProduct = parent.getItemAtPosition(position).toString();
                 delete.setEnabled(!SelectedCategory.equals(""));
-                if(!SelectedCategory.equals(""))
+                if(!SelectedProduct.equals(""))
                 {
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection("Products")
