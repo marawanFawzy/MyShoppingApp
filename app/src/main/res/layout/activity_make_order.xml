@@ -174,23 +174,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.925"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
         app:layout_constraintVertical_bias="0.041" />
 
     <EditText
         android:id="@+id/FeedbackEditText"
-        android:layout_width="202dp"
-        android:layout_height="105dp"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
         android:ems="10"
         android:hint="Feedback"
         android:inputType="textMultiLine"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextLongitude"
-        app:layout_constraintVertical_bias="0.291" />
+        app:layout_constraintVertical_bias="0.226" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -199,23 +198,34 @@
         android:text="Feedback"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextPrice"
-        app:layout_constraintHorizontal_bias="0.121"
+        app:layout_constraintEnd_toStartOf="@+id/FeedbackEditText"
+        app:layout_constraintHorizontal_bias="0.016"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.646" />
+        app:layout_constraintVertical_bias="0.606" />
 
     <RatingBar
         android:id="@+id/simpleRatingBar"
         android:layout_width="238dp"
         android:layout_height="40dp"
+        android:progressTint="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/confirm"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.433"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/FeedbackEditText"
-        app:layout_constraintVertical_bias="0.36"
-        android:progressTint="@color/colorPrimary"
+        app:layout_constraintVertical_bias="0.713"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <Spinner
+        android:id="@+id/spinnerPaymentMethod"
+        android:layout_width="230dp"
+        android:layout_height="39dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.702" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

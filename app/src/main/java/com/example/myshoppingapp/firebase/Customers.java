@@ -3,7 +3,7 @@ package com.example.myshoppingapp.firebase;
 import java.util.Date;
 
 public class Customers {
-    private String id , name, Username, Password, Email, gender;
+    private String id , name, Username, Password, Email, gender , SSN;
     private Date Birthdate;
     private boolean flag;
     private CreditCard creditCard;
@@ -11,7 +11,7 @@ public class Customers {
     public Customers() {
     }
 
-    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender, boolean flag) {
+    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender , String SSN, boolean flag) {
         this.id = id;
         this.name = name;
         Username = username;
@@ -20,6 +20,19 @@ public class Customers {
         Email = email;
         this.gender = gender;
         this.flag = flag;
+        this.SSN = SSN;
+        creditCard = null;
+    }
+    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender , CreditCard creditCard, boolean flag) {
+        this.id = id;
+        this.name = name;
+        Username = username;
+        Password = password;
+        Birthdate = birthdate;
+        Email = email;
+        this.gender = gender;
+        this.flag = flag;
+        this.creditCard = creditCard;
     }
 
     public String getId() {
@@ -93,5 +106,13 @@ public class Customers {
 
     public void setCreditCard(CreditCard creditCard) {
         this.creditCard = creditCard;
+    }
+
+    public String getSSN() {
+        return SSN;
+    }
+
+    public void setSSN(String SSN) {
+        this.SSN = SSN;
     }
 }

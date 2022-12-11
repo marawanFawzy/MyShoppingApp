@@ -88,6 +88,8 @@ public class ShoppingCart extends AppCompatActivity {
         PricesArray.clear();
         quantityArray.clear();
         ids.clear();
+        adapter.clear();
+        total = 0 ;
         getCart(userId, NamesArray, PricesArray, quantityArray, ids);
     }
 

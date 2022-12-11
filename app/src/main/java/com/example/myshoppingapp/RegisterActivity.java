@@ -22,7 +22,7 @@ import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener cdate;
-    EditText cname, cusername , cpassword , cbirthdate , cMail;
+    EditText cname, cusername , cpassword , cbirthdate , cMail , cSSN;
     RadioButton gfemale , gmale;
     Button signup;
 
@@ -36,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         cpassword = findViewById(R.id.passwordeditText3);
         cbirthdate = findViewById(R.id.birthddateeditText4);
         cMail = findViewById(R.id.MailEditText);
+        cSSN = findViewById(R.id.SSNText);
         gfemale = findViewById(R.id.female);
         gmale = findViewById(R.id.male);
         signup = findViewById(R.id.btnsign);
@@ -62,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity {
             String p = cpassword.getText().toString();
             String b = cbirthdate.getText().toString();
             String Mail = cMail.getText().toString();
+            String SSN = cSSN.getText().toString();
             if (gfemale.isChecked()) {
                 gender = "Female";
             } else if (gmale.isChecked()) {
@@ -75,10 +77,12 @@ public class RegisterActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Please enter your Password", Toast.LENGTH_SHORT).show();
             else if (gender.equals(""))
                 Toast.makeText(getApplicationContext(), "Please enter your Gender", Toast.LENGTH_SHORT).show();
-            else if (cbirthdate.getText().toString().equals("Select your Birthdate"))
+            else if (cbirthdate.getText().toString().equals(""))
                 Toast.makeText(getApplicationContext(), "Please enter your Birth Date", Toast.LENGTH_SHORT).show();
             else if (cMail.getText().toString().equals(""))
-                Toast.makeText(getApplicationContext(), "Please enter your Job", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Please enter your Email", Toast.LENGTH_SHORT).show();
+            else if (cSSN.getText().toString().equals(""))
+                Toast.makeText(getApplicationContext(), "Please enter your SSN", Toast.LENGTH_SHORT).show();
             else {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String finalGender = gender;
@@ -93,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                             else {
                                 String id = db.collection("Customers").document().getId().substring(0, 5);
                                 Date date = new Date(b);
-                                Customers newTemp = new Customers(id, n, un, p, date, Mail , finalGender, false);
+                                Customers newTemp = new Customers(id, n, un, p, date, Mail , finalGender , SSN, false);
                                 db.collection("Customers").document(id).set(newTemp);
                                 Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                                 startActivity(i);

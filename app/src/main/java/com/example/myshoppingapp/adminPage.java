@@ -3,7 +3,6 @@ package com.example.myshoppingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,7 +22,6 @@ public class adminPage extends AppCompatActivity {
         editProd = findViewById(R.id.EditProduct);
         report = findViewById(R.id.reports);
         btnChart.setOnClickListener(v -> {
-            Toast.makeText(adminPage.this, "starting the chart", Toast.LENGTH_SHORT).show();
             Intent chartIntent = new Intent(adminPage.this, chart.class);
             startActivity(chartIntent);
         });

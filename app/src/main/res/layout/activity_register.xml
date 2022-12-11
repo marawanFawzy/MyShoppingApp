@@ -8,6 +8,38 @@
     tools:context=".RegisterActivity">
 
 
+    <TextView
+        android:id="@+id/nametxt2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SSN :"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/usernametxt"
+        app:layout_constraintEnd_toStartOf="@+id/nameeditText"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.847" />
+
+    <EditText
+        android:id="@+id/SSNText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="SSN"
+        android:inputType="number"
+        android:minHeight="48dp"
+        android:maxLength="14"
+        android:textColorHint="#757575"
+        app:layout_constraintBottom_toTopOf="@+id/usernameeditText2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="222dp"
@@ -32,17 +64,102 @@
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/usernameeditText2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.86"
+        app:layout_constraintHorizontal_bias="0.865"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.923"
+        app:layout_constraintVertical_bias="0.854"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/nametxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Name :"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/usernametxt"
+        app:layout_constraintEnd_toStartOf="@+id/nameeditText"
+        app:layout_constraintHorizontal_bias="0.424"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.4" />
+
+    <TextView
+        android:id="@+id/usernametxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username :"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toStartOf="@+id/usernameeditText2"
+        app:layout_constraintHorizontal_bias="0.537"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nameeditText"
+        app:layout_constraintVertical_bias="0.736" />
+
+    <TextView
+        android:id="@+id/gendertxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender :"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.123"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/birthdatetxt"
+        app:layout_constraintVertical_bias="0.48" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password:"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/passwordeditText3"
+        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.628" />
+
+    <TextView
+        android:id="@+id/birthdatetxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BirthDate :"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/birthddateeditText4"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.696" />
+
+
+    <TextView
+        android:id="@+id/MailText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mail :"
+        android:textColor="@color/colorPrimary"
+        android:textSize="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/gendertxt"
+        app:layout_constraintEnd_toStartOf="@+id/MailEditText"
+        app:layout_constraintHorizontal_bias="0.452"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/birthdatetxt"
+        app:layout_constraintVertical_bias="0.415" />
 
     <EditText
         android:id="@+id/usernameeditText2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="376dp"
+
         android:ems="10"
         android:hint="username"
         android:inputType="textPersonName"
@@ -50,10 +167,10 @@
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/birthddateeditText4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintHorizontal_bias="0.865"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.877"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
@@ -67,24 +184,24 @@
         android:textColorHint="#757575"
         app:layout_constraintBottom_toTopOf="@+id/birthddateeditText4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.865"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/usernameeditText2"
-        app:layout_constraintVertical_bias="0.307" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <EditText
         android:id="@+id/birthddateeditText4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="500dp"
+        android:layout_marginTop="480dp"
         android:ems="10"
         android:hint="Select your Birthdate"
         android:inputType="none"
-        android:textIsSelectable="true"
         android:minHeight="48dp"
         android:textColorHint="#757575"
+        android:textIsSelectable="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.85"
+        app:layout_constraintHorizontal_bias="0.86"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,15 +210,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:inputType="textPersonName"
         android:hint="Mail"
+        android:inputType="textPersonName"
         android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintHorizontal_bias="0.865"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/birthddateeditText4"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="0.025"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <RadioGroup
@@ -111,17 +228,19 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/btnsign"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.961"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MailEditText">
+        app:layout_constraintTop_toBottomOf="@+id/MailEditText"
+        app:layout_constraintVertical_bias="0.361">
 
         <RadioButton
             android:id="@+id/female"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
             android:buttonTint="@color/colorPrimary"
             android:minHeight="48dp"
             android:text="Female"
-            android:layout_marginRight="20dp"
             app:layout_constraintBottom_toTopOf="@+id/btnsign"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.31"
@@ -144,89 +263,6 @@
             app:layout_constraintTop_toBottomOf="@+id/MailEditText"
             app:layout_constraintVertical_bias="0.222" />
     </RadioGroup>
-
-
-    <TextView
-        android:id="@+id/nametxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Name :"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/usernametxt"
-        app:layout_constraintEnd_toStartOf="@+id/nameeditText"
-        app:layout_constraintHorizontal_bias="0.459"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.535" />
-
-    <TextView
-        android:id="@+id/usernametxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Username :"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView8"
-        app:layout_constraintEnd_toStartOf="@+id/usernameeditText2"
-        app:layout_constraintHorizontal_bias="0.584"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameeditText"
-        app:layout_constraintVertical_bias="0.561" />
-
-    <TextView
-        android:id="@+id/birthdatetxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BirthDate :"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/birthddateeditText4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.728" />
-
-    <TextView
-        android:id="@+id/MailText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Mail :"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/gendertxt"
-        app:layout_constraintEnd_toStartOf="@+id/MailEditText"
-        app:layout_constraintHorizontal_bias="0.387"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/birthdatetxt"
-        app:layout_constraintVertical_bias="0.437" />
-
-    <TextView
-        android:id="@+id/gendertxt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gender :"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.092"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/birthdatetxt"
-        app:layout_constraintVertical_bias="0.474" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Password:"
-        android:textColor="@color/colorPrimary"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/passwordeditText3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.642" />
 
     <Button
         android:id="@+id/btnsign"
