@@ -2,12 +2,12 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class adminPage extends AppCompatActivity {
-    Button btnChart, newProduct, newCategory,
+    CardView btnChart, newProduct, newCategory,
             buttonDeleteCat, EditCat, deleteProd,
             editProd, report , DeleteUser, CheckCredit;
 
