@@ -17,6 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".CheckCreditCard"
+            android:exported="false" />
+        <activity
+            android:name=".DeleteUser"
+            android:exported="false" />
+        <activity
             android:name=".AddPayment"
             android:exported="false" />
         <activity

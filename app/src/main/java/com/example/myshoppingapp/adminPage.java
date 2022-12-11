@@ -7,7 +7,9 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class adminPage extends AppCompatActivity {
-    Button btnChart, newProduct, newCategory, buttonDeleteCat, EditCat, deleteProd, editProd, report;
+    Button btnChart, newProduct, newCategory,
+            buttonDeleteCat, EditCat, deleteProd,
+            editProd, report , DeleteUser, CheckCredit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,8 @@ public class adminPage extends AppCompatActivity {
         deleteProd = findViewById(R.id.DeleteProduct);
         editProd = findViewById(R.id.EditProduct);
         report = findViewById(R.id.reports);
+        DeleteUser = findViewById(R.id.DeleteUser);
+        CheckCredit = findViewById(R.id.CheckCredit);
         btnChart.setOnClickListener(v -> {
             Intent chartIntent = new Intent(adminPage.this, chart.class);
             startActivity(chartIntent);
@@ -51,6 +55,14 @@ public class adminPage extends AppCompatActivity {
         });
         report.setOnClickListener(v -> {
             Intent chartIntent = new Intent(adminPage.this, reportsActivity.class);
+            startActivity(chartIntent);
+        });
+        CheckCredit.setOnClickListener(v -> {
+            Intent chartIntent = new Intent(adminPage.this, CheckCreditCard.class);
+            startActivity(chartIntent);
+        });
+        DeleteUser.setOnClickListener(v -> {
+            Intent chartIntent = new Intent(adminPage.this, DeleteUser.class);
             startActivity(chartIntent);
         });
 
