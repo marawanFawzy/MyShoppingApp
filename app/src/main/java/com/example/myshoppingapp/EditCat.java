@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -12,26 +11,28 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Categories;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class EditCat extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    private final ArrayList<String> paths = new ArrayList<>();
+    private ArrayList<String> paths = new ArrayList<>();
     private String SelectedCategory;
-    Button edit;
+    FloatingActionButton edit;
     EditText editTextEdit;
+    Spinner spinner;
+    int selectedPosition = 0 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_cat);
-        Spinner spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         edit = findViewById(R.id.edit);
         editTextEdit = findViewById(R.id.editTextTextPersonName);
         getAllCategories();
-        paths.add("");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(EditCat.this,
                 android.R.layout.simple_spinner_item, paths);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -39,7 +40,7 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
         spinner.setOnItemSelectedListener(this);
         edit.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            if (SelectedCategory.equals(""))
+            if (SelectedCategory.equals("Select category"))
                 Toast.makeText(this, "please choose a category first", Toast.LENGTH_SHORT).show();
             else {
                 if (editTextEdit.getText().toString().equals(""))
@@ -57,8 +58,10 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
                                                 temp.setName(editTextEdit.getText().toString());
                                                 db.collection("Categories").document(temp.getId()).set(temp).addOnSuccessListener(unused -> {
                                                     Toast.makeText(this, "category name is edited", Toast.LENGTH_SHORT).show();
+                                                    paths.add(selectedPosition ,editTextEdit.getText().toString() );
+                                                    paths.remove(selectedPosition+1);
                                                     editTextEdit.setText("");
-
+                                                    spinner.setSelection(0);
                                                 });
                                             });
                                 } else {
@@ -74,6 +77,9 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     void getAllCategories() {
+        paths = new ArrayList<>();
+        paths.add("Select category");
+        spinner.setSelection(0);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Categories").get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
@@ -92,6 +98,7 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         SelectedCategory = parent.getItemAtPosition(position).toString();
+        selectedPosition = position;
     }
 
     public void onNothingSelected(AdapterView<?> arg0) {

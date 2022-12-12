@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -34,7 +35,8 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
     private final ArrayList<String> paths = new ArrayList<>();
     EditText ProductName, ProductQuantity, price;
     private String SelectedCategory, SelectedCategoryId;
-    Button buttonAddProduct, ButtonUpload;
+    Button ButtonUpload;
+    FloatingActionButton buttonAddProduct;
     Uri filePath;
     FirebaseStorage storage;
     StorageReference storageReference;
@@ -55,7 +57,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
         ProductQuantity = findViewById(R.id.ProductQuantityAdd);
         price = findViewById(R.id.priceAdd);
         getAllCategories();
-        paths.add("");
+        paths.add("Select Category");
         Spinner spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(AddNewProduct.this, android.R.layout.simple_spinner_item, paths);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -63,7 +65,7 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
         spinner.setOnItemSelectedListener(this);
         buttonAddProduct.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            if (SelectedCategory.equals(""))
+            if (SelectedCategory.equals("Select Category"))
                 Toast.makeText(this, "please choose a category first", Toast.LENGTH_SHORT).show();
             else {
                 if (ProductName.getText().toString().equals(""))
