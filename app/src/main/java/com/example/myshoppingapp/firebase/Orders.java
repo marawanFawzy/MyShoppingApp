@@ -9,11 +9,12 @@ public class Orders {
     private String name, feedback , paymentMethod;
     private float rating;
     private Cart cart;
+    private double estimatedTime;
 
     public Orders() {
     }
 
-    public Orders(String id, String customer_id, Date order_date, double latitude, double longitude, String name, Cart cart , String paymentMethod, double total) {
+    public Orders(String id, String customer_id, Date order_date, double latitude, double longitude, String name, Cart cart , String paymentMethod, double total ,double estimatedTime) {
         this.id = id;
         Customer_id = customer_id;
         Order_date = order_date;
@@ -23,6 +24,7 @@ public class Orders {
         this.cart = cart;
         this.total = total;
         this.paymentMethod = paymentMethod;
+        this.estimatedTime = estimatedTime;
     }
 
     public String getId() {
@@ -111,5 +113,13 @@ public class Orders {
 
     public void setPaymentMethod(String paymentMethod) {
         this.paymentMethod = paymentMethod;
+    }
+
+    public double getEstimatedTime() {
+        return estimatedTime;
+    }
+
+    public void setEstimatedTime(double estimatedTime) {
+        this.estimatedTime = estimatedTime;
     }
 }

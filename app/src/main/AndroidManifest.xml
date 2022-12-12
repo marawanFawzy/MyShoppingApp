@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.noActionBar">
         <activity
+            android:name=".Current_Orders"
+            android:exported="false" />
+        <activity
             android:name=".ShowProfile"
             android:exported="false" />
         <activity

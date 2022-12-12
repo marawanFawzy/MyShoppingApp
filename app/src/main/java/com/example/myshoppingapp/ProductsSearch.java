@@ -36,7 +36,7 @@ public class ProductsSearch extends AppCompatActivity {
     ArrayAdapter<String> arr;
     EditText search;
     ImageView searchButton;
-    ImageView cart, home , EditProfile;
+    ImageView cart, home , EditProfile , Orders;
     ImageButton payment;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
 
@@ -48,6 +48,7 @@ public class ProductsSearch extends AppCompatActivity {
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         EditProfile = findViewById(R.id.EditProfile);
+        Orders = findViewById(R.id.Orders);
         mylist = findViewById(R.id.Products_listview);
         arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         mylist.setAdapter(arr);
@@ -82,7 +83,11 @@ public class ProductsSearch extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-
+        Orders.setOnClickListener(v->{
+            Intent i = new Intent(ProductsSearch.this, Current_Orders.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
         home.setOnClickListener(v -> {
             Intent i = new Intent(ProductsSearch.this, HomeActivity.class);
             i.putExtra("userId", userId);

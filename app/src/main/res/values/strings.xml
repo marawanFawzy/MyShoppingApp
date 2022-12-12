@@ -46,4 +46,5 @@
     <string name="CVV">CVV</string>
     <string name="month">M</string>
     <string name="ExpireDateYear">Y</string>
+    <string name="Description">Description</string>
 </resources>

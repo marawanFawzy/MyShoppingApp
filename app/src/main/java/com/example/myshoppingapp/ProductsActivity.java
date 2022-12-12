@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class ProductsActivity extends AppCompatActivity {
     ListView mylist;
     TextView t;
-    ImageView cart , home , EditProfile;
+    ImageView cart , home , EditProfile , Orders;
     ArrayList<String> ids = new ArrayList<>();
     ArrayAdapter<String> arr;
     ImageButton payment;
@@ -35,6 +35,7 @@ public class ProductsActivity extends AppCompatActivity {
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         EditProfile = findViewById(R.id.EditProfile);
+        Orders = findViewById(R.id.Orders);
         arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         mylist.setAdapter(arr);
 
@@ -60,7 +61,11 @@ public class ProductsActivity extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-
+        Orders.setOnClickListener(v->{
+            Intent i = new Intent(ProductsActivity.this, Current_Orders.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
         home.setOnClickListener(v -> {
             Intent i = new Intent(ProductsActivity.this, HomeActivity.class);
             i.putExtra("userId", userId);

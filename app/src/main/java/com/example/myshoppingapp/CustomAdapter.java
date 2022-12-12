@@ -27,7 +27,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<ProductClass> records;
     public ArrayList<String> quantity;
-    public double total = 0;
+    public double total = 0, time = -1;
     boolean report = false;
     ImageView plus, minus;
     CircleImageView ProductImage;
@@ -126,12 +126,19 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
             db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
                 Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
                 {
+                    double newTime = -1;
                     newTemp.getProducts().remove(position);
                     total -= Double.parseDouble(newTemp.getPrices().get(position)) * Double.parseDouble(newTemp.getProductsQuantity().get(position));
                     newTemp.getPrices().remove(position);
                     newTemp.getProductsQuantity().remove(position);
                     newTemp.getNames().remove(position);
+                    newTemp.getTimes().remove(position);
                     records.remove(position);
+                    for (int i = 0; i < newTemp.getTimes().size(); i++) {
+                        if (Double.parseDouble(newTemp.getTimes().get(i)) > newTime)
+                            newTime = Double.parseDouble(newTemp.getTimes().get(i));
+                    }
+                    time = newTime;
                     notifyDataSetChanged();
                 }
                 db.collection("Cart").document(newTemp.getId()).set(newTemp);

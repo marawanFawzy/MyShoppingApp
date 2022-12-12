@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -15,9 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Customers;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.lang.reflect.Method;
@@ -26,11 +23,13 @@ import java.util.Date;
 
 public class ShowProfile extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener cdate;
-    EditText cname, cusername , cpassword , cbirthdate , cMail , cSSN;
-    RadioButton gfemale , gmale;
+    EditText cname, cusername, cpassword, cbirthdate, cMail, cSSN;
+    RadioButton gfemale, gmale;
     FloatingActionButton Update;
     ImageButton back;
-    String userId ,userNameTemp = "";
+    String userId, userNameTemp = "";
+    Customers CurrentCustomer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,76 +63,65 @@ public class ShowProfile extends AppCompatActivity {
             dialog.show();
 
         });
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(ShowProfile.this, HomeActivity.class);
-                i.putExtra("userId", userId);
-                startActivity(i);
-            }
+        back.setOnClickListener(v -> {
+            Intent i = new Intent(ShowProfile.this, HomeActivity.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
         });
-        Update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String gender = "";
-                String n = cname.getText().toString();
-                String un = cusername.getText().toString();
-                String p = cpassword.getText().toString();
-                String b = cbirthdate.getText().toString();
-                String Mail = cMail.getText().toString();
-                String SSN = cSSN.getText().toString();
-                if (gfemale.isChecked()) {
-                    gender = "Female";
-                } else if (gmale.isChecked()) {
-                    gender = "Male";
-                }
-                if (cname.getText().toString().equals(""))
-                    Toast.makeText(ShowProfile.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
-                else if (cusername.getText().toString().equals(""))
-                    Toast.makeText(ShowProfile.this, "Please enter your Username", Toast.LENGTH_SHORT).show();
-                else if (cpassword.getText().toString().equals(""))
-                    Toast.makeText(ShowProfile.this, "Please enter your Password", Toast.LENGTH_SHORT).show();
-                else if (gender.equals(""))
-                    Toast.makeText(ShowProfile.this, "Please enter your Gender", Toast.LENGTH_SHORT).show();
-                else if (cbirthdate.getText().toString().equals(""))
-                    Toast.makeText(ShowProfile.this, "Please enter your Birth Date", Toast.LENGTH_SHORT).show();
-                else if (cMail.getText().toString().equals(""))
-                    Toast.makeText(ShowProfile.this, "Please enter your Email", Toast.LENGTH_SHORT).show();
-                else if (cSSN.getText().toString().equals(""))
-                    Toast.makeText(ShowProfile.this, "Please enter your SSN", Toast.LENGTH_SHORT).show();
-                else {
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
-                    String finalGender = gender;
-                    db.collection("Customers")
-                            .whereEqualTo("username", un)
-                            .limit(1)
-                            .get().addOnSuccessListener(queryDocumentSnapshots -> {
-                                if(userNameTemp.equals(cusername.getText().toString())){
-                                    Date date = new Date(b);
-                                    Customers newTemp = new Customers(userId, n, un, p, date, Mail , finalGender , SSN, false , true);
-                                    db.collection("Customers").document(userId).set(newTemp);
+        Update.setOnClickListener(v -> {
+            String gender = "";
+            String un = cusername.getText().toString();
+            if (gfemale.isChecked()) gender = "Female";
+            else if (gmale.isChecked()) gender = "Male";
+            CurrentCustomer.setName(cname.getText().toString());
+            CurrentCustomer.setPassword(cpassword.getText().toString());
+            CurrentCustomer.setBirthdate(new Date(cbirthdate.getText().toString()));
+            CurrentCustomer.setEmail(cMail.getText().toString());
+            CurrentCustomer.setSSN(cSSN.getText().toString());
+            CurrentCustomer.setGender(gender);
+            if (cname.getText().toString().equals(""))
+                Toast.makeText(ShowProfile.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
+            else if (cusername.getText().toString().equals(""))
+                Toast.makeText(ShowProfile.this, "Please enter your Username", Toast.LENGTH_SHORT).show();
+            else if (cpassword.getText().toString().equals(""))
+                Toast.makeText(ShowProfile.this, "Please enter your Password", Toast.LENGTH_SHORT).show();
+            else if (gender.equals(""))
+                Toast.makeText(ShowProfile.this, "Please enter your Gender", Toast.LENGTH_SHORT).show();
+            else if (cbirthdate.getText().toString().equals(""))
+                Toast.makeText(ShowProfile.this, "Please enter your Birth Date", Toast.LENGTH_SHORT).show();
+            else if (cMail.getText().toString().equals(""))
+                Toast.makeText(ShowProfile.this, "Please enter your Email", Toast.LENGTH_SHORT).show();
+            else if (cSSN.getText().toString().equals(""))
+                Toast.makeText(ShowProfile.this, "Please enter your SSN", Toast.LENGTH_SHORT).show();
+            else {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("Customers")
+                        .whereEqualTo("username", un)
+                        .limit(1)
+                        .get().addOnSuccessListener(queryDocumentSnapshots -> {
+                            if (userNameTemp.equals(cusername.getText().toString())) {
+                                db.collection("Customers").document(userId).set(CurrentCustomer);
+                                Intent i = new Intent(ShowProfile.this, HomeActivity.class);
+                                i.putExtra("userId", userId);
+                                startActivity(i);
+                            } else {
+                                if (queryDocumentSnapshots.size() != 0) {
+                                    Toast.makeText(ShowProfile.this, "please enter a valid username ", Toast.LENGTH_SHORT).show();
+                                    cusername.setText("");
+                                } else {
+                                    CurrentCustomer.setUsername(un);
+                                    db.collection("Customers").document(userId).set(CurrentCustomer);
                                     Intent i = new Intent(ShowProfile.this, HomeActivity.class);
+                                    i.putExtra("userId", userId);
                                     startActivity(i);
                                 }
-                                else {
-                                    if (queryDocumentSnapshots.size() != 0) {
-                                        Toast.makeText(ShowProfile.this, "please enter a valid username ", Toast.LENGTH_SHORT).show();
-                                        cusername.setText("");
-                                    } else {
-                                        Date date = new Date(b);
-                                        Customers newTemp = new Customers(userId, n, un, p, date, Mail , finalGender , SSN, false , true);
-                                        db.collection("Customers").document(userId).set(newTemp);
-                                        Intent i = new Intent(ShowProfile.this, HomeActivity.class);
-                                        i.putExtra("userId", userId);
-                                        startActivity(i);
-                                    }
-                                }
-                            });
+                            }
+                        });
 
-                }
             }
         });
     }
+
     public static void disableSoftInputFromAppearing(EditText editText) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             editText.setShowSoftInputOnFocus(false);
@@ -147,24 +135,22 @@ public class ShowProfile extends AppCompatActivity {
             }
         }
     }
-    void LoadUser()
-    {
+
+    void LoadUser() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Customers").document(userId)
-                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Customers temp = documentSnapshot.toObject(Customers.class);
-                        cname.setText(temp.getName());
-                        userNameTemp = temp.getUsername();
-                        cusername.setText(temp.getUsername());
-                        cpassword.setText(temp.getPassword());
-                        cbirthdate.setText(temp.getBirthdate().toString());
-                        cMail.setText(temp.getEmail());
-                        cSSN.setText(temp.getSSN());
-                        gmale.setChecked(temp.getGender().equals("Male"));
-                        gfemale.setChecked(temp.getGender().equals("Female"));
-                    }
+                .get().addOnSuccessListener(documentSnapshot -> {
+                    CurrentCustomer = documentSnapshot.toObject(Customers.class);
+                    cname.setText(CurrentCustomer.getName());
+                    userNameTemp = CurrentCustomer.getUsername();
+                    cusername.setText(CurrentCustomer.getUsername());
+                    cpassword.setText(CurrentCustomer.getPassword());
+                    cbirthdate.setText(CurrentCustomer.getBirthdate().toString());
+                    cMail.setText(CurrentCustomer.getEmail());
+                    cSSN.setText(CurrentCustomer.getSSN());
+                    gmale.setChecked(CurrentCustomer.getGender().equals("Male"));
+                    gfemale.setChecked(CurrentCustomer.getGender().equals("Female"));
                 });
     }
+
 }

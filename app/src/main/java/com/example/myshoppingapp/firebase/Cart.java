@@ -8,17 +8,19 @@ public class Cart {
     private ArrayList<String> products;
     private ArrayList<String> names;
     private ArrayList<String> prices;
+    private ArrayList<String> times;
 
     public Cart() {
     }
 
-    public Cart(String id, String customerId, ArrayList<String> productsQuantity, ArrayList<String> products, ArrayList<String> names, ArrayList<String> prices) {
+    public Cart(String id, String customerId, ArrayList<String> productsQuantity, ArrayList<String> products, ArrayList<String> names, ArrayList<String> prices , ArrayList<String> times) {
         this.id = id;
         this.customerId = customerId;
         this.productsQuantity = productsQuantity;
         this.products = products;
         this.names = names;
         this.prices = prices;
+        this.times = times;
     }
 
     public String getId() {
@@ -67,5 +69,13 @@ public class Cart {
 
     public void setPrices(ArrayList<String> prices) {
         this.prices = prices;
+    }
+
+    public ArrayList<String> getTimes() {
+        return times;
+    }
+
+    public void setTimes(ArrayList<String> times) {
+        this.times = times;
     }
 }

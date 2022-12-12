@@ -14,15 +14,13 @@ import com.example.myshoppingapp.firebase.CreditCard;
 import com.example.myshoppingapp.firebase.Customers;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.concurrent.atomic.AtomicReference;
-
 public class AddPayment extends AppCompatActivity {
     EditText CardNumber, ExpireDateMonth, ExpireDateYear, CVV;
     Button addCreditCard;
     String userId;
     TextView PrevCard, status;
     boolean flag = true;
-
+    Customers temp ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,13 +36,13 @@ public class AddPayment extends AppCompatActivity {
         CVV = findViewById(R.id.CVV);
         addCreditCard = findViewById(R.id.AddPayment);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        AtomicReference<Customers> temp = new AtomicReference<>(new Customers());
+
         db.collection("Customers").document(userId).get().addOnSuccessListener(documentSnapshot -> {
-            temp.set(documentSnapshot.toObject(Customers.class));
-            if(temp.get().getCreditCard() != null)
+            temp = documentSnapshot.toObject(Customers.class);
+            if(temp.getCreditCard() != null)
             {
-                PrevCard.setText(temp.get().getCreditCard().getNumber());
-                status.setText("your credit Card status is " + temp.get().getCreditCard().getStatus() +"\n\n"+ "(press to edit info)");
+                PrevCard.setText(temp.getCreditCard().getNumber());
+                status.setText("your credit Card status is " + temp.getCreditCard().getStatus() +"\n\n"+ "(press to edit info)");
             }
             else
             {
@@ -64,16 +62,16 @@ public class AddPayment extends AppCompatActivity {
                 Toast.makeText(AddPayment.this, "please fill CVV it must be 3 numbers ", Toast.LENGTH_SHORT).show();
             else {
                 CreditCard newTemp = new CreditCard(CardNumber.getText().toString(), ExpireDateMonth.getText().toString(), ExpireDateYear.getText().toString(), CVV.getText().toString());
-                if(flag &&(temp.get().getCreditCard().getCVV() != newTemp.getCVV() ||
-                        temp.get().getCreditCard().getNumber() != newTemp.getNumber() ||
-                        temp.get().getCreditCard().getExpireDateMonth() != newTemp.getExpireDateMonth() ||
-                        temp.get().getCreditCard().getExpireDateYear() != newTemp.getExpireDateYear()))
+                if(flag &&(temp.getCreditCard().getCVV() != newTemp.getCVV() ||
+                        temp.getCreditCard().getNumber() != newTemp.getNumber() ||
+                        temp.getCreditCard().getExpireDateMonth() != newTemp.getExpireDateMonth() ||
+                        temp.getCreditCard().getExpireDateYear() != newTemp.getExpireDateYear()))
                 {
                     newTemp.setStatus("waiting");
                     Toast.makeText(this, "card data changed it will be reviewed from admin soon", Toast.LENGTH_SHORT).show();
                 }
-                temp.get().setCreditCard(newTemp);
-                db.collection("Customers").document(userId).set(temp.get()).addOnSuccessListener(unused -> {
+                temp.setCreditCard(newTemp);
+                db.collection("Customers").document(userId).set(temp).addOnSuccessListener(unused -> {
                     Toast.makeText(AddPayment.this, "added this credit Card", Toast.LENGTH_SHORT).show();
                     CardNumber.setText("");
                     ExpireDateMonth.setText("");
@@ -82,24 +80,24 @@ public class AddPayment extends AppCompatActivity {
                     PrevCard.setText(newTemp.getNumber());
                     status.setVisibility(View.VISIBLE);
                     status.setText("your credit Card status is " + newTemp.getStatus() +"\n\n"+ "(press to edit info)");
-                    temp.get().setCreditCard(newTemp);
+                    temp.setCreditCard(newTemp);
                 });
             }
         });
         PrevCard.setOnClickListener(v -> {
             if(flag) {
-                CardNumber.setText(temp.get().getCreditCard().getNumber());
-                ExpireDateMonth.setText(temp.get().getCreditCard().getExpireDateMonth());
-                ExpireDateYear.setText(temp.get().getCreditCard().getExpireDateYear());
-                CVV.setText(temp.get().getCreditCard().getCVV());
+                CardNumber.setText(temp.getCreditCard().getNumber());
+                ExpireDateMonth.setText(temp.getCreditCard().getExpireDateMonth());
+                ExpireDateYear.setText(temp.getCreditCard().getExpireDateYear());
+                CVV.setText(temp.getCreditCard().getCVV());
             }
         });
         status.setOnClickListener(v -> {
             if(flag) {
-                CardNumber.setText(temp.get().getCreditCard().getNumber());
-                ExpireDateMonth.setText(temp.get().getCreditCard().getExpireDateMonth());
-                ExpireDateYear.setText(temp.get().getCreditCard().getExpireDateYear());
-                CVV.setText(temp.get().getCreditCard().getCVV());
+                CardNumber.setText(temp.getCreditCard().getNumber());
+                ExpireDateMonth.setText(temp.getCreditCard().getExpireDateMonth());
+                ExpireDateYear.setText(temp.getCreditCard().getExpireDateYear());
+                CVV.setText(temp.getCreditCard().getCVV());
             }
         });
     }

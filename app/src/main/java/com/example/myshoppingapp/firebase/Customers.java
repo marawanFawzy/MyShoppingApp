@@ -1,8 +1,9 @@
 package com.example.myshoppingapp.firebase;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Customers {
+public class Customers implements Cloneable , Serializable {
     private String id , name, Username, Password, Email, gender , SSN;
     private Date Birthdate;
     private boolean flag;
@@ -113,5 +114,14 @@ public class Customers {
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    @Override
+    public Customers clone() {
+        try {
+            return (Customers) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

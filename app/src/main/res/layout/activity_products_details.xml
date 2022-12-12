@@ -13,7 +13,6 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="45dp">
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -29,27 +28,33 @@
                 app:srcCompat="@drawable/shoppingcartlogoicon70706" />
 
             <ImageView
-                android:id="@+id/homebutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="125dp"
-                android:contentDescription="home icon"
-                app:srcCompat="@drawable/home" />
-
-
-            <ImageView
                 android:id="@+id/EditProfile"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
-                android:layout_marginStart="125dp"
+                android:layout_marginStart="100dp"
                 android:backgroundTint="@color/colorBlack"
                 app:srcCompat="@drawable/ic_action_profile"
                 app:tint="@color/colorBlack" />
+            <ImageView
+                android:id="@+id/homebutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_centerInParent="true"
+                android:contentDescription="home icon"
+                app:srcCompat="@drawable/home" />
 
+            <ImageView
+                android:id="@+id/Orders"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="100dp"
+                app:srcCompat="@drawable/ic_action_current_orders"
+                app:tint="@color/colorBlack" />
             <ImageButton
                 android:id="@+id/Payment"
                 android:layout_width="60dp"
@@ -62,136 +67,203 @@
 
 
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ProductImageDetails"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_baseline_image_200"
+                android:layout_centerInParent="true"
+                app:civ_border_color="@color/colorPrimary" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:text="@string/product_name"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextP_Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="10"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:enabled="false"
+                android:hint="@string/name1"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Price (EGP)"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/editTextPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:autofillHints=""
+                android:ems="10"
+                android:enabled="false"
+                android:hint="Price"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Quantity"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/quantityEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:ems="10"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:enabled="false"
+                android:hint="@string/Quantity"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Description"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/Description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:autofillHints=""
+                android:ems="10"
+                android:enabled="false"
+                android:hint="@string/Description"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="delivery time by days"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:textSize="18sp" />
+
+            <EditText
+                android:id="@+id/estimatedTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:autofillHints=""
+                android:ems="10"
+                android:enabled="false"
+                android:hint="delivery time"
+                android:inputType="textPersonName"
+                android:minHeight="48dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/buttonAddtoCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="#4E525B"
+                android:elevation="0dp"
+                android:src="@drawable/ic_baseline_arrow_forward_24"
+                android:tint="@android:color/white"
+                app:elevation="0dp"
+                app:fabCustomSize="80dp"
+                tools:ignore="RelativeOverlap" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
+                android:padding="@dimen/EditTextPadding"
+                android:text="Add product to cart"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
     </LinearLayout>
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ProductImageDetails"
-        android:layout_width="178dp"
-        android:layout_height="161dp"
-        android:layout_marginTop="80dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_baseline_image_200"
-        app:civ_border_color="@color/colorPrimary"
-        app:civ_border_width="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextP_Name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.403" />
-
-    <Button
-        android:id="@+id/buttonAddtoCart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="120dp"
-        android:text="@string/add_to_cart"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/product_name"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextP_Name"
-        app:layout_constraintHorizontal_bias="0.285"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.428" />
-
-    <EditText
-        android:id="@+id/editTextP_Name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:autofillHints=""
-        android:ems="10"
-        android:enabled="false"
-        android:hint="@string/name1"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.895"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.428" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/price1"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editTextPrice"
-        app:layout_constraintHorizontal_bias="0.103"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.52" />
-
-    <EditText
-        android:id="@+id/editTextPrice"
-        android:layout_width="134dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="24dp"
-        android:ems="10"
-        android:enabled="false"
-        android:hint="@string/egp"
-        android:importantForAutofill="no"
-        android:inputType="textPersonName"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/quantityEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.74"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/EGP"
-        android:layout_width="59dp"
-        android:layout_height="35dp"
-        android:text="EGP"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/quantityEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.785"
-        app:layout_constraintStart_toEndOf="@+id/editTextPrice"
-        app:layout_constraintTop_toBottomOf="@+id/editTextP_Name" />
-
-    <TextView
-        android:id="@+id/quantitytextView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quantity1"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/quantityEditText"
-        app:layout_constraintHorizontal_bias="0.152"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.618" />
-
-    <EditText
-        android:id="@id/quantityEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="88dp"
-        android:ems="10"
-        android:enabled="false"
-        android:importantForAutofill="no"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonAddtoCart"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.89"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

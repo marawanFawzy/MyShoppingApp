@@ -22,7 +22,7 @@ public class HomeActivity extends AppCompatActivity {
     ListView listView;
     Button category, search;
     ArrayAdapter<String> arr;
-    ImageView cart, home ,EditProfile ;
+    ImageView cart, home ,EditProfile ,Orders ;
     ArrayList<String> catIds = new ArrayList<>();
     ImageButton payment;
 
@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         EditProfile = findViewById(R.id.EditProfile);
+        Orders = findViewById(R.id.Orders);
         search = findViewById(R.id.searchbtn);
         category = findViewById(R.id.show_cat);
         listView = findViewById(R.id.cat_listview);
@@ -71,7 +72,13 @@ public class HomeActivity extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
+        Orders.setOnClickListener(v->{
+            Intent i = new Intent(HomeActivity.this, Current_Orders.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
     }
+
 
     void getAllCategories() {
         arr.clear();

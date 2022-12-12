@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Products;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProductsDetails extends AppCompatActivity {
-    EditText e_name, e_price, e_qty;
-    Button add;
-    ImageView cart, home , EditProfile;
+    EditText e_name, e_price, e_qty, e_description, e_time;
+    FloatingActionButton add;
+    ImageView cart, home, EditProfile, Orders;
     String Prod_id, userId;
     CircleImageView ProductImage;
     ImageButton Payment;
@@ -39,9 +39,12 @@ public class ProductsDetails extends AppCompatActivity {
         e_name = findViewById(R.id.editTextP_Name);
         e_price = findViewById(R.id.editTextPrice);
         e_qty = findViewById(R.id.quantityEditText);
+        e_description = findViewById(R.id.Description);
+        e_time = findViewById(R.id.estimatedTime);
         add = findViewById(R.id.buttonAddtoCart);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
+        Orders = findViewById(R.id.Orders);
         EditProfile = findViewById(R.id.EditProfile);
         Intent ii = getIntent();
         Prod_id = ii.getStringExtra("Prod_id");
@@ -53,18 +56,22 @@ public class ProductsDetails extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-
+        Orders.setOnClickListener(v -> {
+            Intent i = new Intent(ProductsDetails.this, Current_Orders.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
         home.setOnClickListener(v -> {
             Intent i = new Intent(ProductsDetails.this, HomeActivity.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        Payment.setOnClickListener(v->{
+        Payment.setOnClickListener(v -> {
             Intent i = new Intent(ProductsDetails.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        EditProfile.setOnClickListener(v->{
+        EditProfile.setOnClickListener(v -> {
             Intent i = new Intent(ProductsDetails.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
@@ -86,6 +93,8 @@ public class ProductsDetails extends AppCompatActivity {
                                 e_name.setText(temp.getName());
                                 e_price.setText(String.valueOf(temp.getPrice()));
                                 e_qty.setText(String.valueOf(temp.getQuantity()));
+                                e_description.setText(temp.getDescription());
+                                e_time.setText(String.valueOf(temp.getDays_For_Delivery()));
                                 ProductImage.setImageBitmap(StringToBitMap(temp.getPhoto()));
                             }
                         }
@@ -111,11 +120,13 @@ public class ProductsDetails extends AppCompatActivity {
                 ArrayList<String> prodIds = new ArrayList<>();
                 ArrayList<String> prodNames = new ArrayList<>();
                 ArrayList<String> prices = new ArrayList<>();
+                ArrayList<String> times = new ArrayList<>();
                 productsQuantity.add("1");
                 prodIds.add(Prod_id);
                 prodNames.add(e_name.getText().toString());
                 prices.add(e_price.getText().toString());
-                Cart newTemp = new Cart(id, userId, productsQuantity, prodIds, prodNames, prices);
+                times.add(e_time.getText().toString());
+                Cart newTemp = new Cart(id, userId, productsQuantity, prodIds, prodNames, prices, times);
                 db.collection("Cart").document(id).set(newTemp).addOnSuccessListener(unused -> {
                     Toast.makeText(this, "added product to new cart", Toast.LENGTH_SHORT).show();
                 });
@@ -132,6 +143,7 @@ public class ProductsDetails extends AppCompatActivity {
                 temp.getProducts().add(Prod_id);
                 temp.getNames().add(e_name.getText().toString());
                 temp.getPrices().add(e_price.getText().toString());
+                temp.getTimes().add(e_time.getText().toString());
                 db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
                     Toast.makeText(this, "added this product to existing cart", Toast.LENGTH_SHORT).show();
                 });
@@ -140,11 +152,12 @@ public class ProductsDetails extends AppCompatActivity {
         });
 
     }
-    public Bitmap StringToBitMap(String encodedString){
+
+    public Bitmap StringToBitMap(String encodedString) {
         try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }

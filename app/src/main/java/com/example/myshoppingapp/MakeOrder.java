@@ -7,15 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import com.example.myshoppingapp.firebase.Cart;
@@ -25,6 +26,7 @@ import com.example.myshoppingapp.firebase.Products;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -36,12 +38,15 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MakeOrder extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 155;
-    Button confirm, location;
-    ImageView cart, home , EditProfile;
-    EditText Longitude, Latitude, nameOfReceiver, feedback;
-    String userId, paymentChosen;
+    FloatingActionButton confirm;
+    CardView location;
+    ImageView cart, home, EditProfile, Orders;
+    EditText Longitude, Latitude, nameOfReceiver, feedback, ConfirmCVV;
+    String userId, paymentChosen, CVV;
     ImageButton Payment;
-    double total;
+    TextView estimatedTime;
+    double total, time;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FusedLocationProviderClient fusedLocationClient;
     private final ArrayList<String> paths = new ArrayList<>();
 
@@ -75,6 +80,16 @@ public class MakeOrder extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 paymentChosen = parent.getItemAtPosition(position).toString();
+                if (position > 1) {
+                    ConfirmCVV.setEnabled(true);
+                    db.collection("Customers").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Customers temp = documentSnapshot.toObject(Customers.class);
+                            CVV = temp.getCreditCard().getCVV();
+                        }
+                    });
+                }
             }
 
             @Override
@@ -84,11 +99,16 @@ public class MakeOrder extends AppCompatActivity {
         });
         fillSpinner(userId);
         total = ii.getDoubleExtra("total", 0);
+        time = ii.getDoubleExtra("time", 0);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         EditProfile = findViewById(R.id.EditProfile);
+        Orders = findViewById(R.id.Orders);
+        estimatedTime = findViewById(R.id.estimatedTime);
+        estimatedTime.setText("will be delivered in " + time + " days");
         Payment = findViewById(R.id.Payment);
         confirm = findViewById(R.id.confirm);
+        ConfirmCVV = findViewById(R.id.ConfirmCVV);
         location = findViewById(R.id.location);
         Longitude = findViewById(R.id.editTextLongitude);
         Latitude = findViewById(R.id.editTextTextLatitude);
@@ -110,7 +130,6 @@ public class MakeOrder extends AppCompatActivity {
                         }
                     });
         });
-
         confirm.setOnClickListener(v -> {
             if (Longitude.getText().toString().equals("") || Latitude.getText().toString().equals(""))
                 Toast.makeText(this, "please press on Location button first", Toast.LENGTH_SHORT).show();
@@ -120,7 +139,7 @@ public class MakeOrder extends AppCompatActivity {
                 Toast.makeText(this, "please choose payment method", Toast.LENGTH_SHORT).show();
             else {
                 Date date = new Date();
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
+
                 db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
                     String id;
                     if (queryDocumentSnapshots.getDocuments().size() != 0) {
@@ -130,12 +149,19 @@ public class MakeOrder extends AppCompatActivity {
                             int finalI = i;
                             db.collection("Products").whereEqualTo("id", temp.getProducts().get(i)).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
                                 Products ProductTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
-                                db.collection("Products").document(temp.getProducts().get(finalI)).update("quantity", ProductTemp.getQuantity() - Integer.parseInt(temp.getProductsQuantity().get(finalI)));
+                                db.collection("Products").document(temp.getProducts().get(finalI))
+                                        .update("quantity", ProductTemp.getQuantity() - Integer.parseInt(temp.getProductsQuantity().get(finalI)));
                             });
 
                         }
                         paymentChosen = (!paymentChosen.equals("Cash")) ? paymentChosen.substring(paymentChosen.indexOf(" ") + 1) : "Cash";
-                        Orders newTemp = new Orders(id, userId, date, Double.parseDouble(Latitude.getText().toString()), Double.parseDouble(Longitude.getText().toString()), nameOfReceiver.getText().toString(), temp, paymentChosen, total);
+                        if (!paymentChosen.equals("Cash")) {
+                            if (!CVV.equals(ConfirmCVV.getText().toString())) {
+                                Toast.makeText(this, "wrong CVV", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                        Orders newTemp = new Orders(id, userId, date, Double.parseDouble(Latitude.getText().toString()), Double.parseDouble(Longitude.getText().toString()), nameOfReceiver.getText().toString(), temp, paymentChosen, total, time);
                         newTemp.setRating(simpleRatingBar.getRating());
                         newTemp.setFeedback(feedback.getText().toString());
                         db.collection("Orders").document(id).set(newTemp).addOnSuccessListener(unused -> {
@@ -146,8 +172,13 @@ public class MakeOrder extends AppCompatActivity {
                                 Longitude.setText("");
                                 nameOfReceiver.setText("");
                                 feedback.setText("");
+                                ConfirmCVV.setText("");
+                                estimatedTime.setText("");
                                 simpleRatingBar.setRating(0);
                                 spinner.setSelection(0);
+                                Intent i = new Intent(MakeOrder.this, HomeActivity.class);
+                                i.putExtra("userId", userId);
+                                startActivity(i);
                             });
                         });
 
@@ -167,18 +198,22 @@ public class MakeOrder extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-
+        Orders.setOnClickListener(v -> {
+            Intent i = new Intent(MakeOrder.this, Current_Orders.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
         home.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, HomeActivity.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        EditProfile.setOnClickListener(v->{
+        EditProfile.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        Payment.setOnClickListener(v->{
+        Payment.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
@@ -189,18 +224,15 @@ public class MakeOrder extends AppCompatActivity {
     private void fillSpinner(String userId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         paths.add("Cash");
-        db.collection("Customers").document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Customers temp = documentSnapshot.toObject(Customers.class);
-                if (temp.getCreditCard() != null) {
-                    if (temp.getCreditCard().getStatus().equals("approved")) {
-                        paths.add("Card " + temp.getCreditCard().getNumber());
-                    } else if (temp.getCreditCard().getStatus().equals("rejected")) {
-                        Toast.makeText(MakeOrder.this, "your credit card is rejected please edit it", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MakeOrder.this, "your credit card is not reviewed yet", Toast.LENGTH_SHORT).show();
-                    }
+        db.collection("Customers").document(userId).get().addOnSuccessListener(documentSnapshot -> {
+            Customers temp = documentSnapshot.toObject(Customers.class);
+            if (temp.getCreditCard() != null) {
+                if (temp.getCreditCard().getStatus().equals("approved")) {
+                    paths.add("Card " + temp.getCreditCard().getNumber());
+                } else if (temp.getCreditCard().getStatus().equals("rejected")) {
+                    Toast.makeText(MakeOrder.this, "your credit card is rejected please edit it", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MakeOrder.this, "your credit card is not reviewed yet", Toast.LENGTH_SHORT).show();
                 }
             }
         });

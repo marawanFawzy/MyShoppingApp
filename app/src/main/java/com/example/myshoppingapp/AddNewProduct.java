@@ -22,8 +22,6 @@ import com.example.myshoppingapp.firebase.Products;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -33,15 +31,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddNewProduct extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private final ArrayList<String> paths = new ArrayList<>();
-    EditText ProductName, ProductQuantity, price;
+    EditText ProductName, ProductQuantity, price , estimatedTime , Description;
     private String SelectedCategory, SelectedCategoryId;
     Button ButtonUpload;
     FloatingActionButton buttonAddProduct;
     Uri filePath;
-    FirebaseStorage storage;
-    StorageReference storageReference;
     CircleImageView ProductImage;
-    String photo;
+    String photo = "";
+    Products ClonedProduct = new Products("", 0, "", 0, "", "","" ,"", 0);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +48,11 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
         buttonAddProduct = findViewById(R.id.buttonAddProduct);
         ButtonUpload = findViewById(R.id.ButtonUpload);
         ButtonUpload.setOnClickListener(v -> SelectImage());
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
         ProductName = findViewById(R.id.ProductNameEdit);
         ProductQuantity = findViewById(R.id.ProductQuantityAdd);
         price = findViewById(R.id.priceAdd);
+        estimatedTime = findViewById(R.id.estimatedTime);
+        Description = findViewById(R.id.Description);
         getAllCategories();
         paths.add("Select Category");
         Spinner spinner = findViewById(R.id.spinner);
@@ -74,6 +71,10 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                     Toast.makeText(this, "please choose a Quantity first", Toast.LENGTH_SHORT).show();
                 else if (price.getText().toString().equals(""))
                     Toast.makeText(this, "please choose a price first", Toast.LENGTH_SHORT).show();
+                else if (Description.getText().toString().equals(""))
+                    Toast.makeText(this, "please choose a Description first", Toast.LENGTH_SHORT).show();
+                else if (estimatedTime.getText().toString().equals(""))
+                    Toast.makeText(this, "please choose a estimated Time first", Toast.LENGTH_SHORT).show();
                 else {
                     db.collection("Categories")
                             .whereEqualTo("name", SelectedCategory)
@@ -92,14 +93,22 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
                                                 ProductName.setText("");
                                                 return;
                                             }
-                                            String id = db.collection("Products").document().getId().substring(0, 5);
-                                            Products newtemp = new Products(id, Integer.parseInt(ProductQuantity.getText().toString()), SelectedCategoryId, Integer.parseInt(price.getText().toString()), ProductName.getText().toString(), photo);
-
-                                            db.collection("Products").document(id).set(newtemp).addOnSuccessListener(unused -> {
+                                            ClonedProduct.setId(db.collection("Products").document().getId().substring(0, 5));
+                                            ClonedProduct.setQuantity(Integer.parseInt(ProductQuantity.getText().toString()));
+                                            ClonedProduct.setPhoto(photo);
+                                            ClonedProduct.setName(ProductName.getText().toString());
+                                            ClonedProduct.setDescription(Description.getText().toString());
+                                            ClonedProduct.setDays_For_Delivery(Double.parseDouble(estimatedTime.getText().toString()));
+                                            ClonedProduct.setCatId(SelectedCategoryId);
+                                            ClonedProduct.setPrice(Integer.parseInt(price.getText().toString()));
+                                            Products newtemp = ClonedProduct.clone();
+                                            db.collection("Products").document(newtemp.getId()).set(newtemp).addOnSuccessListener(unused -> {
                                                 Toast.makeText(AddNewProduct.this, "added", Toast.LENGTH_SHORT).show();
                                                 ProductQuantity.setText("");
                                                 price.setText("");
                                                 ProductName.setText("");
+                                                Description.setText("");
+                                                estimatedTime.setText("");
                                                 spinner.setSelection(0);
                                                 Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
                                                 ProductImage.setImageDrawable(myDrawable);
