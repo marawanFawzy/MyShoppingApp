@@ -26,8 +26,9 @@ public class ShoppingCart extends AppCompatActivity {
     CustomAdapter adapter;
     double total = 0.0;
     Button addNewItem, makeOrder, showPrice;
-    ImageButton payment ;
-    ImageView home;
+    ImageButton payment;
+    ImageView home, EditProfile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class ShoppingCart extends AppCompatActivity {
         makeOrder = findViewById(R.id.Orderbutton2);
         showPrice = findViewById(R.id.totalpricebutton3);
         home = findViewById(R.id.homebutton);
+        EditProfile = findViewById(R.id.EditProfile);
         Intent ii = getIntent();
         userId = ii.getStringExtra("userId");
         myList = findViewById(R.id.mylist);
@@ -74,8 +76,13 @@ public class ShoppingCart extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        payment.setOnClickListener(v->{
+        payment.setOnClickListener(v -> {
             Intent i = new Intent(ShoppingCart.this, AddPayment.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        EditProfile.setOnClickListener(v->{
+            Intent i = new Intent(ShoppingCart.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
@@ -91,7 +98,7 @@ public class ShoppingCart extends AppCompatActivity {
         quantityArray.clear();
         ids.clear();
         adapter.clear();
-        total = 0 ;
+        total = 0;
         getCart(userId, NamesArray, PricesArray, quantityArray, ids);
     }
 
@@ -112,8 +119,8 @@ public class ShoppingCart extends AppCompatActivity {
                 image = temp.getPhoto();
                 product = new ProductClass(userId, id, name, price, quantity, image);
                 arrayOfProducts.add(product);
-                if (finalI == namesArray.size()-1) {
-                    adapter = new CustomAdapter(this, 0, arrayOfProducts , false);
+                if (finalI == namesArray.size() - 1) {
+                    adapter = new CustomAdapter(this, 0, arrayOfProducts, false);
                     adapter.total = total;
                     myList.setAdapter(adapter);
                 }

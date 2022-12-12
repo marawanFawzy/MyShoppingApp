@@ -36,7 +36,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class MakeOrder extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 155;
     Button confirm, location;
-    ImageView cart, home;
+    ImageView cart, home , EditProfile;
     EditText Longitude, Latitude, nameOfReceiver, feedback;
     String userId, paymentChosen;
     double total;
@@ -84,6 +84,7 @@ public class MakeOrder extends AppCompatActivity {
         total = ii.getDoubleExtra("total", 0);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
+        EditProfile = findViewById(R.id.EditProfile);
         confirm = findViewById(R.id.confirm);
         location = findViewById(R.id.location);
         Longitude = findViewById(R.id.editTextLongitude);
@@ -166,6 +167,11 @@ public class MakeOrder extends AppCompatActivity {
 
         home.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, HomeActivity.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        EditProfile.setOnClickListener(v->{
+            Intent i = new Intent(MakeOrder.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });

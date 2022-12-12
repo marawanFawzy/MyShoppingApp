@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -37,7 +36,7 @@ public class ProductsSearch extends AppCompatActivity {
     ArrayAdapter<String> arr;
     EditText search;
     ImageView searchButton;
-    ImageView cart, home;
+    ImageView cart, home , EditProfile;
     ImageButton payment;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
 
@@ -48,6 +47,7 @@ public class ProductsSearch extends AppCompatActivity {
         payment = findViewById(R.id.Payment);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
+        EditProfile = findViewById(R.id.EditProfile);
         mylist = findViewById(R.id.Products_listview);
         arr = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         mylist.setAdapter(arr);
@@ -90,6 +90,11 @@ public class ProductsSearch extends AppCompatActivity {
         });
         payment.setOnClickListener(v->{
             Intent i = new Intent(ProductsSearch.this, AddPayment.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        EditProfile.setOnClickListener(v->{
+            Intent i = new Intent(ProductsSearch.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });

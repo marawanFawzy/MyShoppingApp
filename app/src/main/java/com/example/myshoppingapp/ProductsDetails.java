@@ -25,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProductsDetails extends AppCompatActivity {
     EditText e_name, e_price, e_qty;
     Button add;
-    ImageView cart, home;
+    ImageView cart, home , EditProfile;
     String Prod_id, userId;
     CircleImageView ProductImage;
     ImageButton Payment;
@@ -42,6 +42,7 @@ public class ProductsDetails extends AppCompatActivity {
         add = findViewById(R.id.buttonAddtoCart);
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
+        EditProfile = findViewById(R.id.EditProfile);
         Intent ii = getIntent();
         Prod_id = ii.getStringExtra("Prod_id");
         userId = ii.getStringExtra("userId");
@@ -60,6 +61,11 @@ public class ProductsDetails extends AppCompatActivity {
         });
         Payment.setOnClickListener(v->{
             Intent i = new Intent(ProductsDetails.this, AddPayment.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        EditProfile.setOnClickListener(v->{
+            Intent i = new Intent(ProductsDetails.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });

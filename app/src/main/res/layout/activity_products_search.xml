@@ -19,15 +19,6 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/homebutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="150dp"
-                android:contentDescription="home icon"
-                app:srcCompat="@drawable/home" />
-
-            <ImageView
                 android:id="@+id/cartbutton"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -36,6 +27,28 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="30dp"
                 app:srcCompat="@drawable/shoppingcartlogoicon70706" />
+
+            <ImageView
+                android:id="@+id/homebutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="125dp"
+                android:contentDescription="home icon"
+                app:srcCompat="@drawable/home" />
+
+
+            <ImageView
+                android:id="@+id/EditProfile"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="125dp"
+                android:backgroundTint="@color/colorBlack"
+                app:srcCompat="@drawable/ic_action_profile"
+                app:tint="@color/colorBlack" />
 
             <ImageButton
                 android:id="@+id/Payment"
@@ -46,6 +59,8 @@
                 android:layout_marginStart="30dp"
                 android:background="@color/zxing_transparent"
                 app:srcCompat="@drawable/ic_action_payment" />
+
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
