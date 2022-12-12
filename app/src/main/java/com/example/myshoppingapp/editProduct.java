@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -35,7 +36,8 @@ public class editProduct extends AppCompatActivity {
     private final ArrayList<String> paths = new ArrayList<>();
     private final ArrayList<String> pathsProducts = new ArrayList<>();
     private String SelectedCategory, SelectedProduct, SelectedCategoryId;
-    Button edit, changePhoto;
+    Button  changePhoto;
+    FloatingActionButton edit;
     Spinner spinner, spinnerProducts;
     EditText name, quantity, price;
     Uri filePath;
@@ -52,14 +54,16 @@ public class editProduct extends AppCompatActivity {
         quantity = findViewById(R.id.ProductQuantityEdit);
         price = findViewById(R.id.priceEdit);
         spinner = findViewById(R.id.spinner);
-        paths.add("");
-        pathsProducts.add("");
+        paths.add("Select category");
+        spinner.setSelection(0);
+        pathsProducts.add("Select Product");
         ArrayAdapter<String> adapter = new ArrayAdapter<>(editProduct.this,
                 android.R.layout.simple_spinner_item, paths);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinnerProducts = findViewById(R.id.spinnerProduct);
         spinnerProducts.setEnabled(false);
+        spinnerProducts.setSelection(0);
         ArrayAdapter<String> adapterProducts = new ArrayAdapter<>(editProduct.this,
                 android.R.layout.simple_spinner_item, pathsProducts);
         adapterProducts.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -75,15 +79,17 @@ public class editProduct extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedCategory = parent.getItemAtPosition(position).toString();
-                if (!SelectedCategory.equals("")) {
+                changePhoto.setEnabled(false);
+                if (!SelectedCategory.equals("Select category")) {
                     pathsProducts.clear();
-                    pathsProducts.add("");
-                    spinnerProducts.setSelection(0);
+                    pathsProducts.add("Select Product");
+                    spinnerProducts.setSelection(-1);
                     getAllProducts();
                     spinnerProducts.setEnabled(true);
                 } else {
                     pathsProducts.clear();
-                    pathsProducts.add("");
+                    pathsProducts.add("Select Product");
+                    spinnerProducts.setSelection(0);
                     spinnerProducts.setEnabled(false);
                 }
             }
@@ -98,8 +104,9 @@ public class editProduct extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedProduct = parent.getItemAtPosition(position).toString();
-                edit.setEnabled(!SelectedProduct.equals(""));
-                if (!SelectedProduct.equals("")) {
+                edit.setEnabled(!SelectedProduct.equals("Select Product"));
+                if (!SelectedProduct.equals("Select Product")) {
+                    changePhoto.setEnabled(true);
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection("Products")
                             .whereEqualTo("name", SelectedProduct)
@@ -115,6 +122,10 @@ public class editProduct extends AppCompatActivity {
                     name.setText("");
                     quantity.setText("");
                     price.setText("");
+                    newPhoto = "";
+                    Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
+                    ProductImage.setImageDrawable(myDrawable);
+                    changePhoto.setEnabled(false);
                 }
 
 
