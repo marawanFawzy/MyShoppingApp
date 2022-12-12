@@ -8,6 +8,7 @@ import android.util.Base64;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProductsDetails extends AppCompatActivity {
     EditText e_name, e_price, e_qty;
-    Button add, cart, home;
+    Button add;
+    ImageView cart, home;
     String Prod_id, userId;
     CircleImageView ProductImage;
     ImageButton Payment;

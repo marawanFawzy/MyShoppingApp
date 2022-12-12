@@ -5,124 +5,123 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backGround"
+    android:scrollbars="vertical"
     tools:context=".CustomAdapter">
 
-    <ListView
-        android:id="@+id/mylist"
-        android:layout_width="408dp"
-        android:layout_height="453dp"
-        app:layout_constraintBottom_toTopOf="@+id/totalpricebutton3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/Orderbutton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:background="@android:color/transparent"
-        android:text="@string/make_order"
-        android:textSize="18sp"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.836"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.976" />
+        tools:layout_editor_absoluteX="45dp">
 
-    <Button
-        android:id="@+id/addnewbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        android:background="@android:color/transparent"
-        android:text="@string/add_new_product"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Orderbutton2"
-        app:layout_constraintHorizontal_bias="0.697"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totalpricebutton3"
-        app:layout_constraintVertical_bias="0.448" />
+            <ImageView
+                android:id="@+id/homebutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="150dp"
+                android:contentDescription="home icon"
+                app:srcCompat="@drawable/home" />
 
-    <Button
-        android:id="@+id/totalpricebutton3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:text="@string/view_total_price"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/Orderbutton2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.98" />
+            <ImageView
+                android:id="@+id/cartbutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                app:srcCompat="@drawable/shoppingcartlogoicon70706" />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="62dp"
-        android:layout_height="57dp"
-        app:layout_constraintBottom_toTopOf="@+id/mylist"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintHorizontal_bias="0.801"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.129"
-        app:srcCompat="@drawable/home"
-        android:contentDescription="home icon" />
+            <ImageButton
+                android:id="@+id/Payment"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
+                android:background="@color/zxing_transparent"
+                app:srcCompat="@drawable/ic_action_payment" />
+        </RelativeLayout>
 
-    <Button
-        android:id="@+id/homebutton"
-        android:layout_width="62dp"
-        android:layout_height="51dp"
-        android:background="@android:color/transparent"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/mylist"
-        app:layout_constraintEnd_toEndOf="@+id/imageView10"
-        app:layout_constraintHorizontal_bias="0.801"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.297" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp">
 
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="62dp"
-        android:layout_height="62dp"
-        app:layout_constraintBottom_toTopOf="@+id/mylist"
-        app:layout_constraintEnd_toEndOf="@+id/cartbutton"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/shoppingcartlogoicon70706" />
+            <ListView
+                android:id="@+id/mylist"
+                android:layout_width="400dp"
+                android:layout_height="500dp"
+                android:layout_centerInParent="true"
+                android:padding="15dp" />
 
-    <Button
-        android:id="@+id/cartbutton"
-        android:layout_width="62dp"
-        android:layout_height="51dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toTopOf="@+id/mylist"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.997"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView10"
-        app:layout_constraintVertical_bias="0.297"
-        tools:ignore="SpeakableTextPresentCheck" />
+        </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/Payment"
-        android:layout_width="41dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="12dp"
-        android:background="@color/zxing_transparent"
-        app:layout_constraintBottom_toTopOf="@+id/mylist"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.608"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.166"
-        app:srcCompat="@drawable/ic_action_payment" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/totalpricebutton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="@string/view_total_price"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.98" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/Orderbutton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="10dp"
+                android:text="@string/make_order"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.936"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.976" />
+
+
+            <Button
+                android:id="@+id/addnewbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="10dp"
+                android:text="Add Product"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/Orderbutton2"
+                app:layout_constraintStart_toStartOf="parent" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

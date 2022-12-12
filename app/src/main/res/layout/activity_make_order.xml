@@ -6,6 +6,48 @@
     android:layout_height="match_parent"
     android:background="@color/backGround"
     tools:context=".MakeOrder">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="45dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/homebutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="150dp"
+                android:contentDescription="home icon"
+                app:srcCompat="@drawable/home" />
+
+            <ImageView
+                android:id="@+id/cartbutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                app:srcCompat="@drawable/shoppingcartlogoicon70706" />
+
+            <ImageButton
+                android:id="@+id/Payment"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
+                android:background="@color/zxing_transparent"
+                app:srcCompat="@drawable/ic_action_payment" />
+        </RelativeLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView4"
@@ -24,7 +66,6 @@
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_marginTop="32dp"
         android:text="Location"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,47 +85,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="62dp"
-        android:layout_height="57dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.793"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/home" />
 
-    <Button
-        android:id="@+id/homebutton"
-        android:layout_width="62dp"
-        android:layout_height="51dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.793"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="62dp"
-        android:layout_height="62dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/shoppingcartlogoicon70706" />
-
-    <Button
-        android:id="@+id/cartbutton"
-        android:layout_width="62dp"
-        android:layout_height="51dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.971"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/editTextnameOfReceiver"

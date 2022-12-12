@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -34,7 +35,8 @@ import pub.devrel.easypermissions.EasyPermissions;
 
 public class MakeOrder extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 155;
-    Button confirm, location, cart, home;
+    Button confirm, location;
+    ImageView cart, home;
     EditText Longitude, Latitude, nameOfReceiver, feedback;
     String userId, paymentChosen;
     double total;

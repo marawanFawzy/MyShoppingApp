@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -29,19 +28,12 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
     public ArrayList<ProductClass> records;
     public ArrayList<String> quantity;
     public double total = 0;
-    boolean report;
-    ImageView plus, minus ;
+    boolean report = false;
+    ImageView plus, minus;
     CircleImageView ProductImage;
     String photo;
 
-
-    public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records) {
-        super(context, resource, records);
-        this.records = records;
-        quantity = new ArrayList<>();
-        report = false;
-    }
-    public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records , boolean report) {
+    public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records, boolean report) {
         super(context, resource, records);
         this.records = records;
         quantity = new ArrayList<>();
@@ -54,8 +46,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         final ProductClass item = getItem(position);
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_custom_adapter, parent, false);
-        TextView prodQuantity , productName , productPrice;
-        Button plusBtn, minusBtn;
+        TextView prodQuantity, productName, productPrice;
         ImageButton deleteBtn;
         ProductImage = convertView.findViewById(R.id.ProductImageAdapter);
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
@@ -63,24 +54,22 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         productPrice = convertView.findViewById(R.id.priceeditText3);
         plus = convertView.findViewById(R.id.imageViewPlus);
         minus = convertView.findViewById(R.id.imageViewMinus);
-        plusBtn = convertView.findViewById(R.id.plusbutton);
-        minusBtn = convertView.findViewById(R.id.Minusbutton3);
         deleteBtn = convertView.findViewById(R.id.delete_button);
         productName.setText(item.name);
         prodQuantity.setText(item.quantity);
         productPrice.setText(item.price);
         photo = item.image;
         ProductImage.setImageBitmap(StringToBitMap(photo));
-        if(report)
-        {
-            plusBtn.setVisibility(View.GONE);
-            minusBtn.setVisibility(View.GONE);
+        if (report) {
             deleteBtn.setVisibility(View.GONE);
             plus.setVisibility(View.GONE);
             minus.setVisibility(View.GONE);
+        } else {
+            prodQuantity.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            productName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            productPrice.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
-
-        plusBtn.setOnClickListener(v -> {
+        plus.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             db.collection("Products").document(item.id).get().addOnSuccessListener(documentSnapshot -> {
                 Products temp = documentSnapshot.toObject(Products.class);
@@ -108,7 +97,7 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
             });
         });
 
-        minusBtn.setOnClickListener(v -> {
+        minus.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
             int value = Integer.parseInt(prodQuantity.getText().toString());
             if (1 == value) {
@@ -150,12 +139,13 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         });
         return convertView;
     }
-    public Bitmap StringToBitMap(String encodedString){
+
+    public Bitmap StringToBitMap(String encodedString) {
         try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }

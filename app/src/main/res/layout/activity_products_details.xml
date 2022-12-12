@@ -6,7 +6,48 @@
     android:layout_height="match_parent"
     android:background="@color/backGround"
     tools:context=".ProductsDetails">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="top"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="45dp">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/homebutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="150dp"
+                android:contentDescription="home icon"
+                app:srcCompat="@drawable/home" />
+
+            <ImageView
+                android:id="@+id/cartbutton"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                app:srcCompat="@drawable/shoppingcartlogoicon70706" />
+
+            <ImageButton
+                android:id="@+id/Payment"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
+                android:background="@color/zxing_transparent"
+                app:srcCompat="@drawable/ic_action_payment" />
+        </RelativeLayout>
+    </LinearLayout>
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ProductImageDetails"
         android:layout_width="178dp"
@@ -28,7 +69,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="120dp"
-        android:background="@android:color/transparent"
         android:text="@string/add_to_cart"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -137,69 +177,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="62dp"
-        android:layout_height="57dp"
-        app:layout_constraintBottom_toBottomOf="@+id/homebutton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.793"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/home"
-        android:contentDescription="home icon" />
-
-    <Button
-        android:id="@+id/homebutton"
-        android:layout_width="62dp"
-        android:layout_height="51dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.793"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.007"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageView
-        android:id="@+id/imageView10"
-        android:layout_width="62dp"
-        android:layout_height="62dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
-        app:layout_constraintStart_toStartOf="@+id/cartbutton"
-        app:layout_constraintTop_toTopOf="@+id/cartbutton"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/shoppingcartlogoicon70706" />
-
-    <Button
-        android:id="@+id/cartbutton"
-        android:layout_width="62dp"
-        android:layout_height="51dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <ImageButton
-        android:id="@+id/Payment"
-        android:layout_width="41dp"
-        android:layout_height="47dp"
-
-        android:background="@color/zxing_transparent"
-        app:layout_constraintBottom_toTopOf="@+id/ProductImageDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.597"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.166"
-        app:srcCompat="@drawable/ic_action_payment" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

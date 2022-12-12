@@ -37,7 +37,7 @@ public class ProductsSearch extends AppCompatActivity {
     ArrayAdapter<String> arr;
     EditText search;
     ImageView searchButton;
-    Button cart, home;
+    ImageView cart, home;
     ImageButton payment;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
 

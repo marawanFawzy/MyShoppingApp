@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -24,8 +25,9 @@ public class ShoppingCart extends AppCompatActivity {
     String userId;
     CustomAdapter adapter;
     double total = 0.0;
-    Button addNewItem, makeOrder, showPrice, home;
-    ImageButton payment;
+    Button addNewItem, makeOrder, showPrice;
+    ImageButton payment ;
+    ImageView home;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +113,7 @@ public class ShoppingCart extends AppCompatActivity {
                 product = new ProductClass(userId, id, name, price, quantity, image);
                 arrayOfProducts.add(product);
                 if (finalI == namesArray.size()-1) {
-                    adapter = new CustomAdapter(this, 0, arrayOfProducts , true);
+                    adapter = new CustomAdapter(this, 0, arrayOfProducts , false);
                     adapter.total = total;
                     myList.setAdapter(adapter);
                 }
