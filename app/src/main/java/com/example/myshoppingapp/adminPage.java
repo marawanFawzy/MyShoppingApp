@@ -2,6 +2,7 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -10,6 +11,7 @@ public class adminPage extends AppCompatActivity {
     CardView btnChart, newProduct, newCategory,
             buttonDeleteCat, EditCat, deleteProd,
             editProd, report , DeleteUser, CheckCredit;
+    ImageButton logOutB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,11 @@ public class adminPage extends AppCompatActivity {
         report = findViewById(R.id.reports);
         DeleteUser = findViewById(R.id.DeleteUser);
         CheckCredit = findViewById(R.id.CheckCredit);
+        logOutB = findViewById(R.id.logOutB);
+        logOutB.setOnClickListener(v -> {
+            Intent chartIntent = new Intent(adminPage.this, MainActivity.class);
+            startActivity(chartIntent);
+        });
         btnChart.setOnClickListener(v -> {
             Intent chartIntent = new Intent(adminPage.this, chart.class);
             startActivity(chartIntent);

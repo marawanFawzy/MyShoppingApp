@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Customers;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.lang.reflect.Method;
@@ -24,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener cdate;
     EditText cname, cusername , cpassword , cbirthdate , cMail , cSSN;
     RadioButton gfemale , gmale;
-    Button signup;
+    FloatingActionButton signup;
 
 
     @Override

@@ -186,9 +186,10 @@
                     android:id="@+id/imageView11"
                     android:layout_width="101dp"
                     android:layout_height="51dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_action_delete_category"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -229,11 +230,12 @@
 
                 <ImageView
                     android:id="@+id/imageView6"
-                    android:layout_width="98dp"
-                    android:layout_height="50dp"
+                    android:layout_width="100dp"
+                    android:layout_height="53dp"
+                    android:layout_marginTop="12dp"
                     android:src="@drawable/ic_action_add_product"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
