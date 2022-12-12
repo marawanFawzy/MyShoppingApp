@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.Spinner;
@@ -39,6 +40,7 @@ public class MakeOrder extends AppCompatActivity {
     ImageView cart, home , EditProfile;
     EditText Longitude, Latitude, nameOfReceiver, feedback;
     String userId, paymentChosen;
+    ImageButton Payment;
     double total;
     private FusedLocationProviderClient fusedLocationClient;
     private final ArrayList<String> paths = new ArrayList<>();
@@ -85,6 +87,7 @@ public class MakeOrder extends AppCompatActivity {
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         EditProfile = findViewById(R.id.EditProfile);
+        Payment = findViewById(R.id.Payment);
         confirm = findViewById(R.id.confirm);
         location = findViewById(R.id.location);
         Longitude = findViewById(R.id.editTextLongitude);
@@ -172,6 +175,11 @@ public class MakeOrder extends AppCompatActivity {
         });
         EditProfile.setOnClickListener(v->{
             Intent i = new Intent(MakeOrder.this, ShowProfile.class);
+            i.putExtra("userId", userId);
+            startActivity(i);
+        });
+        Payment.setOnClickListener(v->{
+            Intent i = new Intent(MakeOrder.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
