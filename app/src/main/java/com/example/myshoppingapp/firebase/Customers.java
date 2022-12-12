@@ -7,11 +7,12 @@ public class Customers {
     private Date Birthdate;
     private boolean flag;
     private CreditCard creditCard;
+    private boolean status = true;
 
     public Customers() {
     }
 
-    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender , String SSN, boolean flag) {
+    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender , String SSN, boolean flag , boolean status) {
         this.id = id;
         this.name = name;
         Username = username;
@@ -21,18 +22,8 @@ public class Customers {
         this.gender = gender;
         this.flag = flag;
         this.SSN = SSN;
+        this.status = status;
         creditCard = null;
-    }
-    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender , CreditCard creditCard, boolean flag) {
-        this.id = id;
-        this.name = name;
-        Username = username;
-        Password = password;
-        Birthdate = birthdate;
-        Email = email;
-        this.gender = gender;
-        this.flag = flag;
-        this.creditCard = creditCard;
     }
 
     public String getId() {
@@ -114,5 +105,13 @@ public class Customers {
 
     public void setSSN(String SSN) {
         this.SSN = SSN;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }

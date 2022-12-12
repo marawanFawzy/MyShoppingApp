@@ -97,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                             else {
                                 String id = db.collection("Customers").document().getId().substring(0, 5);
                                 Date date = new Date(b);
-                                Customers newTemp = new Customers(id, n, un, p, date, Mail , finalGender , SSN, false);
+                                Customers newTemp = new Customers(id, n, un, p, date, Mail , finalGender , SSN, false , true);
                                 db.collection("Customers").document(id).set(newTemp);
                                 Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                                 startActivity(i);
