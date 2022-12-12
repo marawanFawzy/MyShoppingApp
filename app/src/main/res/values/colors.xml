@@ -11,4 +11,5 @@
     <color name="colorPrimaryDark">#4a148c</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorPurple">#4a148c</color>
+    <color name="backGround">#e4e4e4</color>
 </resources>

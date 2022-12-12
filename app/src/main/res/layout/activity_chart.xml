@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="@color/backGround"
     android:padding="10dp"
     tools:context=".chart">
 
