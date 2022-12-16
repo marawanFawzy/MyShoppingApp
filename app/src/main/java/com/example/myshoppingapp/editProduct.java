@@ -12,7 +12,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
+import com.example.myshoppingapp.helpers.Check;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -36,23 +39,32 @@ public class editProduct extends AppCompatActivity {
     private final ArrayList<String> paths = new ArrayList<>();
     private final ArrayList<String> pathsProducts = new ArrayList<>();
     private String SelectedCategory, SelectedProduct, SelectedCategoryId;
-    Button  changePhoto;
+    Button changePhoto;
     FloatingActionButton edit;
     Spinner spinner, spinnerProducts;
-    EditText name, quantity, price;
+    EditText name, quantity, price, discount;
     Uri filePath;
     CircleImageView ProductImage;
     String newPhoto = "";
+    ImageButton ShowFeedBack;
+    CheckBox addDiscount;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Products ClonedProduct = new Products("", 0, "", 0, "", "", "", new ArrayList<>(), 0);
+    Check errorChecker = new Check();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_product);
         ProductImage = findViewById(R.id.ProductImageEdit);
-
+        ShowFeedBack = findViewById(R.id.ShowFeedBack);
         name = findViewById(R.id.ProductNameEdit);
         quantity = findViewById(R.id.ProductQuantityEdit);
         price = findViewById(R.id.priceEdit);
+        discount = findViewById(R.id.Discount);
+        addDiscount = findViewById(R.id.addDiscount);
+        addDiscount.setOnCheckedChangeListener((buttonView, isChecked) -> discount.setEnabled(isChecked));
         spinner = findViewById(R.id.spinner);
         paths.add("Select category");
         spinner.setSelection(0);
@@ -73,13 +85,18 @@ public class editProduct extends AppCompatActivity {
         changePhoto.setOnClickListener(v -> SelectImage());
         edit.setEnabled(false);
         getAllCategories();
-
+        ShowFeedBack.setOnClickListener(v -> {
+            Intent i = new Intent(editProduct.this, ShowFeedBack.class);
+            i.putExtra("Prod_id", ClonedProduct.getId());
+            startActivity(i);
+        });
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedCategory = parent.getItemAtPosition(position).toString();
                 changePhoto.setEnabled(false);
+                ShowFeedBack.setEnabled(false);
                 if (!SelectedCategory.equals("Select category")) {
                     pathsProducts.clear();
                     pathsProducts.add("Select Product");
@@ -107,16 +124,18 @@ public class editProduct extends AppCompatActivity {
                 edit.setEnabled(!SelectedProduct.equals("Select Product"));
                 if (!SelectedProduct.equals("Select Product")) {
                     changePhoto.setEnabled(true);
-                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    ShowFeedBack.setEnabled(true);
                     db.collection("Products")
                             .whereEqualTo("name", SelectedProduct)
                             .whereEqualTo("catId", SelectedCategoryId)
                             .get().addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                Products EditTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
-                                name.setText(EditTemp.getName());
-                                quantity.setText(String.valueOf(EditTemp.getQuantity()));
-                                price.setText(String.valueOf(EditTemp.getPrice()));
-                                ProductImage.setImageBitmap(StringToBitMap(EditTemp.getPhoto()));
+                                ClonedProduct = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
+                                name.setText(ClonedProduct.getName());
+                                quantity.setText(String.valueOf(ClonedProduct.getQuantity()));
+                                price.setText(String.valueOf(ClonedProduct.getPrice()));
+                                ProductImage.setImageBitmap(StringToBitMap(ClonedProduct.getPhoto()));
+                                discount.setText(String.valueOf(ClonedProduct.getDiscount()));
+
                             });
                 } else {
                     name.setText("");
@@ -126,6 +145,7 @@ public class editProduct extends AppCompatActivity {
                     Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
                     ProductImage.setImageDrawable(myDrawable);
                     changePhoto.setEnabled(false);
+                    ShowFeedBack.setEnabled(false);
                 }
 
 
@@ -138,28 +158,36 @@ public class editProduct extends AppCompatActivity {
         });
         edit.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Products")
-                    .whereEqualTo("name", SelectedProduct)
-                    .whereEqualTo("catId", SelectedCategoryId)
-                    .get().addOnSuccessListener(queryDocumentSnapshots1 -> {
-                        Products EditTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
-                        EditTemp.setName(name.getText().toString());
-                        EditTemp.setQuantity(Integer.parseInt(quantity.getText().toString()));
-                        EditTemp.setPrice(Double.parseDouble(price.getText().toString()));
-                        if(!newPhoto.equals(""))
-                        {
-                            EditTemp.setPhoto(newPhoto);
-                        }
-                        db.collection("Products").document(EditTemp.getId()).set(EditTemp).addOnSuccessListener(unused -> {
-                            spinnerProducts.setSelection(0);
-                            newPhoto = "";
-                            Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
-                            ProductImage.setImageDrawable(myDrawable);
-                            Toast.makeText(this, "updated " + SelectedProduct, Toast.LENGTH_SHORT).show();
+            String checkerResult = errorChecker.EditTextIsEmpty(name, quantity, price, discount);
+            if (!checkerResult.equals("")) {
+                Toast.makeText(editProduct.this, "Please fill " + checkerResult + " Data ", Toast.LENGTH_SHORT).show();
+            } else {
+                db.collection("Products")
+                        .whereEqualTo("name", SelectedProduct)
+                        .whereEqualTo("catId", SelectedCategoryId)
+                        .get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                            ClonedProduct = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
+                            ClonedProduct.setName(name.getText().toString());
+                            ClonedProduct.setQuantity(Integer.parseInt(quantity.getText().toString()));
+                            ClonedProduct.setPrice(Double.parseDouble(price.getText().toString()));
+                            if (addDiscount.isChecked())
+                                ClonedProduct.setDiscount(Double.parseDouble(discount.getText().toString()));
+                            if (!newPhoto.equals(""))
+                                ClonedProduct.setPhoto(newPhoto);
+                            Products newTemp = ClonedProduct.clone();
+                            db.collection("Products").document(newTemp.getId()).set(newTemp).addOnSuccessListener(unused -> {
+                                spinnerProducts.setSelection(0);
+                                discount.setText("0");
+                                addDiscount.setChecked(false);
+                                newPhoto = "";
+                                Drawable myDrawable = getResources().getDrawable(R.drawable.ic_baseline_image_200);
+                                ProductImage.setImageDrawable(myDrawable);
+                                Toast.makeText(this, "updated " + SelectedProduct, Toast.LENGTH_SHORT).show();
+                            });
                         });
-                    });
-
+            }
         });
+
     }
 
     void getAllCategories() {
@@ -211,6 +239,7 @@ public class editProduct extends AppCompatActivity {
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Image from here..."), 22);
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 22 && resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -224,16 +253,18 @@ public class editProduct extends AppCompatActivity {
             }
         }
     }
-    public Bitmap StringToBitMap(String encodedString){
+
+    public Bitmap StringToBitMap(String encodedString) {
         try {
-            byte [] encodeByte= Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
     }
+
     public String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 15, baos);

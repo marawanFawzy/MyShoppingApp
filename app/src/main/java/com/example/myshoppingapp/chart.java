@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Cart;
+import com.example.myshoppingapp.firebase.Orders;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -35,21 +36,21 @@ public class chart extends AppCompatActivity {
         xAxisValues = new ArrayList<>();
         v = new ArrayList<>();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Cart")
-                .whereEqualTo("customerId", "finished Order")
+        db.collection("Orders")
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.getDocuments().size() == 0)
                         Toast.makeText(chart.this, "no orders", Toast.LENGTH_SHORT).show();
                     else {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-                            Cart temp = queryDocumentSnapshots.getDocuments().get(i).toObject(Cart.class);
-                            for (int j = 0; j < temp.getNames().size(); j++) {
-                                int ret = xAxisValues.indexOf(temp.getNames().get(j));
+                            Orders order = queryDocumentSnapshots.getDocuments().get(i).toObject(Orders.class);
+                            Cart temp = order.getCart();
+                            for (int j = 0; j < temp.getProducts().size(); j++) {
+                                int ret = xAxisValues.indexOf(temp.getProducts().get(j).getName());
                                 if (ret == -1) {
-                                    xAxisValues.add(temp.getNames().get(j));
-                                    v.add(new BarEntry(xAxisValues.size() - 1, Float.parseFloat(temp.getProductsQuantity().get(j))));
+                                    xAxisValues.add(temp.getProducts().get(j).getName());
+                                    v.add(new BarEntry(xAxisValues.size() - 1,temp.getProducts().get(j).getQuantity()));
                                 } else {
-                                    v.get(ret).setY(v.get(ret).getY() + Float.parseFloat(temp.getProductsQuantity().get(j)));
+                                    v.get(ret).setY(v.get(ret).getY() + temp.getProducts().get(j).getQuantity());
                                 }
                             }
 

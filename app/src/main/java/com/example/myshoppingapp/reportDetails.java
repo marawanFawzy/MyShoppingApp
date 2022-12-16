@@ -21,11 +21,10 @@ import java.util.ArrayList;
 
 public class reportDetails extends AppCompatActivity {
     ListView myList;
-    ArrayList<ProductClass> arrayOfProducts;
-    ArrayList<String> ids, NamesArray, quantityArray, PricesArray;
+    ArrayList<Products> arrayOfProducts;
     TextView name, date , totalText;
     CustomAdapter adapter;
-    String orderId;
+    String orderId , userId;
     RatingBar rate;
     EditText FeedbackView;
     @Override
@@ -34,6 +33,7 @@ public class reportDetails extends AppCompatActivity {
         setContentView(R.layout.activity_report_details);
         name = findViewById(R.id.nameText);
         date = findViewById(R.id.dateText);
+        arrayOfProducts = new ArrayList<>();
         FeedbackView = findViewById(R.id.FeedbackView);
         totalText = findViewById(R.id.TotalText);
         Intent ii = getIntent();
@@ -41,40 +41,16 @@ public class reportDetails extends AppCompatActivity {
         myList = findViewById(R.id.OrderList);
         rate = findViewById(R.id.RatingBarView);
         rate.setEnabled(false);
-        ids = new ArrayList<>();
-        NamesArray = new ArrayList<>();
-        PricesArray = new ArrayList<>();
-        quantityArray = new ArrayList<>();
-        getOrder(orderId , NamesArray , PricesArray , quantityArray , ids);
+        getOrder(orderId , arrayOfProducts);
     }
 
-    public void InsertIntoAdapter(String userId, ArrayList<String> ids, ArrayList<String> namesArray, ArrayList<String> pricesArray, ArrayList<String> quantityArray) {
-        arrayOfProducts = new ArrayList<>();
-        for (int i = 0; i < namesArray.size(); i++) {
-            String id, name ,  price, quantity;
-            id = ids.get(i);
-            name = namesArray.get(i);
-            price = pricesArray.get(i);
-            quantity = quantityArray.get(i);
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            int finalI = i;
-            db.collection("Products").document(ids.get(i)).get().addOnSuccessListener(documentSnapshot -> {
-                ProductClass product;
-                String image;
-                Products temp = documentSnapshot.toObject(Products.class);
-                image = temp.getPhoto();
-                product = new ProductClass(userId, id, name, price, quantity, image);
-                arrayOfProducts.add(product);
-                if (finalI == namesArray.size()-1) {
-                    adapter = new CustomAdapter(this, 0, arrayOfProducts , true);
-                    myList.setAdapter(adapter);
-                }
-            });
-        }
+    public void InsertIntoAdapter(String userId) {
+        adapter = new CustomAdapter(this, 0, arrayOfProducts , true , true , userId , "Cart");
+        myList.setAdapter(adapter);
     }
 
     @SuppressLint("SetTextI18n")
-    void getOrder(String orderId, ArrayList<String> NamesArray, ArrayList<String> PricesArray, ArrayList<String> quantityArray, ArrayList<String> ids) {
+    void getOrder(String orderId, ArrayList<Products> products) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Orders")
                 .whereEqualTo("id", orderId)
@@ -92,12 +68,10 @@ public class reportDetails extends AppCompatActivity {
                         date.setText(String.valueOf(order.getOrder_date()));
                         FeedbackView.setText(order.getFeedback());
                         temp = order.getCart();
-                        NamesArray.addAll(temp.getNames());
-                        PricesArray.addAll(temp.getPrices());
-                        quantityArray.addAll(temp.getProductsQuantity());
-                        ids.addAll(temp.getProducts());
+                        userId = temp.getCustomerId();
+                        products.addAll(temp.getProducts());
                     }
-                    InsertIntoAdapter(temp.getCustomerId(), ids, NamesArray, PricesArray, quantityArray);
+                    InsertIntoAdapter(temp.getCustomerId());
                 });
     }
 }

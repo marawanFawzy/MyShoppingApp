@@ -7,12 +7,14 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Categories;
+import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AddNewCategory extends AppCompatActivity {
     EditText catName;
     FloatingActionButton buttonAddCat;
+    Check errorChecker = new Check();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +23,7 @@ public class AddNewCategory extends AppCompatActivity {
         catName = findViewById(R.id.catName);
         buttonAddCat = findViewById(R.id.buttonAddCat);
         buttonAddCat.setOnClickListener(v -> {
-            if (catName.getText().toString().equals("")) {
+            if (!errorChecker.EditTextIsEmpty(catName).equals("")) {
                 Toast.makeText(this, "please type the category name ", Toast.LENGTH_SHORT).show();
                 return;
             }

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Products;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -113,39 +114,35 @@ public class ProductsDetails extends AppCompatActivity {
 
     void AddCart(String Prod_id) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
-            if (queryDocumentSnapshots.getDocuments().size() == 0) {
-                String id = db.collection("Cart").document().getId().substring(0, 5);
-                ArrayList<String> productsQuantity = new ArrayList<>();
-                ArrayList<String> prodIds = new ArrayList<>();
-                ArrayList<String> prodNames = new ArrayList<>();
-                ArrayList<String> prices = new ArrayList<>();
-                ArrayList<String> times = new ArrayList<>();
-                productsQuantity.add("1");
-                prodIds.add(Prod_id);
-                prodNames.add(e_name.getText().toString());
-                prices.add(e_price.getText().toString());
-                times.add(e_time.getText().toString());
-                Cart newTemp = new Cart(id, userId, productsQuantity, prodIds, prodNames, prices, times);
-                db.collection("Cart").document(id).set(newTemp).addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "added product to new cart", Toast.LENGTH_SHORT).show();
-                });
-            } else {
-                DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
-                Cart temp = d.toObject(Cart.class);
-                for (String s : temp.getProducts()) {
-                    if (s.equals(Prod_id)) {
-                        Toast.makeText(this, "this product is already added", Toast.LENGTH_SHORT).show();
-                        return;
+        db.collection("Products").document(Prod_id).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Products ProductTemp = documentSnapshot.toObject(Products.class);
+                ProductTemp.setQuantity(1);
+                db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                    Cart temp;
+                    if (queryDocumentSnapshots.getDocuments().size() == 0) {
+                        ArrayList<Products> newCartProduct = new ArrayList<>();
+                        newCartProduct.add(ProductTemp);
+                        String id = db.collection("Cart").document().getId().substring(0, 5);
+                        temp = new Cart(id, userId, newCartProduct);
+                        db.collection("Cart").document(id).set(temp).addOnSuccessListener(unused -> {
+                            Toast.makeText(ProductsDetails.this, "added product to new cart", Toast.LENGTH_SHORT).show();
+                        });
+                    } else {
+                        DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
+                        temp = d.toObject(Cart.class);
+                        for (Products s : temp.getProducts()) {
+                            if (s.getId().equals(Prod_id)) {
+                                Toast.makeText(ProductsDetails.this, "this product is already added", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                        }
+                        temp.getProducts().add(ProductTemp);
+                        db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
+                            Toast.makeText(ProductsDetails.this, "added this product to existing cart", Toast.LENGTH_SHORT).show();
+                        });
                     }
-                }
-                temp.getProductsQuantity().add("1");
-                temp.getProducts().add(Prod_id);
-                temp.getNames().add(e_name.getText().toString());
-                temp.getPrices().add(e_price.getText().toString());
-                temp.getTimes().add(e_time.getText().toString());
-                db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
-                    Toast.makeText(this, "added this product to existing cart", Toast.LENGTH_SHORT).show();
                 });
 
             }

@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Products;
+import com.example.myshoppingapp.helpers.Check;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -152,7 +153,8 @@ public class ProductsSearch extends AppCompatActivity {
 
     void getAllProducts() {
         arr.clear();
-        if (search.getText().toString().equals("")) {
+        Check errorChecker  = new Check();
+        if (!errorChecker.EditTextIsEmpty(search).equals("")) {
             Toast.makeText(this, "please type any search text first", Toast.LENGTH_SHORT).show();
             return;
         }

@@ -1,6 +1,7 @@
 package com.example.myshoppingapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.myshoppingapp.firebase.Cart;
+import com.example.myshoppingapp.firebase.Orders;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -24,30 +26,34 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CustomAdapter extends ArrayAdapter<ProductClass> {
-    public ArrayList<ProductClass> records;
-    public ArrayList<String> quantity;
-    public double total = 0, time = -1;
-    boolean report = false;
+public class CustomAdapter extends ArrayAdapter<Products> {
+    public ArrayList<Products> records;
+    public double total = 0, time = 0;
+    boolean report;
+    boolean delivered;
+    boolean first = true;
     ImageView plus, minus;
     CircleImageView ProductImage;
-    String photo;
+    String photo, userId, OrderId;
+    int tempQuantity;
 
-    public CustomAdapter(@NonNull Context context, int resource, ArrayList<ProductClass> records, boolean report) {
+    public CustomAdapter(@NonNull Context context, int resource, ArrayList<Products> records, boolean report, boolean delivered, String userId, String OrderId) {
         super(context, resource, records);
         this.records = records;
-        quantity = new ArrayList<>();
         this.report = report;
+        this.delivered = delivered;
+        this.userId = userId;
+        this.OrderId = OrderId;
     }
 
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final ProductClass item = getItem(position);
+        final Products item = getItem(position);
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.activity_custom_adapter, parent, false);
         TextView prodQuantity, productName, productPrice;
-        ImageButton deleteBtn;
+        ImageButton deleteBtn, addFeedBack;
         ProductImage = convertView.findViewById(R.id.ProductImageAdapter);
         prodQuantity = convertView.findViewById(R.id.qquantityeditText4);
         productName = convertView.findViewById(R.id.nameeditText2);
@@ -55,13 +61,36 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
         plus = convertView.findViewById(R.id.imageViewPlus);
         minus = convertView.findViewById(R.id.imageViewMinus);
         deleteBtn = convertView.findViewById(R.id.delete_button);
-        productName.setText(item.name);
-        prodQuantity.setText(item.quantity);
-        productPrice.setText(item.price);
-        photo = item.image;
+        addFeedBack = convertView.findViewById(R.id.addFeedBack);
+        productName.setText(item.getName());
+        prodQuantity.setText(String.valueOf(item.getQuantity()));
+        productPrice.setText(String.valueOf(item.getPrice()));
+        photo = item.getPhoto();
         ProductImage.setImageBitmap(StringToBitMap(photo));
+        if (delivered) {
+            deleteBtn.setVisibility(View.GONE);
+            plus.setVisibility(View.GONE);
+            minus.setVisibility(View.GONE);
+            addFeedBack.setVisibility(View.VISIBLE);
+            addFeedBack.setOnClickListener(v -> {
+                Intent i = new Intent(parent.getContext(), AddFeedBackOnItem.class);
+                i.putExtra("Prod_id", item.getId());
+                parent.getContext().startActivity(i);
+            });
+        } else {
+            addFeedBack.setVisibility(View.GONE);
+            deleteBtn.setVisibility(View.VISIBLE);
+            plus.setVisibility(View.VISIBLE);
+            minus.setVisibility(View.VISIBLE);
+        }
         if (report) {
             deleteBtn.setVisibility(View.GONE);
+            addFeedBack.setVisibility(View.VISIBLE);
+            addFeedBack.setOnClickListener(v -> {
+                Intent i = new Intent(parent.getContext(), ShowFeedBack.class);
+                i.putExtra("Prod_id", item.getId());
+                parent.getContext().startActivity(i);
+            });
             plus.setVisibility(View.GONE);
             minus.setVisibility(View.GONE);
         } else {
@@ -69,30 +98,50 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
             productName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             productPrice.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
         }
+        if (!OrderId.equals("Cart") && first) {
+            first = false;
+            tempQuantity = item.getQuantity();
+        }
+
         plus.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Products").document(item.id).get().addOnSuccessListener(documentSnapshot -> {
+            db.collection("Products").document(item.getId()).get().addOnSuccessListener(documentSnapshot -> {
                 Products temp = documentSnapshot.toObject(Products.class);
-                int MaxQuantity = temp.getQuantity();
+                int MaxQuantity;
+                if (OrderId.equals("Cart")) MaxQuantity = temp.getQuantity();
+                else MaxQuantity = temp.getQuantity() + tempQuantity;
                 int value = Integer.parseInt(prodQuantity.getText().toString());
                 if (MaxQuantity == value) {
                     Toast.makeText(getContext(), "this is max quantity", Toast.LENGTH_SHORT).show();
                 } else {
-                    total += Double.parseDouble(productPrice.getText().toString());
-                    String newValue = String.valueOf(value + 1);
-                    prodQuantity.setText(newValue);
-                    records.get(position).quantity = newValue;
-                    db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
-                        Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
-                        ArrayList<String> newQ = new ArrayList<>();
-                        for (int i = 0; i < newTemp.getProducts().size(); i++)
-                            if (newTemp.getProducts().get(i).equals(item.id))
-                                newQ.add(newValue);
-                            else
-                                newQ.add(newTemp.getProductsQuantity().get(i));
-                        newTemp.setProductsQuantity(newQ);
-                        db.collection("Cart").document(newTemp.getId()).set(newTemp);
-                    });
+                    total += (Double.parseDouble(productPrice.getText().toString()));
+                    int newValue = value + 1;
+                    prodQuantity.setText(String.valueOf(newValue));
+                    records.get(position).setQuantity(newValue);
+                    if (OrderId.equals("Cart")) {
+                        db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                            Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                            for (int i = 0; i < newTemp.getProducts().size(); i++)
+                                if (newTemp.getProducts().get(i).getId().equals(item.getId())) {
+                                    newTemp.getProducts().get(i).setQuantity(newValue);
+                                    break;
+                                }
+                            db.collection("Cart").document(newTemp.getId()).set(newTemp);
+                        });
+                    } else {
+                        db.collection("Orders").document(OrderId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                            Orders Order = queryDocumentSnapshots.toObject(Orders.class);
+                            Cart newTemp = Order.getCart();
+                            for (int i = 0; i < newTemp.getProducts().size(); i++)
+                                if (newTemp.getProducts().get(i).getId().equals(item.getId())) {
+                                    newTemp.getProducts().get(i).setQuantity(newValue);
+                                    Order.setTotal(total);
+                                    db.collection("Orders").document(Order.getId()).set(Order);
+                                    notifyDataSetChanged();
+                                    break;
+                                }
+                        });
+                    }
                 }
             });
         });
@@ -104,46 +153,89 @@ public class CustomAdapter extends ArrayAdapter<ProductClass> {
                 Toast.makeText(getContext(), "this is min quantity", Toast.LENGTH_SHORT).show();
             } else {
                 total -= Double.parseDouble(productPrice.getText().toString());
-                String newValue = String.valueOf(value - 1);
-                prodQuantity.setText(newValue);
-                records.get(position).quantity = newValue;
-                db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
-                    Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
-                    ArrayList<String> newQ = new ArrayList<>();
-                    for (int i = 0; i < newTemp.getProducts().size(); i++)
-                        if (newTemp.getProducts().get(i).equals(item.id))
-                            newQ.add(newValue);
-                        else
-                            newQ.add(newTemp.getProductsQuantity().get(i));
-                    newTemp.setProductsQuantity(newQ);
-                    db.collection("Cart").document(newTemp.getId()).set(newTemp);
-                });
+                int newValue = value - 1;
+                prodQuantity.setText(String.valueOf(newValue));
+                records.get(position).setQuantity(newValue);
+                if (OrderId.equals("Cart")) {
+                    db.collection("Cart").whereEqualTo("customerId", userId).get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                                for (int i = 0; i < newTemp.getProducts().size(); i++)
+                                    if (newTemp.getProducts().get(i).getId().equals(item.getId())) {
+                                        newTemp.getProducts().get(i).setQuantity(newValue);
+                                        break;
+                                    }
+                                db.collection("Cart").document(newTemp.getId()).set(newTemp);
+                            });
+                } else {
+                    db.collection("Orders").document(OrderId).get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                Orders order = queryDocumentSnapshots.toObject(Orders.class);
+                                Cart newTemp = order.getCart();
+                                for (int i = 0; i < newTemp.getProducts().size(); i++)
+                                    if (newTemp.getProducts().get(i).getId().equals(item.getId())) {
+                                        newTemp.getProducts().get(i).setQuantity(newValue);
+                                        order.setTotal(total);
+                                        break;
+                                    }
+                                notifyDataSetChanged();
+                                db.collection("Orders").document(order.getId()).set(order);
+                            });
+                }
             }
         });
 
         deleteBtn.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            db.collection("Cart").whereEqualTo("customerId", item.customerId).get().addOnSuccessListener(queryDocumentSnapshots -> {
-                Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
-                {
-                    double newTime = -1;
-                    newTemp.getProducts().remove(position);
-                    total -= Double.parseDouble(newTemp.getPrices().get(position)) * Double.parseDouble(newTemp.getProductsQuantity().get(position));
-                    newTemp.getPrices().remove(position);
-                    newTemp.getProductsQuantity().remove(position);
-                    newTemp.getNames().remove(position);
-                    newTemp.getTimes().remove(position);
-                    records.remove(position);
-                    for (int i = 0; i < newTemp.getTimes().size(); i++) {
-                        if (Double.parseDouble(newTemp.getTimes().get(i)) > newTime)
-                            newTime = Double.parseDouble(newTemp.getTimes().get(i));
-                    }
-                    time = newTime;
-                    notifyDataSetChanged();
-                }
-                db.collection("Cart").document(newTemp.getId()).set(newTemp);
-            });
+            if (OrderId.equals("Cart")) {
+                db.collection("Cart").whereEqualTo("customerId", userId).get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            Cart newTemp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                            {
+                                double newTime = -1;
+                                newTemp.getProducts().remove(position);
+                                records.remove(position);
+                                if (newTemp.getProducts().size() != 0) {
+                                    total -= newTemp.getProducts().get(position).getPrice() * newTemp.getProducts().get(position).getQuantity();
+                                    for (int i = 0; i < newTemp.getProducts().size(); i++) {
+                                        if (newTemp.getProducts().get(i).getDays_For_Delivery() > newTime)
+                                            newTime = newTemp.getProducts().get(i).getDays_For_Delivery();
+                                    }
+                                    time = newTime;
+                                } else {
+                                    time = 0;
+                                }
+                                notifyDataSetChanged();
+                            }
+                            db.collection("Cart").document(newTemp.getId()).set(newTemp);
+                        });
+            } else {
+                db.collection("Orders").document(OrderId).get()
+                        .addOnSuccessListener(queryDocumentSnapshots -> {
+                            Orders order = queryDocumentSnapshots.toObject(Orders.class);
+                            Cart newTemp = order.getCart();
+                            {
+                                double newTime = -1;
+                                newTemp.getProducts().remove(position);
+                                records.remove(position);
+                                if (newTemp.getProducts().size() != 0) {
+                                    total -= newTemp.getProducts().get(position).getPrice() * newTemp.getProducts().get(position).getQuantity();
+                                    for (int i = 0; i < newTemp.getProducts().size(); i++) {
+                                        if (newTemp.getProducts().get(i).getDays_For_Delivery() > newTime)
+                                            newTime = newTemp.getProducts().get(i).getDays_For_Delivery();
+                                    }
+                                    time = newTime;
+                                } else {
+                                    time = 0;
+                                }
+                                order.setEstimatedTime(time);
+                                notifyDataSetChanged();
+                            }
+                            db.collection("Orders").document(order.getId()).set(order);
+                        });
+            }
         });
+
         return convertView;
     }
 

@@ -1,21 +1,34 @@
 package com.example.myshoppingapp.firebase;
 
+import java.util.ArrayList;
+
 public class Products implements Cloneable {
     private int Quantity;
     private double Price;
     private String name, id, catId;
     private String photo;
     private String Description;
-    private String Feedback;
+    private ArrayList<String> Feedback;
     private double Days_For_Delivery;
     private int Time_for_Delivery_in_Seconds;
+    private double discount = 0 ;
 
 
 
     public Products() {
     }
-
-    public Products(String id, int quantity, String catId, double price, String name ,String photo, String Description , String Feedback,double Days_For_Delivery) {
+    public Products(Products p ) {
+        this.id = p.id;
+        this.Quantity = p.Quantity;
+        this.catId = p.catId;
+        this.Price = p.Price;
+        this.name = p.name;
+        this.photo = p.photo;
+        this.Feedback= p.Feedback;
+        this.Description= p.Description;
+        this.Days_For_Delivery=p.Days_For_Delivery;
+    }
+    public Products(String id, int quantity, String catId, double price, String name ,String photo, String Description , ArrayList<String> Feedback,double Days_For_Delivery) {
         this.id = id;
         this.Quantity = quantity;
         this.catId = catId;
@@ -106,11 +119,19 @@ public class Products implements Cloneable {
         this.photo = photo;
     }
 
-    public String getFeedback() {
+    public ArrayList<String> getFeedback() {
         return Feedback;
     }
 
-    public void setFeedback(String feedback) {
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+
+    public void setFeedback(ArrayList<String> feedback) {
         Feedback = feedback;
     }
     @Override

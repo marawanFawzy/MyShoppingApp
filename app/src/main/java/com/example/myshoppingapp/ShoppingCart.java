@@ -20,8 +20,7 @@ import java.util.ArrayList;
 
 public class ShoppingCart extends AppCompatActivity {
     ListView myList;
-    ArrayList<ProductClass> arrayOfProducts;
-    ArrayList<String> ids, NamesArray, quantityArray, PricesArray, times;
+    ArrayList<Products> arrayOfProducts = new ArrayList<>();
     String userId;
     CustomAdapter adapter;
     double total = 0.0, Time;
@@ -43,12 +42,7 @@ public class ShoppingCart extends AppCompatActivity {
         Intent ii = getIntent();
         userId = ii.getStringExtra("userId");
         myList = findViewById(R.id.mylist);
-        ids = new ArrayList<>();
-        NamesArray = new ArrayList<>();
-        PricesArray = new ArrayList<>();
-        quantityArray = new ArrayList<>();
-        times = new ArrayList<>();
-        getCart(userId, NamesArray, PricesArray, quantityArray, ids);
+        getCart(userId, arrayOfProducts);
         makeOrder.setOnClickListener(v -> {
             if (myList.getCount() > 0) {
                 Intent i = new Intent(ShoppingCart.this, MakeOrder.class);
@@ -101,48 +95,24 @@ public class ShoppingCart extends AppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         arrayOfProducts = new ArrayList<>();
-        NamesArray = new ArrayList<>();
-        PricesArray = new ArrayList<>();
-        quantityArray = new ArrayList<>();
-        times = new ArrayList<>();
-        ids = new ArrayList<>();
         total = 0;
         Time = 0;
-        getCart(userId, NamesArray, PricesArray, quantityArray, ids);
+        getCart(userId,arrayOfProducts);
     }
 
-    public void InsertIntoAdapter(String userId, ArrayList<String> ids, ArrayList<String> namesArray, ArrayList<String> pricesArray, ArrayList<String> quantityArray, ArrayList<String> times) {
-        arrayOfProducts = new ArrayList<>();
-        for (int i = 0; i < namesArray.size(); i++) {
-            String id = ids.get(i);
-            String name = namesArray.get(i);
-            String price = pricesArray.get(i);
-            String quantity = quantityArray.get(i);
-            String time = times.get(i);
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
-            total += Double.parseDouble(price) * Double.parseDouble(quantity);
-            if (Double.parseDouble(time) > Time)
-                Time = Double.parseDouble(time);
-            int finalI = i;
-            db.collection("Products").document(ids.get(i)).get().addOnSuccessListener(documentSnapshot -> {
-                ProductClass product;
-                String image;
-                Products temp = documentSnapshot.toObject(Products.class);
-                image = temp.getPhoto();
-                product = new ProductClass(userId, id, name, price, quantity, image, Double.parseDouble(time));
-                arrayOfProducts.add(product);
-                if (finalI == namesArray.size() - 1) {
-                    adapter = new CustomAdapter(this, 0, arrayOfProducts, false);
-                    adapter.total = total;
-                    adapter.time = Time;
-                    myList.setAdapter(adapter);
-                }
-            });
-
+    public void InsertIntoAdapter(String userId, ArrayList<Products> products) {
+        for (int i = 0; i < products.size(); i++) {
+            total += products.get(i).getPrice() * products.get(i).getQuantity();
+            if (products.get(i).getDays_For_Delivery()> Time)
+                Time = products.get(i).getDays_For_Delivery();
         }
+        adapter = new CustomAdapter(this, 0, arrayOfProducts, false , false , userId , "Cart");
+        adapter.total = total;
+        adapter.time = Time;
+        myList.setAdapter(adapter);
     }
 
-    void getCart(String userId, ArrayList<String> NamesArray, ArrayList<String> PricesArray, ArrayList<String> quantityArray, ArrayList<String> ids) {
+    void getCart(String userId, ArrayList<Products> products) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Cart")
                 .whereEqualTo("customerId", userId)
@@ -153,13 +123,9 @@ public class ShoppingCart extends AppCompatActivity {
                     } else {
                         DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
                         Cart temp = d.toObject(Cart.class);
-                        NamesArray.addAll(temp.getNames());
-                        PricesArray.addAll(temp.getPrices());
-                        quantityArray.addAll(temp.getProductsQuantity());
-                        ids.addAll(temp.getProducts());
-                        times.addAll(temp.getTimes());
+                        products.addAll(temp.getProducts());
                     }
-                    InsertIntoAdapter(userId, ids, NamesArray, PricesArray, quantityArray, times);
+                    InsertIntoAdapter(userId, products);
                 });
     }
 

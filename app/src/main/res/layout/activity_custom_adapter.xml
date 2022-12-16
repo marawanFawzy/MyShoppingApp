@@ -35,6 +35,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
+    <ImageButton
+        android:id="@+id/addFeedBack"
+        android:layout_width="37dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="128dp"
+        android:contentDescription="@string/todo1"
+        android:minHeight="48dp"
+        android:src="@drawable/ic_action_add_feedback"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.093"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="SpeakableTextPresentCheck,DuplicateSpeakableTextCheck" />
 
     <TextView
         android:id="@+id/nameTextview"

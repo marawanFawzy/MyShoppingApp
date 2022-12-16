@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Categories;
+import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -24,6 +25,7 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
     EditText editTextEdit;
     Spinner spinner;
     int selectedPosition = 0 ;
+    Check errorChecker  = new Check();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +45,7 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
             if (SelectedCategory.equals("Select category"))
                 Toast.makeText(this, "please choose a category first", Toast.LENGTH_SHORT).show();
             else {
-                if (editTextEdit.getText().toString().equals(""))
+                if (!errorChecker.EditTextIsEmpty(editTextEdit).equals(""))
                     Toast.makeText(this, "please choose a new name first", Toast.LENGTH_SHORT).show();
                 else {
                     db.collection("Categories")

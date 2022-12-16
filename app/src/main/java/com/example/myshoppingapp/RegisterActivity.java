@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Customers;
+import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -25,6 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText cname, cusername , cpassword , cbirthdate , cMail , cSSN;
     RadioButton gfemale , gmale;
     FloatingActionButton signup;
+    Check errorChecker = new Check();
 
 
     @Override
@@ -69,20 +71,9 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (gmale.isChecked()) {
                 gender = "Male";
             }
-            if (cname.getText().toString().equals(""))
-                Toast.makeText(RegisterActivity.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
-            else if (cusername.getText().toString().equals(""))
-                Toast.makeText(getApplicationContext(), "Please enter your Username", Toast.LENGTH_SHORT).show();
-            else if (cpassword.getText().toString().equals(""))
-                Toast.makeText(getApplicationContext(), "Please enter your Password", Toast.LENGTH_SHORT).show();
-            else if (gender.equals(""))
-                Toast.makeText(getApplicationContext(), "Please enter your Gender", Toast.LENGTH_SHORT).show();
-            else if (cbirthdate.getText().toString().equals(""))
-                Toast.makeText(getApplicationContext(), "Please enter your Birth Date", Toast.LENGTH_SHORT).show();
-            else if (cMail.getText().toString().equals(""))
-                Toast.makeText(getApplicationContext(), "Please enter your Email", Toast.LENGTH_SHORT).show();
-            else if (cSSN.getText().toString().equals(""))
-                Toast.makeText(getApplicationContext(), "Please enter your SSN", Toast.LENGTH_SHORT).show();
+            String checkerResult = errorChecker.EditTextIsEmpty(cname , cusername , cpassword , cbirthdate , cMail , cSSN);
+            if(!checkerResult.equals("") || errorChecker.StringCheckIsEmpty(gender))
+                Toast.makeText(RegisterActivity.this, "Please fill " + checkerResult + " Data " , Toast.LENGTH_SHORT).show();
             else {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String finalGender = gender;

@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
+import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,7 +39,8 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
     Uri filePath;
     CircleImageView ProductImage;
     String photo = "";
-    Products ClonedProduct = new Products("", 0, "", 0, "", "","" ,"", 0);
+    Products ClonedProduct = new Products("", 0, "", 0, "", "","" ,new ArrayList<>(), 0);
+    Check errorChecker = new Check();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +67,11 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
             if (SelectedCategory.equals("Select Category"))
                 Toast.makeText(this, "please choose a category first", Toast.LENGTH_SHORT).show();
             else {
-                if (ProductName.getText().toString().equals(""))
-                    Toast.makeText(this, "please choose a name first", Toast.LENGTH_SHORT).show();
-                else if (ProductQuantity.getText().toString().equals(""))
-                    Toast.makeText(this, "please choose a Quantity first", Toast.LENGTH_SHORT).show();
-                else if (price.getText().toString().equals(""))
-                    Toast.makeText(this, "please choose a price first", Toast.LENGTH_SHORT).show();
-                else if (Description.getText().toString().equals(""))
-                    Toast.makeText(this, "please choose a Description first", Toast.LENGTH_SHORT).show();
-                else if (estimatedTime.getText().toString().equals(""))
-                    Toast.makeText(this, "please choose a estimated Time first", Toast.LENGTH_SHORT).show();
+                String checkerResult = errorChecker.EditTextIsEmpty(ProductName , ProductQuantity , price , Description, estimatedTime);
+                if (!checkerResult.equals(""))
+                {
+                    Toast.makeText(AddNewProduct.this, "Please fill " + checkerResult + " Data " , Toast.LENGTH_SHORT).show();
+                }
                 else {
                     db.collection("Categories")
                             .whereEqualTo("name", SelectedCategory)

@@ -1,7 +1,10 @@
 package com.example.myshoppingapp.firebase;
 
-public class CreditCard {
-    private String number, expireDateMonth, expireDateYear, CVV;
+import com.example.myshoppingapp.helpers.Payment;
+
+public class CreditCard implements Payment {
+    private String number, expireDateMonth, expireDateYear;
+    private int CVV;
     private String status;
     private double amount = 1000;
 
@@ -9,7 +12,7 @@ public class CreditCard {
 
     }
 
-    public CreditCard(String number, String expireDateMonth, String expireDateYear, String CVV, String status) {
+    public CreditCard(String number, String expireDateMonth, String expireDateYear, int CVV, String status) {
         this.number = number;
         this.expireDateMonth = expireDateMonth;
         this.expireDateYear = expireDateYear;
@@ -17,7 +20,7 @@ public class CreditCard {
         this.status = status;
     }
 
-    public CreditCard(String number, String expireDateMonth, String expireDateYear, String CVV) {
+    public CreditCard(String number, String expireDateMonth, String expireDateYear, int CVV) {
         this.number = number;
         this.expireDateMonth = expireDateMonth;
         this.expireDateYear = expireDateYear;
@@ -33,11 +36,11 @@ public class CreditCard {
         this.number = number;
     }
 
-    public String getCVV() {
+    public int getCVV() {
         return CVV;
     }
 
-    public void setCVV(String CVV) {
+    public void setCVV(int CVV) {
         this.CVV = CVV;
     }
 
@@ -71,5 +74,10 @@ public class CreditCard {
 
     public void setExpireDateYear(String expireDateYear) {
         this.expireDateYear = expireDateYear;
+    }
+
+    @Override
+    public boolean withdraw(double amount) {
+        return true;
     }
 }

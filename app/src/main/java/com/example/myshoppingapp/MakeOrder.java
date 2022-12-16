@@ -20,9 +20,12 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 
 import com.example.myshoppingapp.firebase.Cart;
+import com.example.myshoppingapp.firebase.CreditCard;
 import com.example.myshoppingapp.firebase.Customers;
 import com.example.myshoppingapp.firebase.Orders;
 import com.example.myshoppingapp.firebase.Products;
+import com.example.myshoppingapp.helpers.Check;
+import com.example.myshoppingapp.helpers.ProxyCheck;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,10 +45,12 @@ public class MakeOrder extends AppCompatActivity {
     CardView location;
     ImageView cart, home, EditProfile, Orders;
     EditText Longitude, Latitude, nameOfReceiver, feedback, ConfirmCVV;
-    String userId, paymentChosen, CVV;
+    String userId, paymentChosen;
+    CreditCard CVV;
     ImageButton Payment;
     TextView estimatedTime;
     double total, time;
+    Check errorChecker = new Check();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     private FusedLocationProviderClient fusedLocationClient;
     private final ArrayList<String> paths = new ArrayList<>();
@@ -86,7 +91,7 @@ public class MakeOrder extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             Customers temp = documentSnapshot.toObject(Customers.class);
-                            CVV = temp.getCreditCard().getCVV();
+                            CVV = temp.getCreditCard();
                         }
                     });
                 }
@@ -131,15 +136,13 @@ public class MakeOrder extends AppCompatActivity {
                     });
         });
         confirm.setOnClickListener(v -> {
-            if (Longitude.getText().toString().equals("") || Latitude.getText().toString().equals(""))
-                Toast.makeText(this, "please press on Location button first", Toast.LENGTH_SHORT).show();
-            else if (nameOfReceiver.getText().toString().equals(""))
-                Toast.makeText(this, "please type the name of the Receiver", Toast.LENGTH_SHORT).show();
-            else if (paymentChosen.equals("Choose payment method"))
+            String checkerResult = errorChecker.EditTextIsEmpty(Longitude, Latitude, nameOfReceiver);
+            if (paymentChosen.equals("Choose payment method"))
                 Toast.makeText(this, "please choose payment method", Toast.LENGTH_SHORT).show();
+            else if (!checkerResult.equals(""))
+                Toast.makeText(MakeOrder.this, "Please fill " + checkerResult + " Data ", Toast.LENGTH_SHORT).show();
             else {
                 Date date = new Date();
-
                 db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
                     String id;
                     if (queryDocumentSnapshots.getDocuments().size() != 0) {
@@ -147,40 +150,55 @@ public class MakeOrder extends AppCompatActivity {
                         Cart temp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
                         for (int i = 0; i < temp.getProducts().size(); i++) {
                             int finalI = i;
-                            db.collection("Products").whereEqualTo("id", temp.getProducts().get(i)).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                            db.collection("Products").whereEqualTo("id", temp.getProducts().get(i).getId()).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
                                 Products ProductTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
-                                db.collection("Products").document(temp.getProducts().get(finalI))
-                                        .update("quantity", ProductTemp.getQuantity() - Integer.parseInt(temp.getProductsQuantity().get(finalI)));
+                                db.collection("Products").document(temp.getProducts().get(finalI).getId())
+                                        .update("quantity", ProductTemp.getQuantity() - temp.getProducts().get(finalI).getQuantity());
                             });
 
                         }
                         paymentChosen = (!paymentChosen.equals("Cash")) ? paymentChosen.substring(paymentChosen.indexOf(" ") + 1) : "Cash";
-                        if (!paymentChosen.equals("Cash")) {
-                            if (!CVV.equals(ConfirmCVV.getText().toString())) {
-                                Toast.makeText(this, "wrong CVV", Toast.LENGTH_SHORT).show();
-                                return;
-                            }
+                        ProxyCheck checkCredit;
+                        try {
+                            checkCredit = new ProxyCheck(Integer.parseInt(ConfirmCVV.getText().toString()), CVV);
+                        } catch (Exception e) {
+                            checkCredit = new ProxyCheck(0, CVV);
                         }
-                        Orders newTemp = new Orders(id, userId, date, Double.parseDouble(Latitude.getText().toString()), Double.parseDouble(Longitude.getText().toString()), nameOfReceiver.getText().toString(), temp, paymentChosen, total, time);
-                        newTemp.setRating(simpleRatingBar.getRating());
-                        newTemp.setFeedback(feedback.getText().toString());
-                        db.collection("Orders").document(id).set(newTemp).addOnSuccessListener(unused -> {
-                            Toast.makeText(MakeOrder.this, "your order is created successfully", Toast.LENGTH_SHORT).show();
-                            temp.setCustomerId("finished Order");
-                            db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
-                                Latitude.setText("");
-                                Longitude.setText("");
-                                nameOfReceiver.setText("");
-                                feedback.setText("");
-                                ConfirmCVV.setText("");
-                                estimatedTime.setText("");
-                                simpleRatingBar.setRating(0);
-                                spinner.setSelection(0);
-                                Intent i = new Intent(MakeOrder.this, HomeActivity.class);
-                                i.putExtra("userId", userId);
-                                startActivity(i);
+                        boolean access = true;
+                        if (!paymentChosen.equals("Cash")) {
+                            access = checkCredit.withdraw(total);
+                        }
+                        if (access) {
+                            Orders newTemp = new Orders.OrderBuilder()
+                                    .buildId(id)
+                                    .buildCustomer_id(userId).buildLatitude(Double.parseDouble(Latitude.getText().toString()))
+                                    .buildLongitude(Double.parseDouble(Longitude.getText().toString()))
+                                    .buildName(nameOfReceiver.getText().toString())
+                                    .buildCart(temp).buildPaymentMethod(paymentChosen)
+                                    .buildOrder_date(date)
+                                    .buildTotal(total).buildEstimatedTime(time).build();
+                            newTemp.setRating(simpleRatingBar.getRating());
+                            newTemp.setFeedback(feedback.getText().toString());
+                            db.collection("Orders").document(id).set(newTemp).addOnSuccessListener(unused -> {
+                                Toast.makeText(MakeOrder.this, "your order is created successfully", Toast.LENGTH_SHORT).show();
+                                temp.setCustomerId("finished Order");
+                                db.collection("Cart").document(temp.getId()).set(temp).addOnSuccessListener(unused1 -> {
+                                    Latitude.setText("");
+                                    Longitude.setText("");
+                                    nameOfReceiver.setText("");
+                                    feedback.setText("");
+                                    ConfirmCVV.setText("");
+                                    estimatedTime.setText("");
+                                    simpleRatingBar.setRating(0);
+                                    spinner.setSelection(0);
+                                    Intent i = new Intent(MakeOrder.this, HomeActivity.class);
+                                    i.putExtra("userId", userId);
+                                    startActivity(i);
+                                });
                             });
-                        });
+                        } else {
+                            Toast.makeText(this, "access denied", Toast.LENGTH_SHORT).show();
+                        }
 
                     } else
                         Toast.makeText(MakeOrder.this, "please fill your cart first", Toast.LENGTH_SHORT).show();

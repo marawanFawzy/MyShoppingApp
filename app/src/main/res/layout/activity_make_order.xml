@@ -270,7 +270,6 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:text="2 days to deliver"
             android:textAlignment="center"
             android:textColor="@android:color/primary_text_light"
             android:textSize="25sp"

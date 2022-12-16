@@ -10,8 +10,7 @@ public class Customers implements Cloneable , Serializable {
     private CreditCard creditCard;
     private boolean status = true;
 
-    public Customers() {
-    }
+    public Customers() {}
 
     public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender , String SSN, boolean flag , boolean status) {
         this.id = id;

@@ -17,6 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.noActionBar">
         <activity
+            android:name=".ShowFeedBack"
+            android:exported="false" />
+        <activity
+            android:name=".AddFeedBackOnItem"
+            android:exported="false" />
+        <activity
+            android:name=".Edit_Order"
+            android:exported="false" />
+        <activity
             android:name=".Current_Orders"
             android:exported="false" />
         <activity

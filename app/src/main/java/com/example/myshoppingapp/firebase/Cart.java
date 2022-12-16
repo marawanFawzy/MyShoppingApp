@@ -4,23 +4,15 @@ import java.util.ArrayList;
 
 public class Cart {
     private String id, customerId;
-    private ArrayList<String> productsQuantity;
-    private ArrayList<String> products;
-    private ArrayList<String> names;
-    private ArrayList<String> prices;
-    private ArrayList<String> times;
+    private ArrayList<Products> products;
 
     public Cart() {
     }
 
-    public Cart(String id, String customerId, ArrayList<String> productsQuantity, ArrayList<String> products, ArrayList<String> names, ArrayList<String> prices , ArrayList<String> times) {
+    public Cart(String id, String customerId, ArrayList<Products> products) {
         this.id = id;
         this.customerId = customerId;
-        this.productsQuantity = productsQuantity;
         this.products = products;
-        this.names = names;
-        this.prices = prices;
-        this.times = times;
     }
 
     public String getId() {
@@ -39,43 +31,11 @@ public class Cart {
         this.customerId = customerId;
     }
 
-    public ArrayList<String> getProductsQuantity() {
-        return productsQuantity;
-    }
-
-    public void setProductsQuantity(ArrayList<String> productsQuantity) {
-        this.productsQuantity = productsQuantity;
-    }
-
-    public ArrayList<String> getProducts() {
+    public ArrayList<Products> getProducts() {
         return products;
     }
 
-    public void setProducts(ArrayList<String> products) {
+    public void setProducts(ArrayList<Products> products) {
         this.products = products;
-    }
-
-    public ArrayList<String> getNames() {
-        return names;
-    }
-
-    public void setNames(ArrayList<String> names) {
-        this.names = names;
-    }
-
-    public ArrayList<String> getPrices() {
-        return prices;
-    }
-
-    public void setPrices(ArrayList<String> prices) {
-        this.prices = prices;
-    }
-
-    public ArrayList<String> getTimes() {
-        return times;
-    }
-
-    public void setTimes(ArrayList<String> times) {
-        this.times = times;
     }
 }

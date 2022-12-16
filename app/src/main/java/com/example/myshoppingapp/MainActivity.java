@@ -10,7 +10,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myshoppingapp.firebase.Admin;
 import com.example.myshoppingapp.firebase.Customers;
+import com.example.myshoppingapp.helpers.AdminAccessProxy;
+import com.example.myshoppingapp.helpers.Check;
+import com.example.myshoppingapp.helpers.LoginProxy;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     CheckBox remember;
+    Check errorChecker = new Check();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,29 +76,33 @@ public class MainActivity extends AppCompatActivity {
                         DocumentSnapshot d = queryDocumentSnapshots.getDocuments().get(0);
                         if (d.exists()) {
                             Customers temp = d.toObject(Customers.class);
-                            if (temp != null && !Password.equals(temp.getPassword())) {
-                                Toast.makeText(MainActivity.this, "please enter a valid username or password", Toast.LENGTH_SHORT).show();
+                            AdminAccessProxy checkAdmin = new AdminAccessProxy();
+                            LoginProxy checkLogin = new LoginProxy();
+                            if (checkLogin.generateAccess(temp, Password)) {
+                                if (remember.isChecked()) {
+                                    editor.putBoolean("savelogin", true);
+                                    editor.putString("username", userName);
+                                    editor.putString("password", Password);
+                                } else {
+                                    editor.putBoolean("savelogin", false);
+                                }
+                                editor.commit();
+                                if (checkAdmin.AdminRouter(temp)) {
+                                    Admin admin = Admin.getAdmin();
+                                    Toast.makeText(MainActivity.this, "welcome admin " + admin.getUsername(), Toast.LENGTH_SHORT).show();
+                                    Intent adminIntent = new Intent(MainActivity.this, adminPage.class);
+                                    startActivity(adminIntent);
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_SHORT).show();
+                                    Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
+                                    homeIntent.putExtra("userId", temp.getId());
+                                    startActivity(homeIntent);
+                                }
+                            } else {
+                                Toast.makeText(this, "access denied please contact the admin", Toast.LENGTH_SHORT).show();
                                 username.setText("");
                                 password.setText("");
                                 return;
-                            }
-                            if (remember.isChecked()) {
-                                editor.putBoolean("savelogin", true);
-                                editor.putString("username", userName);
-                                editor.putString("password", Password);
-                            } else {
-                                editor.putBoolean("savelogin", false);
-                            }
-                            editor.commit();
-                            if (temp.isFlag()) {
-                                Toast.makeText(MainActivity.this, "welcome admin", Toast.LENGTH_SHORT).show();
-                                Intent adminIntent = new Intent(MainActivity.this, adminPage.class);
-                                startActivity(adminIntent);
-                            } else {
-                                Toast.makeText(MainActivity.this, "Successfully Logged in!", Toast.LENGTH_SHORT).show();
-                                Intent homeIntent = new Intent(MainActivity.this, HomeActivity.class);
-                                homeIntent.putExtra("userId" ,temp.getId());
-                                startActivity(homeIntent);
                             }
                         }
                     });
@@ -101,13 +110,12 @@ public class MainActivity extends AppCompatActivity {
 
         forgetPassword.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            String userName = username.getText().toString();
-            if (userName.equals("")) {
+            if (errorChecker.EditTextIsEmpty(username).equals("")) {
                 Toast.makeText(this, "please type your username", Toast.LENGTH_SHORT).show();
                 return;
             }
             db.collection("Customers")
-                    .whereEqualTo("username", userName)
+                    .whereEqualTo("username", username.getText().toString())
                     .limit(1)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
