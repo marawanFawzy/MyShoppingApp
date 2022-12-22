@@ -3,8 +3,8 @@ package com.example.myshoppingapp.helpers;
 import com.example.myshoppingapp.firebase.CreditCard;
 
 public class ProxyCheck implements Payment {
-    private CreditCard c1;
-    private int Cvv;
+    private final CreditCard c1;
+    private final int Cvv;
 
     public ProxyCheck(int Cvv, CreditCard c1) {
         this.Cvv = Cvv;

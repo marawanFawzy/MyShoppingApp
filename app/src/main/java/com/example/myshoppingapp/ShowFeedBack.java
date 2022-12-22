@@ -9,15 +9,12 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.FirebaseFirestore;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ShowFeedBack extends AppCompatActivity {
     ArrayAdapter<String> FeedBackList;
@@ -49,7 +46,6 @@ public class ShowFeedBack extends AppCompatActivity {
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.size() == 0) {
                         Toast.makeText(ShowFeedBack.this, "not found", Toast.LENGTH_SHORT).show();
-                        return;
                     } else {
                         ClonedProduct = queryDocumentSnapshots.getDocuments().get(0).toObject(Products.class);
                         if (ClonedProduct != null) {

@@ -7,17 +7,14 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Products;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AddFeedBackOnItem extends AppCompatActivity {
     EditText e_name, e_price, e_FeedBack, e_description;
@@ -60,7 +57,6 @@ public class AddFeedBackOnItem extends AppCompatActivity {
                 .get().addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.size() == 0) {
                         Toast.makeText(AddFeedBackOnItem.this, "not found", Toast.LENGTH_SHORT).show();
-                        return;
                     } else {
                         for (DocumentSnapshot d : queryDocumentSnapshots) {
                              ClonedProduct = d.toObject(Products.class);

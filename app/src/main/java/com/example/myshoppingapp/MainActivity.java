@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(this, "access denied please contact the admin", Toast.LENGTH_SHORT).show();
                                 username.setText("");
                                 password.setText("");
-                                return;
                             }
                         }
                     });
