@@ -1,6 +1,7 @@
 package com.example.myshoppingapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,6 +16,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
@@ -28,6 +33,7 @@ import com.example.myshoppingapp.helpers.Check;
 import com.example.myshoppingapp.helpers.ProxyCheck;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -134,7 +140,8 @@ public class MakeOrder extends AppCompatActivity {
                             Latitude.setText(String.valueOf(location1.getLatitude()));
                             Longitude.setText(String.valueOf(location1.getLongitude()));
                             Intent i = new Intent(MakeOrder.this, map.class);
-                            startActivity(i);
+                            startActivityForResult(i, 1);
+
                         }
                     });
 
@@ -234,6 +241,18 @@ public class MakeOrder extends AppCompatActivity {
             startActivity(i);
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                LatLng dest = data.getParcelableExtra("result");
+                Latitude.setText(String.valueOf(dest.latitude));
+                Longitude.setText(String.valueOf(dest.longitude));
+            }
+        }
     }
 
     private void fillSpinner(String userId) {
