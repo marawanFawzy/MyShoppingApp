@@ -11,17 +11,14 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="map"
+        android:text="pick your location"
         android:textSize="30dp"
         android:textColor="#000"
         android:textStyle="bold"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="test"/>
 
-    <FrameLayout
-        android:id="@+id/frame"
+    <fragment
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

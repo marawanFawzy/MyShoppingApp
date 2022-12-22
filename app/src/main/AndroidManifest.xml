@@ -17,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.noActionBar">
         <activity
+            android:name=".map"
+            android:exported="false" />
+        <activity
             android:name=".ShowFeedBack"
             android:exported="false" />
         <activity
@@ -64,12 +67,16 @@
             android:required="true" />
 
         <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC55eHM8q7gB1ZggiRYXcwCz4RJCdBejvg" />
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBf5a-9IsVJTMFnIt22p7HsAkWOvO_-Jyk" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
-        <activity
-            android:name=".map"
-            android:exported="false" />
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name=".AddNewCategory"
             android:exported="false" />

@@ -55,6 +55,7 @@ public class Edit_Order extends AppCompatActivity {
                     Orders temp = documentSnapshot.toObject(Orders.class);
                     temp.setEstimatedTime(adapter.time);
                     temp.setOrder_date(new Date());
+                    //TODO UPDATE REMAINING QUANTITY
                     db.collection("Orders").document(orderId).set(temp).addOnSuccessListener(unused -> {
                         Toast.makeText(Edit_Order.this, "your order is edited and it will be delivered in " + adapter.time + " days", Toast.LENGTH_SHORT).show();
                         Edit_Order.this.finish();

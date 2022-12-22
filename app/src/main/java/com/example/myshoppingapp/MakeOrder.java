@@ -43,7 +43,7 @@ public class MakeOrder extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 155;
     FloatingActionButton confirm;
     CardView location;
-    ImageView cart, home, EditProfile, Orders;
+    ImageView cart, home, EditProfile, OrdersI;
     EditText Longitude, Latitude, nameOfReceiver, feedback, ConfirmCVV;
     String userId, paymentChosen;
     CreditCard CVV;
@@ -108,7 +108,7 @@ public class MakeOrder extends AppCompatActivity {
         cart = findViewById(R.id.cartbutton);
         home = findViewById(R.id.homebutton);
         EditProfile = findViewById(R.id.EditProfile);
-        Orders = findViewById(R.id.Orders);
+        OrdersI = findViewById(R.id.Orders);
         estimatedTime = findViewById(R.id.estimatedTime);
         estimatedTime.setText("will be delivered in " + time + " days");
         Payment = findViewById(R.id.Payment);
@@ -122,6 +122,7 @@ public class MakeOrder extends AppCompatActivity {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         RatingBar simpleRatingBar = findViewById(R.id.simpleRatingBar);
         location.setOnClickListener(v -> {
+
             if (ActivityCompat.checkSelfPermission(MakeOrder.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MakeOrder.this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MakeOrder.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
                 return;
@@ -132,8 +133,11 @@ public class MakeOrder extends AppCompatActivity {
                             Toast.makeText(MakeOrder.this, "Location: " + location1.getLatitude() + ", " + location1.getLongitude(), Toast.LENGTH_SHORT).show();
                             Latitude.setText(String.valueOf(location1.getLatitude()));
                             Longitude.setText(String.valueOf(location1.getLongitude()));
+                            Intent i = new Intent(MakeOrder.this, map.class);
+                            startActivity(i);
                         }
                     });
+
         });
         confirm.setOnClickListener(v -> {
             String checkerResult = errorChecker.EditTextIsEmpty(Longitude, Latitude, nameOfReceiver);
@@ -143,33 +147,32 @@ public class MakeOrder extends AppCompatActivity {
                 Toast.makeText(MakeOrder.this, "Please fill " + checkerResult + " Data ", Toast.LENGTH_SHORT).show();
             else {
                 Date date = new Date();
-                db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
-                    String id;
-                    if (queryDocumentSnapshots.getDocuments().size() != 0) {
-                        id = db.collection("Orders").document().getId().substring(0, 5);
-                        Cart temp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
-                        for (int i = 0; i < temp.getProducts().size(); i++) {
-                            int finalI = i;
-                            db.collection("Products").whereEqualTo("id", temp.getProducts().get(i).getId()).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                Products ProductTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
-                                db.collection("Products").document(temp.getProducts().get(finalI).getId())
-                                        .update("quantity", ProductTemp.getQuantity() - temp.getProducts().get(finalI).getQuantity());
-                            });
-
-                        }
-                        paymentChosen = (!paymentChosen.equals("Cash")) ? paymentChosen.substring(paymentChosen.indexOf(" ") + 1) : "Cash";
-                        ProxyCheck checkCredit;
-                        try {
-                            checkCredit = new ProxyCheck(Integer.parseInt(ConfirmCVV.getText().toString()), CVV);
-                        } catch (Exception e) {
-                            checkCredit = new ProxyCheck(0, CVV);
-                        }
-                        boolean access = true;
-                        if (!paymentChosen.equals("Cash")) {
-                            access = checkCredit.withdraw(total);
-                        }
-                        if (access) {
-                            Orders newTemp = new Orders.OrderBuilder()
+                paymentChosen = (!paymentChosen.equals("Cash")) ? paymentChosen.substring(paymentChosen.indexOf(" ") + 1) : "Cash";
+                ProxyCheck checkCredit;
+                try {
+                    checkCredit = new ProxyCheck(Integer.parseInt(ConfirmCVV.getText().toString()), CVV);
+                } catch (Exception e) {
+                    checkCredit = new ProxyCheck(0, CVV);
+                }
+                boolean access = true;
+                if (!paymentChosen.equals("Cash")) {
+                    access = checkCredit.withdraw(total);
+                }
+                if (access) {
+                    db.collection("Cart").whereEqualTo("customerId", userId).get().addOnSuccessListener(queryDocumentSnapshots -> {
+                        String id;
+                        if (queryDocumentSnapshots.getDocuments().size() != 0) {
+                            id = db.collection("Orders").document().getId().substring(0, 5);
+                            Cart temp = queryDocumentSnapshots.getDocuments().get(0).toObject(Cart.class);
+                            for (int i = 0; i < temp.getProducts().size(); i++) {
+                                int finalI = i;
+                                db.collection("Products").whereEqualTo("id", temp.getProducts().get(i).getId()).get().addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                    Products ProductTemp = queryDocumentSnapshots1.getDocuments().get(0).toObject(Products.class);
+                                    db.collection("Products").document(temp.getProducts().get(finalI).getId())
+                                            .update("quantity", ProductTemp.getQuantity() - temp.getProducts().get(finalI).getQuantity());
+                                });
+                            }
+                            com.example.myshoppingapp.firebase.Orders newTemp = new Orders.OrderBuilder()
                                     .buildId(id)
                                     .buildCustomer_id(userId).buildLatitude(Double.parseDouble(Latitude.getText().toString()))
                                     .buildLongitude(Double.parseDouble(Longitude.getText().toString()))
@@ -196,18 +199,12 @@ public class MakeOrder extends AppCompatActivity {
                                     startActivity(i);
                                 });
                             });
-                        } else {
-                            Toast.makeText(this, "access denied", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } else
-                        Toast.makeText(MakeOrder.this, "please fill your cart first", Toast.LENGTH_SHORT).show();
-                });
-                System.out.println();
-                //TODO TO BE CONSIDERED WHEN DR ANSWERS
-                //Intent i = new Intent(MakeOrder.this, map.class);
-                //i.putExtra("userId" ,userId);
-                //startActivity(i);
+                        } else
+                            Toast.makeText(MakeOrder.this, "please fill your cart first", Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    Toast.makeText(this, "access denied", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -216,7 +213,7 @@ public class MakeOrder extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        Orders.setOnClickListener(v -> {
+        OrdersI.setOnClickListener(v -> {
             Intent i = new Intent(MakeOrder.this, Current_Orders.class);
             i.putExtra("userId", userId);
             startActivity(i);
