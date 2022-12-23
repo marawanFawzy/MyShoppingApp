@@ -2,14 +2,8 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -102,7 +96,7 @@ public class ShoppingCart extends AppCompatActivity {
 
     public void InsertIntoAdapter(String userId, ArrayList<Products> products) {
         for (int i = 0; i < products.size(); i++) {
-            total += products.get(i).getPrice() * products.get(i).getQuantity() - ( products.get(i).getPrice() * products.get(i).getQuantity() * products.get(i).getDiscount() / 100);
+            total += products.get(i).getPrice() * products.get(i).getQuantity() - (products.get(i).getPrice() * products.get(i).getQuantity() * products.get(i).getDiscount() / 100);
             if (products.get(i).getDays_For_Delivery() > Time)
                 Time = products.get(i).getDays_For_Delivery();
         }

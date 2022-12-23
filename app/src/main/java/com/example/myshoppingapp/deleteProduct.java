@@ -11,18 +11,15 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class deleteProduct extends AppCompatActivity {
     private final ArrayList<String> paths = new ArrayList<>();

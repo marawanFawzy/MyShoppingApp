@@ -3,9 +3,7 @@ package com.example.myshoppingapp;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Orders;
 import com.github.mikephil.charting.charts.BarChart;
@@ -27,10 +25,10 @@ public class chart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chart);
         final int[] Colors = {
-                Color.rgb(192, 255, 140), Color.rgb(255, 247, 140),  Color.rgb(255, 208, 140),
-                Color.rgb(140, 234, 255), Color.rgb(255, 140, 157) , Color.rgb(193, 37, 82),
-                Color.rgb(255, 102, 0),   Color.rgb(245, 199, 0),    Color.rgb(106, 150, 31),
-                Color.rgb(179, 100, 53),  Color.rgb(64, 89, 128),    Color.rgb(149, 165, 124)
+                Color.rgb(192, 255, 140), Color.rgb(255, 247, 140), Color.rgb(255, 208, 140),
+                Color.rgb(140, 234, 255), Color.rgb(255, 140, 157), Color.rgb(193, 37, 82),
+                Color.rgb(255, 102, 0), Color.rgb(245, 199, 0), Color.rgb(106, 150, 31),
+                Color.rgb(179, 100, 53), Color.rgb(64, 89, 128), Color.rgb(149, 165, 124)
         };
         barChart = findViewById(R.id.barChart);
         xAxisValues = new ArrayList<>();
@@ -48,7 +46,7 @@ public class chart extends AppCompatActivity {
                                 int ret = xAxisValues.indexOf(temp.getProducts().get(j).getName());
                                 if (ret == -1) {
                                     xAxisValues.add(temp.getProducts().get(j).getName());
-                                    v.add(new BarEntry(xAxisValues.size() - 1,temp.getProducts().get(j).getQuantity()));
+                                    v.add(new BarEntry(xAxisValues.size() - 1, temp.getProducts().get(j).getQuantity()));
                                 } else {
                                     v.get(ret).setY(v.get(ret).getY() + temp.getProducts().get(j).getQuantity());
                                 }

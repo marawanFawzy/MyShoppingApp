@@ -116,15 +116,15 @@ public class MakeOrder extends AppCompatActivity {
                 return;
             }
             fusedLocationClient.getLastLocation().addOnSuccessListener(MakeOrder.this, location1 -> {
-                        if (location1 != null) {
-                            Toast.makeText(MakeOrder.this, "Location: " + location1.getLatitude() + ", " + location1.getLongitude(), Toast.LENGTH_SHORT).show();
-                            Latitude.setText(String.valueOf(location1.getLatitude()));
-                            Longitude.setText(String.valueOf(location1.getLongitude()));
-                            Intent i = new Intent(MakeOrder.this, map.class);
-                            startActivityForResult(i, 1);
+                if (location1 != null) {
+                    Toast.makeText(MakeOrder.this, "Location: " + location1.getLatitude() + ", " + location1.getLongitude(), Toast.LENGTH_SHORT).show();
+                    Latitude.setText(String.valueOf(location1.getLatitude()));
+                    Longitude.setText(String.valueOf(location1.getLongitude()));
+                    Intent i = new Intent(MakeOrder.this, map.class);
+                    startActivityForResult(i, 1);
 
-                        }
-                    });
+                }
+            });
 
         });
         confirm.setOnClickListener(v -> {

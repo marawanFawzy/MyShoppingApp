@@ -3,14 +3,8 @@ package com.example.myshoppingapp;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Customers;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -20,12 +14,13 @@ import java.util.ArrayList;
 
 public class DeleteUser extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    Button buttonActivate , buttonBan;
+    Button buttonActivate, buttonBan;
     FloatingActionButton buttonDelete;
-    ArrayList<Customers>LoadedUser = new ArrayList<>();
+    ArrayList<Customers> LoadedUser = new ArrayList<>();
     Spinner spinner;
     int SelectedUser;
     private final ArrayList<String> paths = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,14 +40,12 @@ public class DeleteUser extends AppCompatActivity {
             @SuppressLint("ResourceAsColor")
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position==0)
-                {
+                if (position == 0) {
                     buttonActivate.setEnabled(false);
                     buttonBan.setEnabled(false);
                     buttonDelete.setEnabled(false);
 
-                }
-                else{
+                } else {
                     SelectedUser = position;
                     buttonActivate.setEnabled(!LoadedUser.get(position).isStatus());
                     buttonBan.setEnabled(LoadedUser.get(position).isStatus());
@@ -91,8 +84,8 @@ public class DeleteUser extends AppCompatActivity {
                     spinner.setSelection(0);
                 }));
     }
-    void LoadAllUsers()
-    {
+
+    void LoadAllUsers() {
         db.collection("Customers").get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (queryDocumentSnapshots.size() == 0) {
@@ -100,7 +93,7 @@ public class DeleteUser extends AppCompatActivity {
                     } else {
                         for (DocumentSnapshot d : queryDocumentSnapshots) {
                             Customers temp = d.toObject(Customers.class);
-                            if(temp.isFlag())
+                            if (temp.isFlag())
                                 continue;
                             LoadedUser.add(temp);
                             paths.add(temp.getUsername());

@@ -7,9 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.CreditCard;
 import com.example.myshoppingapp.firebase.Customers;
 import com.example.myshoppingapp.helpers.Check;

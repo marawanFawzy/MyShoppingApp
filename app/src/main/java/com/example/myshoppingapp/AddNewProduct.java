@@ -8,38 +8,30 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
 import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class AddNewProduct extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private final ArrayList<String> paths = new ArrayList<>();
-    EditText ProductName, ProductQuantity, price , estimatedTime , Description;
+    EditText ProductName, ProductQuantity, price, estimatedTime, Description;
     private String SelectedCategory, SelectedCategoryId;
     Button ButtonUpload;
     FloatingActionButton buttonAddProduct;
     Uri filePath;
     CircleImageView ProductImage;
     String photo = "";
-    Products ClonedProduct = new Products("", 0, "", 0, "", "","" ,new ArrayList<>(), 0);
+    Products ClonedProduct = new Products("", 0, "", 0, "", "", "", new ArrayList<>(), 0);
     Check errorChecker = new Check();
 
     @Override
@@ -67,12 +59,10 @@ public class AddNewProduct extends AppCompatActivity implements AdapterView.OnIt
             if (SelectedCategory.equals("Select Category"))
                 Toast.makeText(this, "please choose a category first", Toast.LENGTH_SHORT).show();
             else {
-                String checkerResult = errorChecker.EditTextIsEmpty(ProductName , ProductQuantity , price , Description, estimatedTime);
-                if (!checkerResult.equals(""))
-                {
-                    Toast.makeText(AddNewProduct.this, "Please fill " + checkerResult + " Data " , Toast.LENGTH_SHORT).show();
-                }
-                else {
+                String checkerResult = errorChecker.EditTextIsEmpty(ProductName, ProductQuantity, price, Description, estimatedTime);
+                if (!checkerResult.equals("")) {
+                    Toast.makeText(AddNewProduct.this, "Please fill " + checkerResult + " Data ", Toast.LENGTH_SHORT).show();
+                } else {
                     db.collection("Categories")
                             .whereEqualTo("name", SelectedCategory)
                             .get()

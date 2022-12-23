@@ -7,9 +7,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Admin;
 import com.example.myshoppingapp.firebase.Customers;
 import com.example.myshoppingapp.helpers.AdminAccessProxy;

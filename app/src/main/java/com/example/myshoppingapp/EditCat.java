@@ -2,14 +2,8 @@ package com.example.myshoppingapp;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -24,8 +18,8 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
     FloatingActionButton edit;
     EditText editTextEdit;
     Spinner spinner;
-    int selectedPosition = 0 ;
-    Check errorChecker  = new Check();
+    int selectedPosition = 0;
+    Check errorChecker = new Check();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +54,8 @@ public class EditCat extends AppCompatActivity implements AdapterView.OnItemSele
                                                 temp.setName(editTextEdit.getText().toString());
                                                 db.collection("Categories").document(temp.getId()).set(temp).addOnSuccessListener(unused -> {
                                                     Toast.makeText(this, "category name is edited", Toast.LENGTH_SHORT).show();
-                                                    paths.add(selectedPosition ,editTextEdit.getText().toString() );
-                                                    paths.remove(selectedPosition+1);
+                                                    paths.add(selectedPosition, editTextEdit.getText().toString());
+                                                    paths.remove(selectedPosition + 1);
                                                     editTextEdit.setText("");
                                                     spinner.setSelection(0);
                                                 });

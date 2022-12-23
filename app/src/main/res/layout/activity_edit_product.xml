@@ -1,249 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backGround"
-    tools:context=".editProduct">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@color/backGround"
+                                                   tools:context=".editProduct">
     <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/background_image" />
+            android:src="@drawable/background_image"/>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        android:orientation="vertical">
-        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
-
-            <Spinner
-                android:id="@+id/spinner"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:orientation="vertical">
+        <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:padding="25dp"
-                android:textColor="#292929"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.815"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.471" />
-        </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="#999999" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
 
             <Spinner
-                android:id="@+id/spinnerProduct"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:padding="25dp"
-                android:textColor="#292929"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.815"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.471" />
+                    android:id="@+id/spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="25dp"
+                    android:textColor="#292929"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.815"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.471"/>
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="#999999" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
+                android:background="#999999"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="180dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+            <Spinner
+                    android:id="@+id/spinnerProduct"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="25dp"
+                    android:textColor="#292929"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.815"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.471"/>
+        </RelativeLayout>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
+                android:background="#999999"/>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_height="180dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ProductImageEdit"
-                android:layout_width="178dp"
-                android:layout_height="161dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="30dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_baseline_image_200" />
+                    android:id="@+id/ProductImageEdit"
+                    android:layout_width="178dp"
+                    android:layout_height="161dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_baseline_image_200"/>
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
                 <Button
-                    android:id="@+id/ChangePhoto"
-                    android:layout_width="wrap_content"
-                    android:layout_height="58dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginEnd="80dp"
-                    android:text="Change"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                        android:id="@+id/ChangePhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="58dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="80dp"
+                        android:text="Change"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 <ImageButton
-                    android:id="@+id/ShowFeedBack"
-                    android:layout_width="wrap_content"
-                    android:layout_height="58dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginEnd="20dp"
-                    android:contentDescription="@string/todo1"
-                    android:minHeight="48dp"
-                    android:src="@drawable/ic_action_add_feedback" />
+                        android:id="@+id/ShowFeedBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="58dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginEnd="20dp"
+                        android:contentDescription="@string/todo1"
+                        android:minHeight="48dp"
+                        android:src="@drawable/ic_action_add_feedback"/>
             </RelativeLayout>
 
         </RelativeLayout>
         <EditText
-            android:id="@+id/ProductNameEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/catName"
-            android:inputType="text"
-            android:padding="20dp"
-            android:textColor="#292929"
-            android:textColorHint="#797979" />
+                android:id="@+id/ProductNameEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/catName"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textColor="#292929"
+                android:textColorHint="#797979"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
         <EditText
-            android:id="@+id/ProductQuantityEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/Quantity"
-            android:inputType="text"
-            android:padding="20dp"
-            android:textColor="#292929"
-            android:textColorHint="#797979" />
+                android:id="@+id/ProductQuantityEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/Quantity"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textColor="#292929"
+                android:textColorHint="#797979"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
         <EditText
-            android:id="@+id/priceEdit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/Price"
-            android:inputType="text"
-            android:padding="20dp"
-            android:textColor="#292929"
-            android:textColorHint="#797979" />
+                android:id="@+id/priceEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/Price"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textColor="#292929"
+                android:textColorHint="#797979"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginEnd="30dp"
-            android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_marginEnd="30dp"
+                android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/Discount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="30dp"
-                android:layout_toStartOf="@+id/addDiscount"
-                android:backgroundTint="@android:color/transparent"
-                android:hint="Discount"
-                android:inputType="numberDecimal"
-                android:padding="20dp"
-                android:text="0"
-                android:textColor="#292929"
-                android:textColorHint="#797979" />
+                    android:id="@+id/Discount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="30dp"
+                    android:layout_toStartOf="@+id/addDiscount"
+                    android:backgroundTint="@android:color/transparent"
+                    android:hint="Discount"
+                    android:inputType="numberDecimal"
+                    android:padding="20dp"
+                    android:text="0"
+                    android:textColor="#292929"
+                    android:textColorHint="#797979"/>
 
             <CheckBox
-                android:id="@+id/addDiscount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:buttonTint="@color/colorPrimary"
-                android:text="Discount" />
+                    android:id="@+id/addDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:buttonTint="@color/colorPrimary"
+                    android:text="Discount"/>
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
 
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/editProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:backgroundTint="#4E525B"
-                android:elevation="0dp"
-                android:src="@drawable/ic_baseline_arrow_forward_24"
-                android:tint="@android:color/white"
-                app:elevation="0dp"
-                app:fabCustomSize="80dp"
-                tools:ignore="RelativeOverlap" />
+                    android:id="@+id/editProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:backgroundTint="#4E525B"
+                    android:elevation="0dp"
+                    android:src="@drawable/ic_baseline_arrow_forward_24"
+                    android:tint="@android:color/white"
+                    app:elevation="0dp"
+                    app:fabCustomSize="80dp"
+                    tools:ignore="RelativeOverlap"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="30dp"
-                android:padding="@dimen/EditTextPadding"
-                android:text="Edit product"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:padding="@dimen/EditTextPadding"
+                    android:text="Edit product"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
         </RelativeLayout>
     </LinearLayout>
 

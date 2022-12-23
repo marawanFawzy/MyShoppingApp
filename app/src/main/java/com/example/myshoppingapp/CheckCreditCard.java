@@ -2,15 +2,8 @@ package com.example.myshoppingapp;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.CreditCard;
 import com.example.myshoppingapp.firebase.Customers;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,10 +17,11 @@ public class CheckCreditCard extends AppCompatActivity {
     private final ArrayList<String> paths = new ArrayList<>();
     private final ArrayList<String> CustomerId = new ArrayList<>();
     private final ArrayList<CreditCard> creditCards = new ArrayList<>();
-    EditText number , month , year , cvv;
+    EditText number, month, year, cvv;
     int SelectedPosition = 0;
-    Button buttonReject , buttonApprove;
+    Button buttonReject, buttonApprove;
     Spinner spinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,17 +57,14 @@ public class CheckCreditCard extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 SelectedPosition = position;
-                if(position!= 0)
-                {
+                if (position != 0) {
                     buttonApprove.setEnabled(true);
                     buttonReject.setEnabled(true);
                     number.setText(creditCards.get(position).getNumber());
                     month.setText(creditCards.get(position).getExpireDateMonth());
                     year.setText(creditCards.get(position).getExpireDateYear());
                     cvv.setText(String.valueOf(creditCards.get(position).getCVV()));
-                }
-                else
-                {
+                } else {
                     buttonApprove.setEnabled(false);
                     buttonReject.setEnabled(false);
                     number.setText("");
@@ -89,19 +80,16 @@ public class CheckCreditCard extends AppCompatActivity {
             }
         });
     }
-    void FillWithWaitingCards()
-    {
+
+    void FillWithWaitingCards() {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        db.collection("Customers").whereEqualTo("creditCard.status" , "waiting").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+        db.collection("Customers").whereEqualTo("creditCard.status", "waiting").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                if(queryDocumentSnapshots.getDocuments().size() ==0)
-                {
+                if (queryDocumentSnapshots.getDocuments().size() == 0) {
                     Toast.makeText(CheckCreditCard.this, "no waiting credit cards", Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    for(int i = 0 ; i < queryDocumentSnapshots.getDocuments().size();i++)
-                    {
+                } else {
+                    for (int i = 0; i < queryDocumentSnapshots.getDocuments().size(); i++) {
                         Customers temp = queryDocumentSnapshots.getDocuments().get(i).toObject(Customers.class);
                         CustomerId.add(temp.getId());
                         CreditCard newTemp = temp.getCreditCard();
@@ -113,8 +101,8 @@ public class CheckCreditCard extends AppCompatActivity {
             }
         });
     }
-    void UpdateStatus(String newStatus)
-    {
+
+    void UpdateStatus(String newStatus) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("Customers").document(CustomerId.get(SelectedPosition)).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override

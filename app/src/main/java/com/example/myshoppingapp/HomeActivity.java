@@ -2,16 +2,8 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Categories;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -22,7 +14,7 @@ public class HomeActivity extends AppCompatActivity {
     ListView listView;
     Button category, search;
     ArrayAdapter<String> arr;
-    ImageView cart, home ,EditProfile ,Orders ;
+    ImageView cart, home, EditProfile, Orders;
     ArrayList<String> catIds = new ArrayList<>();
     ImageButton payment;
 
@@ -62,17 +54,17 @@ public class HomeActivity extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        payment.setOnClickListener(v->{
+        payment.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        EditProfile.setOnClickListener(v->{
+        EditProfile.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        Orders.setOnClickListener(v->{
+        Orders.setOnClickListener(v -> {
             Intent i = new Intent(HomeActivity.this, Current_Orders.class);
             i.putExtra("userId", userId);
             startActivity(i);

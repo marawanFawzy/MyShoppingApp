@@ -7,13 +7,10 @@ public class AdminAccessProxy implements AdminAccess {
     @Override
     public boolean AdminRouter(Customers temp) {
 
-        if(temp.isFlag())
-        {
+        if (temp.isFlag()) {
             Admin.getAdmin().setUsername(temp.getUsername());
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }

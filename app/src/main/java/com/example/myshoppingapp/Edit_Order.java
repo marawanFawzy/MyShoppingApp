@@ -4,14 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Orders;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,8 +26,9 @@ public class Edit_Order extends AppCompatActivity {
     FloatingActionButton ConfirmEdit;
     RelativeLayout confirm;
     Button totalPrice;
-    boolean changes = false ;
+    boolean changes = false;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +42,7 @@ public class Edit_Order extends AppCompatActivity {
         getOrder(orderId);
         ConfirmEdit = findViewById(R.id.buttonAddProduct);
         confirm = findViewById(R.id.confirm);
-        if(!Delivered) {
+        if (!Delivered) {
             confirm.setVisibility(View.VISIBLE);
             ConfirmEdit.setOnClickListener(v -> {
                 changes = true;
@@ -63,8 +58,7 @@ public class Edit_Order extends AppCompatActivity {
                 });
 
             });
-        }
-        else {
+        } else {
             confirm.setVisibility(View.GONE);
         }
         totalPrice.setOnClickListener(v -> {
@@ -79,12 +73,13 @@ public class Edit_Order extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(!changes) {
+        if (!changes) {
             db.collection("Orders").document(orderId).set(cache).addOnSuccessListener(unused -> {
                 Toast.makeText(Edit_Order.this, "your order is not edited", Toast.LENGTH_SHORT).show();
             });
         }
     }
+
     public void InsertIntoAdapter(String userId) {
         adapter = new CustomAdapter(this, 0, arrayOfProducts, false, Delivered, userId, orderId);
         adapter.time = cache.getEstimatedTime();
@@ -106,7 +101,7 @@ public class Edit_Order extends AppCompatActivity {
                         Orders order = d.toObject(Orders.class);
                         date.setText(String.valueOf(order.getOrder_date()));
                         cache = order.clone();
-                        for (Products p: cache.getCart().getProducts()) {
+                        for (Products p : cache.getCart().getProducts()) {
                             arrayOfProducts.add(new Products(p));
                         }
 

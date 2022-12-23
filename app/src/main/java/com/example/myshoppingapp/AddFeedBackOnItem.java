@@ -1,5 +1,5 @@
-
 package com.example.myshoppingapp;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,8 +21,9 @@ public class AddFeedBackOnItem extends AppCompatActivity {
     FloatingActionButton Submit;
     String Prod_id;
     CircleImageView ProductImage;
-    Products ClonedProduct = new Products("", 0, "", 0, "", "","" ,new ArrayList<>(), 0);
+    Products ClonedProduct = new Products("", 0, "", 0, "", "", "", new ArrayList<>(), 0);
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +38,7 @@ public class AddFeedBackOnItem extends AppCompatActivity {
         Prod_id = ii.getStringExtra("Prod_id");
         getProduct(Prod_id);
         Submit.setOnClickListener(v -> {
-            if(e_FeedBack.getText().toString().equals("")) {
+            if (e_FeedBack.getText().toString().equals("")) {
                 Toast.makeText(AddFeedBackOnItem.this, "please type your feedback", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -50,6 +51,7 @@ public class AddFeedBackOnItem extends AppCompatActivity {
 
         });
     }
+
     void getProduct(String Prod_id) {
 
         db.collection("Products")
@@ -59,7 +61,7 @@ public class AddFeedBackOnItem extends AppCompatActivity {
                         Toast.makeText(AddFeedBackOnItem.this, "not found", Toast.LENGTH_SHORT).show();
                     } else {
                         for (DocumentSnapshot d : queryDocumentSnapshots) {
-                             ClonedProduct = d.toObject(Products.class);
+                            ClonedProduct = d.toObject(Products.class);
                             if (ClonedProduct != null) {
                                 e_name.setText(ClonedProduct.getName());
                                 e_price.setText(String.valueOf(ClonedProduct.getPrice()));
@@ -70,6 +72,7 @@ public class AddFeedBackOnItem extends AppCompatActivity {
                     }
                 });
     }
+
     public Bitmap StringToBitMap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);

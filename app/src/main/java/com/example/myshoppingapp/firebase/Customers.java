@@ -3,16 +3,17 @@ package com.example.myshoppingapp.firebase;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Customers implements Cloneable , Serializable {
-    private String id , name, Username, Password, Email, gender , SSN;
+public class Customers implements Cloneable, Serializable {
+    private String id, name, Username, Password, Email, gender, SSN;
     private Date Birthdate;
     private boolean flag;
     private CreditCard creditCard;
     private boolean status = true;
 
-    public Customers() {}
+    public Customers() {
+    }
 
-    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender , String SSN, boolean flag , boolean status) {
+    public Customers(String id, String name, String username, String password, Date birthdate, String email, String gender, String SSN, boolean flag, boolean status) {
         this.id = id;
         this.name = name;
         Username = username;

@@ -1,4 +1,3 @@
-
 package com.example.myshoppingapp.firebase;
 
 import java.util.Date;

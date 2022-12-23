@@ -23,7 +23,8 @@ public class ShowFeedBack extends AppCompatActivity {
     String Prod_id;
     EditText e_name, e_price, e_description;
     CircleImageView ProductImage;
-    Products ClonedProduct = new Products("", 0, "", 0, "", "","" ,new ArrayList<>(), 0);
+    Products ClonedProduct = new Products("", 0, "", 0, "", "", "", new ArrayList<>(), 0);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class ShowFeedBack extends AppCompatActivity {
         Prod_id = ii.getStringExtra("Prod_id");
         getProduct(Prod_id);
     }
+
     void getProduct(String Prod_id) {
 
         db.collection("Products")
@@ -58,6 +60,7 @@ public class ShowFeedBack extends AppCompatActivity {
                     }
                 });
     }
+
     public Bitmap StringToBitMap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);

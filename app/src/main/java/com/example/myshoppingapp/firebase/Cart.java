@@ -1,6 +1,7 @@
 package com.example.myshoppingapp.firebase;
 
 import java.util.ArrayList;
+
 public class Cart {
     private String id, customerId;
     private ArrayList<Products> products;

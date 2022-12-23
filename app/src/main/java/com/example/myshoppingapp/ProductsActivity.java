@@ -2,15 +2,8 @@ package com.example.myshoppingapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -20,7 +13,7 @@ import java.util.ArrayList;
 public class ProductsActivity extends AppCompatActivity {
     ListView mylist;
     TextView t;
-    ImageView cart , home , EditProfile , Orders;
+    ImageView cart, home, EditProfile, Orders;
     ArrayList<String> ids = new ArrayList<>();
     ArrayAdapter<String> arr;
     ImageButton payment;
@@ -61,7 +54,7 @@ public class ProductsActivity extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        Orders.setOnClickListener(v->{
+        Orders.setOnClickListener(v -> {
             Intent i = new Intent(ProductsActivity.this, Current_Orders.class);
             i.putExtra("userId", userId);
             startActivity(i);
@@ -71,12 +64,12 @@ public class ProductsActivity extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        payment.setOnClickListener(v->{
+        payment.setOnClickListener(v -> {
             Intent i = new Intent(ProductsActivity.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        EditProfile.setOnClickListener(v->{
+        EditProfile.setOnClickListener(v -> {
             Intent i = new Intent(ProductsActivity.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);

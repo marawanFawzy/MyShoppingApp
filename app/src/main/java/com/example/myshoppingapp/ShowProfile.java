@@ -73,9 +73,9 @@ public class ShowProfile extends AppCompatActivity {
             String un = cusername.getText().toString();
             if (gfemale.isChecked()) gender = "Female";
             else if (gmale.isChecked()) gender = "Male";
-            String checkerResult = errorChecker.EditTextIsEmpty(cname , cusername , cpassword , cbirthdate , cMail , cSSN);
-            if(!checkerResult.equals("") || errorChecker.StringCheckIsEmpty(gender))
-                Toast.makeText(ShowProfile.this, "Please fill " + checkerResult + " Data " , Toast.LENGTH_SHORT).show();
+            String checkerResult = errorChecker.EditTextIsEmpty(cname, cusername, cpassword, cbirthdate, cMail, cSSN);
+            if (!checkerResult.equals("") || errorChecker.StringCheckIsEmpty(gender))
+                Toast.makeText(ShowProfile.this, "Please fill " + checkerResult + " Data ", Toast.LENGTH_SHORT).show();
             else {
                 CurrentCustomer.setName(cname.getText().toString());
                 CurrentCustomer.setPassword(cpassword.getText().toString());

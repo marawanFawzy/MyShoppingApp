@@ -6,9 +6,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -36,8 +34,7 @@ public class deleteCat extends AppCompatActivity implements AdapterView.OnItemSe
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
         delete.setOnClickListener(v -> {
-            if(SelectedCategory.equals("Select category"))
-            {
+            if (SelectedCategory.equals("Select category")) {
                 Toast.makeText(this, "select category first", Toast.LENGTH_SHORT).show();
                 return;
             }

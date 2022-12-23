@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView;
 public class adminPage extends AppCompatActivity {
     CardView btnChart, newProduct, newCategory,
             buttonDeleteCat, EditCat, deleteProd,
-            editProd, report , DeleteUser, CheckCredit;
+            editProd, report, DeleteUser, CheckCredit;
     ImageButton logOutB;
 
     @Override

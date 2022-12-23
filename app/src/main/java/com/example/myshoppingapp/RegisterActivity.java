@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Customers;
 import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,8 +21,8 @@ import java.util.Date;
 
 public class RegisterActivity extends AppCompatActivity {
     DatePickerDialog.OnDateSetListener cdate;
-    EditText cname, cusername , cpassword , cbirthdate , cMail , cSSN;
-    RadioButton gfemale , gmale;
+    EditText cname, cusername, cpassword, cbirthdate, cMail, cSSN;
+    RadioButton gfemale, gmale;
     FloatingActionButton signup;
     Check errorChecker = new Check();
 
@@ -71,9 +69,9 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (gmale.isChecked()) {
                 gender = "Male";
             }
-            String checkerResult = errorChecker.EditTextIsEmpty(cname , cusername , cpassword , cbirthdate , cMail , cSSN);
-            if(!checkerResult.equals("") || errorChecker.StringCheckIsEmpty(gender))
-                Toast.makeText(RegisterActivity.this, "Please fill " + checkerResult + " Data " , Toast.LENGTH_SHORT).show();
+            String checkerResult = errorChecker.EditTextIsEmpty(cname, cusername, cpassword, cbirthdate, cMail, cSSN);
+            if (!checkerResult.equals("") || errorChecker.StringCheckIsEmpty(gender))
+                Toast.makeText(RegisterActivity.this, "Please fill " + checkerResult + " Data ", Toast.LENGTH_SHORT).show();
             else {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 String finalGender = gender;
@@ -84,11 +82,10 @@ public class RegisterActivity extends AppCompatActivity {
                             if (queryDocumentSnapshots.size() != 0) {
                                 Toast.makeText(RegisterActivity.this, "please enter a valid username ", Toast.LENGTH_SHORT).show();
                                 cusername.setText("");
-                            }
-                            else {
+                            } else {
                                 String id = db.collection("Customers").document().getId().substring(0, 5);
                                 Date date = new Date(b);
-                                Customers newTemp = new Customers(id, n, un, p, date, Mail , finalGender , SSN, false , true);
+                                Customers newTemp = new Customers(id, n, un, p, date, Mail, finalGender, SSN, false, true);
                                 db.collection("Customers").document(id).set(newTemp);
                                 Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                                 startActivity(i);

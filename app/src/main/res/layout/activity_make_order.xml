@@ -1,157 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backGround"
-    tools:context=".MakeOrder">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@color/backGround"
+                                                   tools:context=".MakeOrder">
     <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/background_image" />
+            android:src="@drawable/background_image"/>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="top"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="45dp">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="45dp">
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/cartbutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                app:srcCompat="@drawable/shoppingcartlogoicon70706" />
+                    android:id="@+id/cartbutton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    app:srcCompat="@drawable/shoppingcartlogoicon70706"/>
 
             <ImageView
-                android:id="@+id/EditProfile"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="100dp"
-                android:backgroundTint="@color/colorBlack"
-                app:srcCompat="@drawable/ic_action_profile"
-                app:tint="@color/colorBlack" />
+                    android:id="@+id/EditProfile"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="100dp"
+                    android:backgroundTint="@color/colorBlack"
+                    app:srcCompat="@drawable/ic_action_profile"
+                    app:tint="@color/colorBlack"/>
 
             <ImageView
-                android:id="@+id/homebutton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="home icon"
-                app:srcCompat="@drawable/home" />
+                    android:id="@+id/homebutton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="home icon"
+                    app:srcCompat="@drawable/home"/>
 
             <ImageView
-                android:id="@+id/Orders"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="100dp"
-                app:srcCompat="@drawable/ic_action_current_orders"
-                app:tint="@color/colorBlack" />
+                    android:id="@+id/Orders"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="100dp"
+                    app:srcCompat="@drawable/ic_action_current_orders"
+                    app:tint="@color/colorBlack"/>
 
             <ImageButton
-                android:id="@+id/Payment"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="30dp"
-                android:background="@color/zxing_transparent"
-                app:srcCompat="@drawable/ic_action_payment" />
+                    android:id="@+id/Payment"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:background="@color/zxing_transparent"
+                    app:srcCompat="@drawable/ic_action_payment"/>
 
 
         </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view">
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/view">
 
             <RelativeLayout
-                android:layout_width="240dp"
-                android:layout_height="wrap_content">
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/editTextTextLatitude"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:enabled="false"
-                    android:hint="Latitude" />
+                        android:id="@+id/editTextTextLatitude"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:enabled="false"
+                        android:hint="Latitude"/>
 
                 <EditText
-                    android:id="@+id/editTextLongitude"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:enabled="false"
-                    android:hint="Longitude" />
+                        android:id="@+id/editTextLongitude"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:enabled="false"
+                        android:hint="Longitude"/>
             </RelativeLayout>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/location"
-                android:layout_width="@dimen/box"
-                android:layout_height="@dimen/box"
-                android:layout_margin="8dp"
-                android:layout_marginEnd="16dp"
-                android:clickable="true"
-                android:elevation="12dp"
-                android:focusable="true"
-                app:cardCornerRadius="8dp">
+                    android:id="@+id/location"
+                    android:layout_width="@dimen/box"
+                    android:layout_height="@dimen/box"
+                    android:layout_margin="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:clickable="true"
+                    android:elevation="12dp"
+                    android:focusable="true"
+                    app:cardCornerRadius="8dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
                     <ImageView
-                        android:id="@+id/image_view1"
-                        android:layout_width="97dp"
-                        android:layout_height="51dp"
-                        android:src="@drawable/ic_action_get_location"
-                        app:layout_constraintBottom_toTopOf="@+id/textView1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                            android:id="@+id/image_view1"
+                            android:layout_width="97dp"
+                            android:layout_height="51dp"
+                            android:src="@drawable/ic_action_get_location"
+                            app:layout_constraintBottom_toTopOf="@+id/textView1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
-                        android:id="@+id/textView1"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="get Location"
-                        android:textAllCaps="true"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/image_view1" />
+                            android:id="@+id/textView1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="get Location"
+                            android:textAllCaps="true"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.5"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/image_view1"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -160,160 +160,160 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/editTextnameOfReceiver"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="name of receiver"
-            android:inputType="text"
-            android:padding="20dp"
-            android:textColor="#292929"
-            android:textColorHint="#797979" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
-
-        <EditText
-            android:id="@+id/FeedbackEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="Feedback"
-            android:inputType="text"
-            android:padding="20dp"
-            android:textColor="#292929"
-            android:textColorHint="#797979" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
-
-            <Spinner
-                android:id="@+id/spinnerPaymentMethod"
+                android:id="@+id/editTextnameOfReceiver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:padding="25dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="name of receiver"
+                android:inputType="text"
+                android:padding="20dp"
                 android:textColor="#292929"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.815"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.471" />
+                android:textColorHint="#797979"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
+
+        <EditText
+                android:id="@+id/FeedbackEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="Feedback"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textColor="#292929"
+                android:textColorHint="#797979"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp">
+
+            <Spinner
+                    android:id="@+id/spinnerPaymentMethod"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:padding="25dp"
+                    android:textColor="#292929"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.815"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.471"/>
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="10dp"
-            android:background="#999999" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="10dp"
+                android:background="#999999"/>
 
         <EditText
-            android:id="@+id/ConfirmCVV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:enabled="false"
-            android:hint="Confirm CVV"
-            android:inputType="text"
-            android:maxLength="3"
-            android:padding="20dp"
-            android:textColor="#292929"
-            android:textColorHint="#797979" />
+                android:id="@+id/ConfirmCVV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@android:color/transparent"
+                android:enabled="false"
+                android:hint="Confirm CVV"
+                android:inputType="text"
+                android:maxLength="3"
+                android:padding="20dp"
+                android:textColor="#292929"
+                android:textColorHint="#797979"/>
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp">
 
             <RatingBar
-                android:id="@+id/simpleRatingBar"
-                android:layout_width="240dp"
-                android:layout_height="50dp"
-                android:layout_centerInParent="true"
-                android:progressTint="@color/colorPrimary"
-                tools:ignore="SpeakableTextPresentCheck" />
+                    android:id="@+id/simpleRatingBar"
+                    android:layout_width="240dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:progressTint="@color/colorPrimary"
+                    tools:ignore="SpeakableTextPresentCheck"/>
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/estimatedTime"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:textAlignment="center"
-            android:textColor="@android:color/primary_text_light"
-            android:textSize="25sp"
-            android:textStyle="bold" />
+                android:id="@+id/estimatedTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/primary_text_light"
+                android:textSize="25sp"
+                android:textStyle="bold"/>
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="50dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/confirm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:backgroundTint="#4E525B"
-                android:elevation="0dp"
-                android:src="@drawable/ic_baseline_arrow_forward_24"
-                android:tint="@android:color/white"
-                app:elevation="0dp"
-                app:fabCustomSize="80dp"
-                tools:ignore="RelativeOverlap" />
+                    android:id="@+id/confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:backgroundTint="#4E525B"
+                    android:elevation="0dp"
+                    android:src="@drawable/ic_baseline_arrow_forward_24"
+                    android:tint="@android:color/white"
+                    app:elevation="0dp"
+                    app:fabCustomSize="80dp"
+                    tools:ignore="RelativeOverlap"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="30dp"
-                android:padding="@dimen/EditTextPadding"
-                android:text="Confirm"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:padding="@dimen/EditTextPadding"
+                    android:text="Confirm"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
         </RelativeLayout>
 
     </LinearLayout>

@@ -3,17 +3,10 @@ package com.example.myshoppingapp;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Products;
 import com.example.myshoppingapp.helpers.Check;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -37,7 +30,7 @@ public class ProductsSearch extends AppCompatActivity {
     ArrayAdapter<String> arr;
     EditText search;
     ImageView searchButton;
-    ImageView cart, home , EditProfile , Orders;
+    ImageView cart, home, EditProfile, Orders;
     ImageButton payment;
     private static final int REQUEST_CODE_SPEECH_INPUT = 1;
 
@@ -84,7 +77,7 @@ public class ProductsSearch extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        Orders.setOnClickListener(v->{
+        Orders.setOnClickListener(v -> {
             Intent i = new Intent(ProductsSearch.this, Current_Orders.class);
             i.putExtra("userId", userId);
             startActivity(i);
@@ -94,12 +87,12 @@ public class ProductsSearch extends AppCompatActivity {
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        payment.setOnClickListener(v->{
+        payment.setOnClickListener(v -> {
             Intent i = new Intent(ProductsSearch.this, AddPayment.class);
             i.putExtra("userId", userId);
             startActivity(i);
         });
-        EditProfile.setOnClickListener(v->{
+        EditProfile.setOnClickListener(v -> {
             Intent i = new Intent(ProductsSearch.this, ShowProfile.class);
             i.putExtra("userId", userId);
             startActivity(i);
@@ -153,7 +146,7 @@ public class ProductsSearch extends AppCompatActivity {
 
     void getAllProducts() {
         arr.clear();
-        Check errorChecker  = new Check();
+        Check errorChecker = new Check();
         if (!errorChecker.EditTextIsEmpty(search).equals("")) {
             Toast.makeText(this, "please type any search text first", Toast.LENGTH_SHORT).show();
             return;

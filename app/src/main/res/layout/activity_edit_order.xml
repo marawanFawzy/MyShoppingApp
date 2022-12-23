@@ -1,98 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backGround"
-    tools:context=".CustomAdapter"
-    tools:layout_editor_absoluteX="0dp"
-    tools:layout_editor_absoluteY="-6dp">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@color/backGround"
+                                                   tools:context=".CustomAdapter"
+                                                   tools:layout_editor_absoluteX="0dp"
+                                                   tools:layout_editor_absoluteY="-6dp">
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginEnd="25dp"
-        android:layout_marginStart="25dp"
-        android:gravity="center"
-        android:orientation="vertical">
-        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp">
-            <TextView
-                android:id="@+id/dateText"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="25dp"
+            android:layout_marginStart="25dp"
+            android:gravity="center"
+            android:orientation="vertical">
+        <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:textSize="22sp"
-                android:text="test date" />
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp">
+            <TextView
+                    android:id="@+id/dateText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="22sp"
+                    android:text="test date"/>
         </RelativeLayout>
         <ListView
-            android:id="@+id/OrderList"
-            android:layout_width="match_parent"
-            android:layout_height="450dp" />
+                android:id="@+id/OrderList"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <Button
-                android:id="@+id/totalpricebutton3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="@string/view_total_price"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.498"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.98" />
+                    android:id="@+id/totalpricebutton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/view_total_price"
+                    android:textSize="18sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.498"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.98"/>
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/confirm"
-            android:layout_width="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_height="wrap_content">
+                android:id="@+id/confirm"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_height="wrap_content">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/buttonAddProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="20dp"
-                android:backgroundTint="#4E525B"
-                android:src="@drawable/ic_baseline_arrow_forward_24"
-                android:tint="@android:color/white"
-                app:elevation="0dp"
-                app:fabCustomSize="80dp"
-                tools:ignore="RelativeOverlap" />
+                    android:id="@+id/buttonAddProduct"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="20dp"
+                    android:backgroundTint="#4E525B"
+                    android:src="@drawable/ic_baseline_arrow_forward_24"
+                    android:tint="@android:color/white"
+                    app:elevation="0dp"
+                    app:fabCustomSize="80dp"
+                    tools:ignore="RelativeOverlap"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="20dp"
-                android:padding="@dimen/EditTextPadding"
-                android:text="Confirm edit"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="20dp"
+                    android:padding="@dimen/EditTextPadding"
+                    android:text="Confirm edit"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
         </RelativeLayout>
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

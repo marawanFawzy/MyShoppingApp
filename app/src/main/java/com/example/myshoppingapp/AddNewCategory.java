@@ -3,9 +3,7 @@ package com.example.myshoppingapp;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Categories;
 import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

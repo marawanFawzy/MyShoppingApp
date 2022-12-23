@@ -1,74 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backGround"
-    tools:context=".adminPage">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   android:background="@color/backGround"
+                                                   tools:context=".adminPage">
     <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            android:src="@drawable/background_image" />
+            android:src="@drawable/background_image"/>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
         <EditText
-            android:id="@+id/catName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@android:color/transparent"
-            android:hint="@string/category_name"
-            android:inputType="text"
-            android:padding="20dp"
-            android:textColor="#292929"
-            android:textColorHint="#797979" />
+                android:id="@+id/catName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@android:color/transparent"
+                android:hint="@string/category_name"
+                android:inputType="text"
+                android:padding="20dp"
+                android:textColor="#292929"
+                android:textColorHint="#797979"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="30dp"
-            android:background="#999999" />
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="30dp"
+                android:background="#999999"/>
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_marginBottom="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/buttonAddCat"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
-                android:backgroundTint="#4E525B"
-                android:elevation="0dp"
-                android:src="@drawable/ic_baseline_arrow_forward_24"
-                android:tint="@android:color/white"
-                app:elevation="0dp"
-                app:fabCustomSize="80dp"
-                tools:ignore="RelativeOverlap" />
+                    android:id="@+id/buttonAddCat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="30dp"
+                    android:backgroundTint="#4E525B"
+                    android:elevation="0dp"
+                    android:src="@drawable/ic_baseline_arrow_forward_24"
+                    android:tint="@android:color/white"
+                    app:elevation="0dp"
+                    app:fabCustomSize="80dp"
+                    tools:ignore="RelativeOverlap"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:layout_marginStart="30dp"
-                android:padding="@dimen/EditTextPadding"
-                android:text="@string/add_category"
-                android:textColor="@android:color/primary_text_light"
-                android:textSize="25sp"
-                android:textStyle="bold" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="30dp"
+                    android:padding="@dimen/EditTextPadding"
+                    android:text="@string/add_category"
+                    android:textColor="@android:color/primary_text_light"
+                    android:textSize="25sp"
+                    android:textStyle="bold"/>
         </RelativeLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
