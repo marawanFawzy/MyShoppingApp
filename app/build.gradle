@@ -31,13 +31,11 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
     implementation files('libs/activation.jar')
     implementation files('libs/additionnal.jar')
     implementation files('libs/mail.jar')
-    implementation 'com.google.android.material:material:1.7.0'
     implementation 'com.google.firebase:firebase-firestore:24.4.1'
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.firebase:firebase-storage:20.1.0'
@@ -61,5 +59,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.karumi:dexter:6.2.2'
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
+    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'com.google.android.material:material:1.6.0'
 
 }

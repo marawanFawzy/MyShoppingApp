@@ -7,7 +7,12 @@
     android:background="@color/backGround"
     tools:context=".adminPage"
     tools:ignore="HardcodedText">
-
+    <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_image" />
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"

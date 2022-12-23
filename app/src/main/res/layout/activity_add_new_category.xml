@@ -6,7 +6,12 @@
     android:layout_height="match_parent"
     android:background="@color/backGround"
     tools:context=".adminPage">
-
+    <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background_image" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

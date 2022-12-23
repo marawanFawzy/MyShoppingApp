@@ -1,5 +1,5 @@
-package com.example.myshoppingapp;
 
+package com.example.myshoppingapp;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

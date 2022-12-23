@@ -6,29 +6,12 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RatingBar;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import android.widget.*;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
-
-import com.example.myshoppingapp.firebase.Cart;
-import com.example.myshoppingapp.firebase.CreditCard;
-import com.example.myshoppingapp.firebase.Customers;
-import com.example.myshoppingapp.firebase.Orders;
-import com.example.myshoppingapp.firebase.Products;
+import com.example.myshoppingapp.firebase.*;
 import com.example.myshoppingapp.helpers.Check;
 import com.example.myshoppingapp.helpers.ProxyCheck;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -38,12 +21,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
 
 import java.util.ArrayList;
 import java.util.Date;
-
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
 
 public class MakeOrder extends AppCompatActivity {
     public static final int LOCATION_REQUEST_CODE = 155;
@@ -133,8 +115,7 @@ public class MakeOrder extends AppCompatActivity {
                 ActivityCompat.requestPermissions(MakeOrder.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
                 return;
             }
-            fusedLocationClient.getLastLocation()
-                    .addOnSuccessListener(MakeOrder.this, location1 -> {
+            fusedLocationClient.getLastLocation().addOnSuccessListener(MakeOrder.this, location1 -> {
                         if (location1 != null) {
                             Toast.makeText(MakeOrder.this, "Location: " + location1.getLatitude() + ", " + location1.getLongitude(), Toast.LENGTH_SHORT).show();
                             Latitude.setText(String.valueOf(location1.getLatitude()));

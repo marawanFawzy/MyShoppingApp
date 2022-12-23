@@ -8,23 +8,16 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.example.myshoppingapp.firebase.Cart;
 import com.example.myshoppingapp.firebase.Orders;
 import com.example.myshoppingapp.firebase.Products;
 import com.google.firebase.firestore.FirebaseFirestore;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.util.ArrayList;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CustomAdapter extends ArrayAdapter<Products> {
     public ArrayList<Products> records;
@@ -114,7 +107,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
                 if (MaxQuantity == value) {
                     Toast.makeText(getContext(), "this is max quantity", Toast.LENGTH_SHORT).show();
                 } else {
-                    total += (Double.parseDouble(productPrice.getText().toString()));
+                    total += (Double.parseDouble(productPrice.getText().toString()))-((Double.parseDouble(productPrice.getText().toString()))*temp.getDiscount());
                     int newValue = value + 1;
                     prodQuantity.setText(String.valueOf(newValue));
                     records.get(position).setQuantity(newValue);
@@ -152,7 +145,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
             if (1 == value) {
                 Toast.makeText(getContext(), "this is min quantity", Toast.LENGTH_SHORT).show();
             } else {
-                total -= Double.parseDouble(productPrice.getText().toString());
+                total -= (Double.parseDouble(productPrice.getText().toString()))-((Double.parseDouble(productPrice.getText().toString()))*item.getDiscount());
                 int newValue = value - 1;
                 prodQuantity.setText(String.valueOf(newValue));
                 records.get(position).setQuantity(newValue);
@@ -196,7 +189,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
                                 newTemp.getProducts().remove(position);
                                 records.remove(position);
                                 if (newTemp.getProducts().size() != 0) {
-                                    total -= newTemp.getProducts().get(position).getPrice() * newTemp.getProducts().get(position).getQuantity();
+                                    total -= (newTemp.getProducts().get(position).getPrice() * newTemp.getProducts().get(position).getQuantity())*item.getDiscount();
                                     for (int i = 0; i < newTemp.getProducts().size(); i++) {
                                         if (newTemp.getProducts().get(i).getDays_For_Delivery() > newTime)
                                             newTime = newTemp.getProducts().get(i).getDays_For_Delivery();

@@ -1,7 +1,5 @@
 package com.example.myshoppingapp;
 
-import static com.google.android.gms.maps.CameraUpdateFactory.*;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,17 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PointOfInterest;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -29,11 +24,12 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import static com.google.android.gms.maps.CameraUpdateFactory.newLatLngZoom;
+
 public class map extends AppCompatActivity implements OnMapReadyCallback {
     boolean granted;
     GoogleMap gMap;
     private Marker marker;
-    private final static int request_code = 100;
     private FloatingActionButton fab;
 
     @Override
