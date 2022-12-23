@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
 
         forgetPassword.setOnClickListener(v -> {
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-            if (errorChecker.EditTextIsEmpty(username).equals("")) {
+            if (!errorChecker.EditTextIsEmpty(username).equals("")) {
                 Toast.makeText(this, "please type your username", Toast.LENGTH_SHORT).show();
                 return;
             }

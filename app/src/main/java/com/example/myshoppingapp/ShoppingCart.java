@@ -97,16 +97,16 @@ public class ShoppingCart extends AppCompatActivity {
         arrayOfProducts = new ArrayList<>();
         total = 0;
         Time = 0;
-        getCart(userId,arrayOfProducts);
+        getCart(userId, arrayOfProducts);
     }
 
     public void InsertIntoAdapter(String userId, ArrayList<Products> products) {
         for (int i = 0; i < products.size(); i++) {
-            total += products.get(i).getPrice() * products.get(i).getQuantity();
-            if (products.get(i).getDays_For_Delivery()> Time)
+            total += products.get(i).getPrice() * products.get(i).getQuantity() - ( products.get(i).getPrice() * products.get(i).getQuantity() * products.get(i).getDiscount() / 100);
+            if (products.get(i).getDays_For_Delivery() > Time)
                 Time = products.get(i).getDays_For_Delivery();
         }
-        adapter = new CustomAdapter(this, 0, arrayOfProducts, false , false , userId , "Cart");
+        adapter = new CustomAdapter(this, 0, arrayOfProducts, false, false, userId, "Cart");
         adapter.total = total;
         adapter.time = Time;
         myList.setAdapter(adapter);

@@ -57,7 +57,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
         addFeedBack = convertView.findViewById(R.id.addFeedBack);
         productName.setText(item.getName());
         prodQuantity.setText(String.valueOf(item.getQuantity()));
-        productPrice.setText(String.valueOf(item.getPrice()));
+        productPrice.setText(String.valueOf(item.getPrice()-(item.getPrice()*item.getDiscount()/100)));
         photo = item.getPhoto();
         ProductImage.setImageBitmap(StringToBitMap(photo));
         if (delivered) {
@@ -107,7 +107,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
                 if (MaxQuantity == value) {
                     Toast.makeText(getContext(), "this is max quantity", Toast.LENGTH_SHORT).show();
                 } else {
-                    total += (Double.parseDouble(productPrice.getText().toString()))-((Double.parseDouble(productPrice.getText().toString()))*temp.getDiscount());
+                    total += Double.parseDouble(productPrice.getText().toString());
                     int newValue = value + 1;
                     prodQuantity.setText(String.valueOf(newValue));
                     records.get(position).setQuantity(newValue);
@@ -145,7 +145,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
             if (1 == value) {
                 Toast.makeText(getContext(), "this is min quantity", Toast.LENGTH_SHORT).show();
             } else {
-                total -= (Double.parseDouble(productPrice.getText().toString()))-((Double.parseDouble(productPrice.getText().toString()))*item.getDiscount());
+                total -= Double.parseDouble(productPrice.getText().toString());
                 int newValue = value - 1;
                 prodQuantity.setText(String.valueOf(newValue));
                 records.get(position).setQuantity(newValue);
@@ -189,7 +189,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
                                 newTemp.getProducts().remove(position);
                                 records.remove(position);
                                 if (newTemp.getProducts().size() != 0) {
-                                    total -= (newTemp.getProducts().get(position).getPrice() * newTemp.getProducts().get(position).getQuantity())*item.getDiscount();
+                                    total -= Double.parseDouble(productPrice.getText().toString())*newTemp.getProducts().get(position-1).getQuantity();
                                     for (int i = 0; i < newTemp.getProducts().size(); i++) {
                                         if (newTemp.getProducts().get(i).getDays_For_Delivery() > newTime)
                                             newTime = newTemp.getProducts().get(i).getDays_For_Delivery();
@@ -212,7 +212,7 @@ public class CustomAdapter extends ArrayAdapter<Products> {
                                 newTemp.getProducts().remove(position);
                                 records.remove(position);
                                 if (newTemp.getProducts().size() != 0) {
-                                    total -= newTemp.getProducts().get(position).getPrice() * newTemp.getProducts().get(position).getQuantity();
+                                    total -= Double.parseDouble(productPrice.getText().toString())*newTemp.getProducts().get(position-1).getQuantity();
                                     for (int i = 0; i < newTemp.getProducts().size(); i++) {
                                         if (newTemp.getProducts().get(i).getDays_For_Delivery() > newTime)
                                             newTime = newTemp.getProducts().get(i).getDays_For_Delivery();

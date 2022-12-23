@@ -70,7 +70,7 @@ public class CheckCreditCard extends AppCompatActivity {
                     number.setText(creditCards.get(position).getNumber());
                     month.setText(creditCards.get(position).getExpireDateMonth());
                     year.setText(creditCards.get(position).getExpireDateYear());
-                    cvv.setText(creditCards.get(position).getCVV());
+                    cvv.setText(String.valueOf(creditCards.get(position).getCVV()));
                 }
                 else
                 {

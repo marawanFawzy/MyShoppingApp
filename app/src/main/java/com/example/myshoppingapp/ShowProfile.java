@@ -10,10 +10,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.myshoppingapp.firebase.Customers;
+import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -29,6 +28,7 @@ public class ShowProfile extends AppCompatActivity {
     ImageButton back;
     String userId, userNameTemp = "";
     Customers CurrentCustomer;
+    Check errorChecker = new Check();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,27 +73,16 @@ public class ShowProfile extends AppCompatActivity {
             String un = cusername.getText().toString();
             if (gfemale.isChecked()) gender = "Female";
             else if (gmale.isChecked()) gender = "Male";
-            CurrentCustomer.setName(cname.getText().toString());
-            CurrentCustomer.setPassword(cpassword.getText().toString());
-            CurrentCustomer.setBirthdate(new Date(cbirthdate.getText().toString()));
-            CurrentCustomer.setEmail(cMail.getText().toString());
-            CurrentCustomer.setSSN(cSSN.getText().toString());
-            CurrentCustomer.setGender(gender);
-            if (cname.getText().toString().equals(""))
-                Toast.makeText(ShowProfile.this, "Please enter your Name", Toast.LENGTH_SHORT).show();
-            else if (cusername.getText().toString().equals(""))
-                Toast.makeText(ShowProfile.this, "Please enter your Username", Toast.LENGTH_SHORT).show();
-            else if (cpassword.getText().toString().equals(""))
-                Toast.makeText(ShowProfile.this, "Please enter your Password", Toast.LENGTH_SHORT).show();
-            else if (gender.equals(""))
-                Toast.makeText(ShowProfile.this, "Please enter your Gender", Toast.LENGTH_SHORT).show();
-            else if (cbirthdate.getText().toString().equals(""))
-                Toast.makeText(ShowProfile.this, "Please enter your Birth Date", Toast.LENGTH_SHORT).show();
-            else if (cMail.getText().toString().equals(""))
-                Toast.makeText(ShowProfile.this, "Please enter your Email", Toast.LENGTH_SHORT).show();
-            else if (cSSN.getText().toString().equals(""))
-                Toast.makeText(ShowProfile.this, "Please enter your SSN", Toast.LENGTH_SHORT).show();
+            String checkerResult = errorChecker.EditTextIsEmpty(cname , cusername , cpassword , cbirthdate , cMail , cSSN);
+            if(!checkerResult.equals("") || errorChecker.StringCheckIsEmpty(gender))
+                Toast.makeText(ShowProfile.this, "Please fill " + checkerResult + " Data " , Toast.LENGTH_SHORT).show();
             else {
+                CurrentCustomer.setName(cname.getText().toString());
+                CurrentCustomer.setPassword(cpassword.getText().toString());
+                CurrentCustomer.setBirthdate(new Date(cbirthdate.getText().toString()));
+                CurrentCustomer.setEmail(cMail.getText().toString());
+                CurrentCustomer.setSSN(cSSN.getText().toString());
+                CurrentCustomer.setGender(gender);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 db.collection("Customers")
                         .whereEqualTo("username", un)
