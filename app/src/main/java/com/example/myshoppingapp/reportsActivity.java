@@ -101,21 +101,23 @@ public class reportsActivity extends AppCompatActivity {
                             } else {
                                 for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
                                     Orders temp = queryDocumentSnapshots.getDocuments().get(i).toObject(Orders.class);
-                                    String entry = users.get(usersIds.indexOf(temp.getCustomer_id())) + " | " +
-                                            temp.getCart().getProducts().size() + " Product(s) " + " | " +
-                                            temp.getTotal() + " EGP " + "| " +
-                                            temp.getRating() + " Stars " + "| " +
-                                            temp.getOrder_date().getDate() + "/" +
-                                            temp.getOrder_date().getMonth() + "/" +
-                                            (temp.getOrder_date().getYear() + 1900);
-                                    if (allTime.isChecked()) {
-                                        OrderArrayAdapter.add(entry);
-                                        ordersId.add(temp.getId());
-                                    } else {
-                                        Date d = new Date(date.getText().toString());
-                                        if (d.getDate() == temp.getOrder_date().getDate() && d.getMonth() == temp.getOrder_date().getMonth() && d.getYear() == temp.getOrder_date().getYear()) {
+                                    if (temp.getCart().getProducts().size() != 0) {
+                                        String entry = users.get(usersIds.indexOf(temp.getCustomer_id())) + " | " +
+                                                temp.getCart().getProducts().size() + " Product(s) " + " | " +
+                                                temp.getTotal() + " EGP " + "| " +
+                                                temp.getRating() + " Stars " + "| " +
+                                                temp.getOrder_date().getDate() + "/" +
+                                                temp.getOrder_date().getMonth() + "/" +
+                                                (temp.getOrder_date().getYear() + 1900);
+                                        if (allTime.isChecked()) {
                                             OrderArrayAdapter.add(entry);
                                             ordersId.add(temp.getId());
+                                        } else {
+                                            Date d = new Date(date.getText().toString());
+                                            if (d.getDate() == temp.getOrder_date().getDate() && d.getMonth() == temp.getOrder_date().getMonth() && d.getYear() == temp.getOrder_date().getYear()) {
+                                                OrderArrayAdapter.add(entry);
+                                                ordersId.add(temp.getId());
+                                            }
                                         }
                                     }
                                 }

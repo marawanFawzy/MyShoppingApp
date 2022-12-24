@@ -224,7 +224,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="30dp"
                     android:backgroundTint="#4E525B"
@@ -233,7 +232,7 @@
                     android:tint="@android:color/white"
                     app:elevation="0dp"
                     app:fabCustomSize="80dp"
-                    tools:ignore="RelativeOverlap"/>
+                    tools:ignore="RelativeOverlap" android:layout_centerInParent="true"/>
 
             <TextView
                     android:layout_width="wrap_content"

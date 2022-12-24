@@ -37,6 +37,8 @@ public class CustomAdapter extends ArrayAdapter<Products> {
         this.delivered = delivered;
         this.userId = userId;
         this.OrderId = OrderId;
+        if(records.size() == 0)
+            total = 0;
     }
 
     @NonNull

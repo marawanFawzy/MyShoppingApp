@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -15,7 +14,6 @@ import com.example.myshoppingapp.helpers.Check;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -40,7 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
         gfemale = findViewById(R.id.female);
         gmale = findViewById(R.id.male);
         signup = findViewById(R.id.btnsign);
-        disableSoftInputFromAppearing(cbirthdate);
+        cbirthdate.setShowSoftInputOnFocus(false);
+        //disableSoftInputFromAppearing(cbirthdate);
         cdate = (datePicker, year, month, day) -> {
             month = month + 1;  //assuming month starts with zero
             String date = month + "/" + day + "/" + year;
@@ -97,16 +96,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public static void disableSoftInputFromAppearing(EditText editText) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            editText.setShowSoftInputOnFocus(false);
-        } else {
-            try {
-                final Method method = EditText.class.getMethod("setShowSoftInputOnFocus", boolean.class);
-                method.setAccessible(true);
-                method.invoke(editText, false);
-            } catch (Exception e) {
-                // handle error
-            }
-        }
+
     }
 }

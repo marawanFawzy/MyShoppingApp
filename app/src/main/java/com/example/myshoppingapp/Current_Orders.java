@@ -45,13 +45,15 @@ public class Current_Orders extends AppCompatActivity {
                         Toast.makeText(Current_Orders.this, "no Orders", Toast.LENGTH_SHORT).show();
                     } else {
                         for (int i = 0; i < queryDocumentSnapshots.size(); i++) {
-                            Date now = new Date();
                             Orders temp = queryDocumentSnapshots.getDocuments().get(i).toObject(Orders.class);
-                            Date deliver_date = new Date((long) (temp.getOrder_date().getTime() + (temp.getEstimatedTime() * 1000 * 24 * 60 * 60)));
-                            String entry = temp.getCart().getProducts().size() + " Product(s) " + " | " + (now.before(deliver_date) ? "preparing" : "delivered");
-                            OrderArrayAdapter.add(entry);
-                            ordersId.add(temp.getId());
-                            ordersDelivered.add(!now.before(deliver_date));
+                            if(temp.getCart().getProducts().size() != 0) {
+                                Date now = new Date();
+                                Date deliver_date = new Date((long) (temp.getOrder_date().getTime() + (temp.getEstimatedTime() * 1000 * 24 * 60 * 60)));
+                                String entry = temp.getCart().getProducts().size() + " Product(s) " + " | " + (now.before(deliver_date) ? "preparing" : "delivered");
+                                OrderArrayAdapter.add(entry);
+                                ordersId.add(temp.getId());
+                                ordersDelivered.add(!now.before(deliver_date));
+                            }
                         }
                     }
                 });
